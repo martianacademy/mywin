@@ -1,0 +1,73 @@
+{
+  "name": "myvee-referral",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
+    "@chakra-ui/react": "^2.5.2",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.0.1",
+    "@testing-library/user-event": "^14.1.0",
+    "@types/jest": "^28.1.1",
+    "@types/node": "^12.0.0",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "@usedapp/core": "^1.2.7",
+    "@usedapp/portis-connector": "^1.0.1",
+    "@usedapp/wallet-connect-connector": "^1.0.2",
+    "ethers": "5.7.2",
+    "framer-motion": "^6.2.9",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-icons": "^4.8.0",
+    "react-lottie": "^1.2.3",
+    "react-router-dom": "^6.9.0",
+    "react-scripts": "5.0.1",
+    "typescript": "4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react-lottie": "^1.2.6",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "https-browserify": "^1.0.0",
+    "next-tick": "^1.1.0",
+    "os": "^0.1.2",
+    "os-browserify": "^0.3.0",
+    "process": "^0.11.10",
+    "react-app-rewired": "^2.2.1",
+    "stream": "^0.0.2",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.0"
+  }
+}

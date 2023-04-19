@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.js": "/static/js/main.c9a547bc.js",
+    "static/media/tokenLogoPNG.png": "/static/media/tokenLogoPNG.6999972956d8a78ae30e.png",
+    "static/media/QuickSwapLogoSVG.svg": "/static/media/QuickSwapLogoSVG.aa0f5ef593b1a9f00bab835581e318f3.svg",
+    "static/media/QuickSwapLogoJPG.jpeg": "/static/media/QuickSwapLogoJPG.ed4853fc16ed019d9cd0.jpeg",
+    "static/media/BithumbLogoSVG.svg": "/static/media/BithumbLogoSVG.5c0336c870b5afd619f6f214696a0c8c.svg",
+    "static/media/BuyUCoinLogoSVG.svg": "/static/media/BuyUCoinLogoSVG.c8f876009bc40f197e14ad1152f2fcea.svg",
+    "static/media/HuboiLogoSVG.svg": "/static/media/HuboiLogoSVG.c5f5d72386def86692b673753f2ecd11.svg",
+    "static/media/BinanceExchangeLogoSVG.svg": "/static/media/BinanceExchangeLogoSVG.f3c9d710b7e60fcdad253447469f233e.svg",
+    "static/media/KucoinLogoSVG.svg": "/static/media/KucoinLogoSVG.5d9325042dfb31cec957ca81abf79f20.svg",
+    "static/media/OKXLogoSVG.svg": "/static/media/OKXLogoSVG.e5b740455e2809622c0e7561f44050ee.svg",
+    "static/media/CoinbaseLogoSVG.svg": "/static/media/CoinbaseLogoSVG.24b8ea69592a08cb81ed841edcc3a5ad.svg",
+    "static/media/metamask.svg": "/static/media/metamask.df996025af54766016c55e23524ba3fa.svg",
+    "static/media/bnb.svg": "/static/media/bnb.797868eb94521320b78e3967134febbe.svg",
+    "static/media/polygon.svg": "/static/media/polygon.97ff139cc7379a42cf141d74a6595fff.svg",
+    "static/media/bscscan-logo-light-circle.svg": "/static/media/bscscan-logo-light-circle.04a16bf21cd324fa1574378859b7a166.svg",
+    "static/media/walletconnect.svg": "/static/media/walletconnect.a1aae2e6951e60f34926642947a36f84.svg",
+    "static/media/usdt.svg": "/static/media/usdt.6dc09781df56f4a369623b3cb8349479.svg",
+    "static/media/coinbase.svg": "/static/media/coinbase.3b075142db763b24c3930abc1070fada.svg",
+    "static/media/trustwallet.svg": "/static/media/trustwallet.123a236026ee4659d3c2875ac0068c6d.svg",
+    "index.html": "/index.html",
+    "static/media/busd.svg": "/static/media/busd.b78b8434d519268b6737f8925da76473.svg",
+    "main.c9a547bc.js.map": "/static/js/main.c9a547bc.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.c9a547bc.js"
+  ]
+}
