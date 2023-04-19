@@ -13,12 +13,13 @@ import { useEthers } from "@usedapp/core";
 import { BiLogInCircle } from "react-icons/bi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ConnectWalletButton } from "../../ConnectWalletButton/ConnectWalletButton";
+import { UserAddressActionButton } from "../../UI";
 import { NavMenuItems } from "../NavMenuItems";
 
 export const NavUser = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { deactivate } = useEthers();
+  const { deactivate, account } = useEthers();
   return (
     <VStack
       w={250}
@@ -37,10 +38,7 @@ export const NavUser = () => {
             colorScheme: "green",
           }}
         />
-        <VStack spacing={0}>
-          {/* <Heading size="sm">Name</Heading> */}
-          <Text>@username</Text>
-        </VStack>
+        <UserAddressActionButton address={account}></UserAddressActionButton>
       </VStack>
       <Divider />
       <VStack flex={1}>

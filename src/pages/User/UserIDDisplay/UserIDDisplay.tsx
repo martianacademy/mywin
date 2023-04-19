@@ -19,7 +19,7 @@ export const UserIDDisplay = () => {
             {referralAccount?.accountInfoArray.map(
               (id: number, key: number) => {
                 return (
-                  <VStack onClick={() => navigate(`dashboard`)} key={key}>
+                  <VStack onClick={() => navigate(`dashboard/${id}`)} key={key}>
                     <UserIDCardDashboard id={id}></UserIDCardDashboard>
                   </VStack>
                 );

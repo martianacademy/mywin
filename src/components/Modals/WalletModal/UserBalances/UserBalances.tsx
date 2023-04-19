@@ -1,7 +1,6 @@
 import { VStack } from "@chakra-ui/react";
 import { useEtherBalance, useEthers, useTokenBalance } from "@usedapp/core";
 import { utils } from "ethers";
-import React from "react";
 import { useSupportedNetworkInfo } from "../../../../constants";
 import { BalancesCard } from "../../../UI";
 
@@ -17,15 +16,17 @@ export const UserBalances = () => {
   return (
     <VStack w="full">
       <BalancesCard
-        currencyName={currentNetwork?.Native?.Symbol}
+        heading="Native Balance"
         currencyValue={utils.formatUnits(
           userNativeBalanceWei ?? 0,
           currentNetwork?.Native?.Decimals
         )}
+        currencySymbol={currentNetwork?.Native?.Symbol}
         logo={currentNetwork?.Native?.Logo}
       ></BalancesCard>
       <BalancesCard
-        currencyName={currentNetwork?.MYUSD?.Symbol}
+        heading={`${currentNetwork?.MYUSD?.Symbol} Balance`}
+        currencySymbol={currentNetwork?.MYUSD?.Symbol}
         currencyValue={utils.formatUnits(
           userMYUSDBalance ?? 0,
           currentNetwork?.MYUSD?.Decimals

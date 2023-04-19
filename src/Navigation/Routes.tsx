@@ -22,8 +22,8 @@ export const Routes = createHashRouter([
         element: <JoinPage />,
       },
       {
-        path: "stake/:referrerAddress",
-        element: <Stake />,
+        path: "/:referrerAddress",
+        element: <JoinPage />,
       },
       {
         path: "user",
@@ -38,7 +38,7 @@ export const Routes = createHashRouter([
             element: <UserIDDisplay />,
           },
           {
-            path: "dashboard",
+            path: "dashboard/:userID",
             element: <Dashboard />,
             children: [
               {
@@ -53,6 +53,7 @@ export const Routes = createHashRouter([
                 path: "future-secure-wallet",
                 element: <FutureSecureWallet />,
               },
+
               {
                 path: "team",
                 element: <Team />,

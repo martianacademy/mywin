@@ -14,10 +14,11 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useEthers } from "@usedapp/core";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEtherBalance, useEthers } from "@usedapp/core";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import { formatEther } from "ethers/lib/utils";
 import { useEffect, useState } from "react";
 import { IoIosWallet } from "react-icons/io";
 import { NavUser } from "../../../components";
@@ -29,11 +30,11 @@ export const Dashboard = () => {
   const { chainId } = useEthers();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const { account } = useEthers();
-  const referralAccount = useReferralAccountMap(account!);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isOpen, onToggle } = useDisclosure();
   const [userNavHeading, setUserNavHeading] = useState("");
+  const userNativeBalance = useEtherBalance(account);
 
   useEffect(() => {
     NavMenuItems.map((menuObject) => {
@@ -42,6 +43,7 @@ export const Dashboard = () => {
       }
     });
   }, [pathname]);
+
   return (
     <VStack w="full">
       <Show below="md">
@@ -83,12 +85,11 @@ export const Dashboard = () => {
           </Collapse>
         </VStack>
       </Show>
-      <VStack p={5}>
+      <VStack p={5} w="full">
         <HStack w="full" align="flex-start" spacing={5}>
           <Hide below="md">
             <NavUser />
           </Hide>
-
           <VStack
             minH="80vh"
             flex={1}
@@ -105,7 +106,8 @@ export const Dashboard = () => {
                 <HStack>
                   <Icon as={IoIosWallet} boxSize={5}></Icon>
                   <Text color="pink.500">
-                    580 {currentNetwork?.Native?.Symbol}
+                    {Number(formatEther(userNativeBalance ?? 0)).toFixed(2)}{" "}
+                    {currentNetwork?.Native?.Symbol}
                   </Text>
                 </HStack>
               </Tag>

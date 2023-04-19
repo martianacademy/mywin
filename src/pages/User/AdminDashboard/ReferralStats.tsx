@@ -1,7 +1,7 @@
 import { Heading, HStack, Text, VStack, Icon } from "@chakra-ui/react";
 import React from "react";
 import { GiPayMoney } from "react-icons/gi";
-import { CardContainer } from "../../../../components";
+import { CardContainer } from "../../../components";
 
 export const ReferralStats = () => {
   return (

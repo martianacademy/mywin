@@ -5,6 +5,7 @@ import {
   Icon,
   IconButton,
   Link,
+  Tag,
   Text,
   useClipboard,
   useColorModeValue,
@@ -12,18 +13,20 @@ import {
 } from "@chakra-ui/react";
 import { shortenAddress } from "@usedapp/core";
 import { FaUser } from "react-icons/fa";
+import { useIDAccountMap } from "../../hooks/ReferralHooks";
 import { UserAddressActionButton } from "./UserAddressActionButton";
 
 export const UserRefereeCard = ({
-  address,
+  userID,
   style,
   onClick,
 }: {
-  address: string | undefined;
+  userID?: number;
   style?: ButtonProps;
   onClick?: () => void;
 }) => {
-  const { onCopy, hasCopied } = useClipboard(address!);
+  const userIDAccount = useIDAccountMap(userID ? `${userID}` : "0");
+  const { onCopy, hasCopied } = useClipboard(userIDAccount?.owner);
   return (
     <VStack
       p={5}
@@ -31,8 +34,9 @@ export const UserRefereeCard = ({
       borderRadius="25px"
     >
       <Icon as={FaUser} boxSize={7} onClick={onClick}></Icon>
-      <Text fontSize="sm">{shortenAddress(address!)}</Text>
-      <UserAddressActionButton address={address} style={style} />
+      <Tag colorScheme="green">User ID: {userID}</Tag>
+      <Text fontSize="sm">{shortenAddress(userIDAccount?.owner)}</Text>
+      <UserAddressActionButton address={userIDAccount?.owner} style={style} />
     </VStack>
   );
 };

@@ -14,17 +14,17 @@ import { Children } from "react";
 import { IconType } from "react-icons";
 
 export const BalancesCard = ({
-  currencyName,
+  heading,
   currencyValue,
+  currencySymbol,
   logo,
   icon,
-  lottie,
 }: {
-  currencyName: string;
+  heading: string;
   currencyValue: string;
+  currencySymbol: string;
   logo?: string;
   icon?: IconType;
-  lottie?: any;
 }) => {
   const { account } = useEthers();
   const userNativeBalance = useEtherBalance(account);
@@ -36,18 +36,26 @@ export const BalancesCard = ({
     >
       <Card borderRadius="3xl" w="full" p={3} minW={200}>
         <HStack justify="space-around">
-          <VStack>
+          <VStack w="full">
             <Heading size="sm" color="pink.500" fontWeight="semibold">
-              {currencyName}
+              {heading}
             </Heading>
             <Heading size="sm" wordBreak="break-all" fontWeight="semibold">
               {currencyValue}
+            </Heading>
+            <Heading
+              size="xs"
+              wordBreak="break-all"
+              fontWeight="semibold"
+              fontStyle="oblique"
+              opacity={0.75}
+            >
+              {currencySymbol}
             </Heading>
           </VStack>
           <Spacer />
           {logo && <Image src={logo} boxSize={7} color="pink.500"></Image>}
           {icon && <Icon as={icon} boxSize={7} color="pink.500"></Icon>}
-          {lottie && lottie}
         </HStack>
       </Card>
     </Skeleton>

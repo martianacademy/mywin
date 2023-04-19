@@ -11,7 +11,7 @@ import {
 import React, { ReactNode } from "react";
 import { IconType } from "react-icons";
 import { FaPiggyBank } from "react-icons/fa";
-import { CardContainer } from "../../../../components";
+import { CardContainer } from "../../../components";
 
 const StakingInfoContainer = ({
   heading,

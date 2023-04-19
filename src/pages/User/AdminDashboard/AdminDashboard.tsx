@@ -15,7 +15,7 @@ import {
 import { useEthers } from "@usedapp/core";
 import { FaMoneyBill, FaPiggyBank, FaUsers } from "react-icons/fa";
 import { GiPayMoney } from "react-icons/gi";
-import { AdminNav, CardContainer } from "../../../../components";
+import { AdminNav, CardContainer } from "../../../components";
 import { ReferralStats } from "./ReferralStats";
 import { StakingStats } from "./StakingStats";
 import { TotalUsersStats } from "./TotalUsersStats";

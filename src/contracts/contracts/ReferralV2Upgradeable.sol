@@ -83,7 +83,6 @@ contract ReferralV2Upgradeable is
         uint256 royaltyClubListIndex;
         uint256 referralPaidUSD;
         uint256 rewardPaidRoyaltyClubUSD;
-        uint256 fundsToActivateIDUSD;
         uint256 balanceClaimedUSD;
         uint256 limitBalanceUSD;
         uint256 maxLimitAmount;

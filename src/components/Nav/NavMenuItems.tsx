@@ -17,22 +17,22 @@ export const NavMenuItems = [
   },
   {
     name: "Dashboard",
-    link: "/user/dashboard",
+    link: "",
     icon: <FontAwesomeIcon icon={faChartArea} shake color={IconColor} />,
   },
   {
     name: "Stakings",
-    link: "/user/dashboard/stakings",
+    link: "stakings",
     icon: <FontAwesomeIcon icon={faCube} shake color={IconColor} />,
   },
   {
     name: "Future Secure Wallet",
-    link: "/user/dashboard/future-secure-wallet",
+    link: "future-secure-wallet",
     icon: <FontAwesomeIcon icon={faWallet} shake color={IconColor} />,
   },
   {
     name: "Team",
-    link: "/user/dashboard/team",
+    link: "team",
     icon: <FontAwesomeIcon icon={faUsers} shake color={IconColor} />,
   },
 ];

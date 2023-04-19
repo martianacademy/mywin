@@ -11,6 +11,7 @@ export const TokenSymbol = "MYWIN";
 export const ProjectName = "MyWin Incorporation";
 export const DefaultReferrer = "0x49066990635F9AEA7706dD73183177a463352445";
 export const DefaultReferrerID = "0";
+export const AddressZero: string = "0x0000000000000000000000000000000000000000";
 
 export const StakingInfo = {
   rewardRate: 100,
@@ -80,9 +81,9 @@ export const useSupportedNetworkInfo = {
       "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",
       PriceOracle?.abi
     ),
-    referralContractAddress: "0xcA5FD81b5ac7555D1e5120b4e3C030B321E0F752",
+    referralContractAddress: "0x2612A322DD2F3B3F8eAF77c9b5B7c1318f88f9a7",
     referralContractInterface: new Contract(
-      "0xcA5FD81b5ac7555D1e5120b4e3C030B321E0F752",
+      "0x2612A322DD2F3B3F8eAF77c9b5B7c1318f88f9a7",
       ReferralInterface.abi
     ),
     Native: {

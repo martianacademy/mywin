@@ -3,17 +3,17 @@ import { useEthers } from "@usedapp/core";
 import React from "react";
 import { BsShieldFillCheck } from "react-icons/bs";
 import { GiCube, GiPayMoney, GiReceiveMoney } from "react-icons/gi";
-import { BalancesCard, CardContainer } from "../../../../../../components";
-import { useSupportedNetworkInfo } from "../../../../../../constants";
+import { BalancesCard, CardContainer } from "../../../../../components";
+import { useSupportedNetworkInfo } from "../../../../../constants";
 
-export const UserStakings = () => {
+export const UserROI = () => {
   const { chainId, account } = useEthers();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
 
   return (
     <CardContainer>
       <Heading size="sm">Stakings</Heading>
-      <BalancesCard
+      {/* <BalancesCard
         currencyName="Plan Stakings Value"
         currencyValue={`700 ${currentNetwork?.Native?.Symbol}`}
         icon={GiCube}
@@ -32,7 +32,7 @@ export const UserStakings = () => {
         currencyName="Claimed Rewards"
         currencyValue={`10 ${currentNetwork?.Native?.Symbol}`}
         icon={GiReceiveMoney}
-      ></BalancesCard>
+      ></BalancesCard> */}
     </CardContainer>
   );
 };
