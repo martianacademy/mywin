@@ -1,10 +1,9 @@
 import { BSCTestnet, ERC20Interface } from "@usedapp/core";
 import { Contract } from "ethers";
-import { BNBLogoSVG, BSCScanLogoCircleLight, USDTLogoSVG } from "../assets";
+import { BNBLogoSVG, BSCScanLogoCircleLight } from "../assets";
 import { MyVeeChain } from "./ChainInfo";
 
 import PriceOracle from "../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json";
-import StakingInterface from "../contracts/artifacts/contracts/StakingUpgradeable.sol/StakingUpgradeable.json";
 import ReferralInterface from "../contracts/artifacts/contracts/ReferralV2Upgradeable.sol/ReferralV2Upgradeable.json";
 
 export const TokenName = "MyWin";
@@ -39,14 +38,14 @@ export interface tokenType {
 
 export const useSupportedNetworkInfo = {
   [MyVeeChain.chainId]: {
-    priceOracleContractAddress: "0xC90c7221bd990b3aFb046d3fba2dE13023ba9eF5",
+    priceOracleContractAddress: "0x701D48A7e16B5885Bb3D5f5156b9B9f0186c6C3e",
     priceOracleContractInterface: new Contract(
-      "0xC90c7221bd990b3aFb046d3fba2dE13023ba9eF5",
+      "0x701D48A7e16B5885Bb3D5f5156b9B9f0186c6C3e",
       PriceOracle?.abi
     ),
-    referralContractAddress: "0xE13Bb7CE7208B7879abA9f0485DdE753E72B25B0",
+    referralContractAddress: "0xcA5FD81b5ac7555D1e5120b4e3C030B321E0F752",
     referralContractInterface: new Contract(
-      "0xE13Bb7CE7208B7879abA9f0485DdE753E72B25B0",
+      "0xcA5FD81b5ac7555D1e5120b4e3C030B321E0F752",
       ReferralInterface.abi
     ),
     Native: {
@@ -72,18 +71,18 @@ export const useSupportedNetworkInfo = {
     NetworkRPCUrl: "https://rpc.myveescan.com",
     NetworkColor: "yellow.500",
     NetworkExplorerLink: MyVeeChain.blockExplorerUrl,
-    NetworkExplorerName: "BscScanTestnet",
+    NetworkExplorerName: "MyVeeScan",
     NetworkExplorerLogo: BSCScanLogoCircleLight,
   },
   [BSCTestnet.chainId]: {
-    priceOracleContractAddress: "0x26a9dD00ba9f050f3243a906a13C805784BeD67f",
+    priceOracleContractAddress: "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",
     priceOracleContractInterface: new Contract(
-      "0x26a9dD00ba9f050f3243a906a13C805784BeD67f",
+      "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",
       PriceOracle?.abi
     ),
-    referralContractAddress: "0x2612A322DD2F3B3F8eAF77c9b5B7c1318f88f9a7",
+    referralContractAddress: "0xcA5FD81b5ac7555D1e5120b4e3C030B321E0F752",
     referralContractInterface: new Contract(
-      "0x2612A322DD2F3B3F8eAF77c9b5B7c1318f88f9a7",
+      "0xcA5FD81b5ac7555D1e5120b4e3C030B321E0F752",
       ReferralInterface.abi
     ),
     Native: {

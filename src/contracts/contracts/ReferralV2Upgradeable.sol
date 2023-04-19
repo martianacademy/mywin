@@ -186,7 +186,7 @@ contract ReferralV2Upgradeable is
     event ROIClaimed(uint256 indexed userID, uint256 indexed reward);
 
     function initialize() public initializer {
-        _priceOracleContract = 0x26a9dD00ba9f050f3243a906a13C805784BeD67f;
+        _priceOracleContract = 0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168;
 
         _decimals = 1000;
         _levelRates = [
