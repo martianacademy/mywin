@@ -2,7 +2,6 @@ import { Center, Divider, Heading, HStack, Icon } from "@chakra-ui/react";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
-import { FaCrown } from "react-icons/fa";
 
 import { MdVerified } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,7 @@ export const Logo = () => {
       }}
     >
       <Center boxSize={10} borderWidth="medium" borderRadius="full">
-        <FontAwesomeIcon icon={faCrown} shake color="#DD6B20" />
+        <FontAwesomeIcon icon={faCrown} color="#DD6B20" />
       </Center>
       <Center h={7}>
         <Divider orientation="vertical" />

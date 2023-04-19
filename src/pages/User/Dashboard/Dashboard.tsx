@@ -75,7 +75,7 @@ export const Dashboard = () => {
                     >
                       {menuObject?.name}
                     </Text>
-                    <Icon as={menuObject.icon} color="orange.500"></Icon>
+                    {menuObject.icon}
                   </HStack>
                 );
               })}

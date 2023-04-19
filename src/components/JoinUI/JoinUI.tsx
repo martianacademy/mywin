@@ -193,7 +193,7 @@ export const JoinUI = () => {
     >
       <VStack
         w="90%"
-        maxW={400}
+        maxW={350}
         bgColor={useColorModeValue("white", "gray.900")}
         borderRadius="50px"
         p={5}
@@ -237,7 +237,7 @@ export const JoinUI = () => {
               }
               isDisabled={referrerAddress ? true : false}
             >
-              Select Default Referrer ID
+              Default Referrer
             </Button>
           </HStack>
         </VStack>

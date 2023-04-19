@@ -15,28 +15,28 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
+import { faCrown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEthers } from "@usedapp/core";
 import { IconType } from "react-icons";
 import {
-  FaChartArea,
   FaFacebook,
   FaGithub,
   FaIdCard,
   FaMoon,
-  FaPiggyBank,
   FaSun,
   FaTelegram,
   FaTwitter,
-  FaUsers,
   FaYoutube,
 } from "react-icons/fa";
-import { IoMdFlame } from "react-icons/io";
-import { TbArrowsDoubleNeSw } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { useSupportedNetworkInfo, website } from "../../../constants";
+import {
+  TokenSymbol,
+  useSupportedNetworkInfo,
+  website,
+} from "../../../constants";
 import { ConnectWalletButton } from "../../ConnectWalletButton/ConnectWalletButton";
 import { UserAddressActionButton } from "../../UI/UserAddressActionButton";
-import { NavMenuItems } from "../NavMenuItems";
 
 const MenuItemComponent = ({
   name,
@@ -60,7 +60,7 @@ const MenuItemComponent = ({
       <HStack w="full">
         <Text fontSize="sm">{name}</Text>
         <Spacer />
-        {icon && <Icon as={icon}></Icon>}
+        {icon && <Icon as={icon} color="orange.500"></Icon>}
       </HStack>
     </MenuItem>
   );
@@ -85,11 +85,11 @@ export const NavMenu = () => {
             <Avatar size="lg">
               <AvatarBadge boxSize="1.25em" bg="green.500" />
             </Avatar>
-            <Heading size="md">Name</Heading>
-            <HStack spacing={0} fontSize="sm">
+            {/* <Heading size="md">Name</Heading> */}
+            {/* <HStack spacing={0} fontSize="sm">
               <Text>@</Text>
               <Text>username</Text>
-            </HStack>
+            </HStack> */}
 
             <ConnectWalletButton
               style={{
@@ -111,22 +111,22 @@ export const NavMenu = () => {
               onClick={() => navigate("/user")}
             ></MenuItemComponent>
           </VStack>
-          <Button
-            borderRadius="xl"
-            colorScheme={hasCopied ? "green" : "pink"}
-            onClick={onCopy}
-          >
-            {hasCopied ? "Referral Link Copied" : "Copy Referral Link"}
-          </Button>
         </>
       )}
 
       <VStack py={5}>
-        <MenuItemComponent
-          name={`Stake ${currentNetwork?.Native?.Symbol}`}
-          icon={IoMdFlame}
+        <Button
+          borderRadius="xl"
+          colorScheme="orange"
+          rightIcon={<FontAwesomeIcon icon={faCrown}></FontAwesomeIcon>}
+          bg="orange.500"
+          _hover={{
+            bg: "orange.600",
+          }}
           onClick={() => navigate("/")}
-        ></MenuItemComponent>
+        >
+          Join {TokenSymbol}
+        </Button>
       </VStack>
       <Divider />
       <VStack py={5}>

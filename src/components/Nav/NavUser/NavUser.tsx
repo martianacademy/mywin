@@ -2,20 +2,16 @@ import {
   Avatar,
   Button,
   Divider,
-  Heading,
   HStack,
+  Icon,
   Spacer,
-  Tag,
   Text,
   useColorModeValue,
   VStack,
-  Icon,
 } from "@chakra-ui/react";
 import { useEthers } from "@usedapp/core";
-import React from "react";
 import { BiLogInCircle } from "react-icons/bi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import { ConnectWalletButton } from "../../ConnectWalletButton/ConnectWalletButton";
 import { NavMenuItems } from "../NavMenuItems";
 
@@ -57,7 +53,7 @@ export const NavUser = () => {
               fontSize="sm"
               borderRadius="xl"
               onClick={() => navigate(itemsOject?.link)}
-              leftIcon={<Icon as={itemsOject.icon} color="pink.500" />}
+              leftIcon={itemsOject.icon}
             >
               {itemsOject?.name}
             </Button>
