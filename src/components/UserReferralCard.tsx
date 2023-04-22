@@ -12,6 +12,8 @@ import {
   Image,
   HStack,
   Text,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { shortenAddress } from "@usedapp/core";
 import { motion } from "framer-motion";
@@ -104,6 +106,22 @@ export const UserReferralCard = ({
             <Tag colorScheme={userIDAccount?.isDisabled ? "red" : "green"}>
               Status: {userIDAccount?.isDisabled ? "Inactive" : "Active"}
             </Tag>
+            <HStack>
+              <Tag p={2} borderRadius="xl">
+                <HStack color="pink.500">
+                  <Icon as={HiUsers} boxSize={5}></Icon>
+                  <Heading size="md">
+                    {userIDAccount?.refereeIDs?.length}
+                  </Heading>
+                </HStack>
+              </Tag>
+              <Tag p={2} borderRadius="xl">
+                <HStack color="pink.500">
+                  <Icon as={FaUsers} boxSize={5}></Icon>
+                  <Heading size="md">{userIDAccount?.teamIDs?.length}</Heading>
+                </HStack>
+              </Tag>
+            </HStack>
           </VStack>
           <Wrap align="center" justify="center">
             <Tag
@@ -114,21 +132,12 @@ export const UserReferralCard = ({
               colorScheme="pink"
             >
               <HStack>
-                <Icon as={FaUsers}></Icon>
-                <Text>{userIDAccount?.teamIDs?.length}</Text>
-              </HStack>
-            </Tag>
-            <Tag
-              borderRadius="lg"
-              _hover={{
-                transform: "scale(1.05)",
-              }}
-              colorScheme="pink"
-            >
-              <HStack>
                 <Icon as={HiUser}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
-                <Text>{userIDAccount?.selfBusinessUSD}</Text>
+                <Text>
+                  {userIDAccount?.selfBusinessUSDOld +
+                    userIDAccount?.selfBusinessUSD}
+                </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>
             </Tag>
@@ -142,7 +151,10 @@ export const UserReferralCard = ({
               <HStack>
                 <Icon as={HiUsers}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
-                <Text>{userIDAccount?.directBusinessUSD}</Text>
+                <Text>
+                  {userIDAccount?.directBusinessUSDOld +
+                    userIDAccount?.directBusinessUSD}
+                </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>
             </Tag>
@@ -156,7 +168,10 @@ export const UserReferralCard = ({
               <HStack>
                 <Icon as={FaUsers}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
-                <Text>{userIDAccount?.teamBusinessUSD}</Text>
+                <Text>
+                  {userIDAccount?.teamBusinessUSDOld +
+                    userIDAccount?.teamBusinessUSD}
+                </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>
             </Tag>

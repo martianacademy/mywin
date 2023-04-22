@@ -11,9 +11,9 @@ export const Team = () => {
   const userIDAccount = useIDAccount(userID);
   const [id, setId] = useState(userIDAccount.id);
   return (
-    <VStack py={10} px={5} spacing={10}>
+    <VStack py={10} px={5} spacing={10} w="full">
       <Heading>Your Team Object</Heading>
-      {userIDAccount.refererID && (
+      {userIDAccount.refererID > 0 && (
         <VStack spacing={10}>
           <UserReferralCard
             heading="Referrer"
@@ -30,24 +30,24 @@ export const Team = () => {
         id={userIDAccount?.id}
       ></UserReferralCard>
       <Icon as={FaArrowDown} boxSize={10}></Icon>
-      <Wrap align="center" justify="center">
-        {userIDAccount?.refereeIDs ? (
-          <VStack>
+      <VStack w="full">
+        {userIDAccount?.refereeIDs.length > 0 ? (
+          <Wrap align="center" justify="center" w="full">
             {userIDAccount?.refereeIDs.map((id: string, key: number) => {
               return (
                 <UserReferralCard
-                  heading="Team"
+                  heading="Referee"
                   icon={HiUsers}
                   id={id}
                   scale={0.8}
                 ></UserReferralCard>
               );
             })}
-          </VStack>
+          </Wrap>
         ) : (
           <Heading>You have no referee</Heading>
         )}
-      </Wrap>
+      </VStack>
     </VStack>
   );
 };

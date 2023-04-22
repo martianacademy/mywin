@@ -33,16 +33,8 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isOpen, onToggle } = useDisclosure();
-  const [userNavHeading, setUserNavHeading] = useState("");
+  const [userNavHeading, setUserNavHeading] = useState("Dashboard");
   const userNativeBalance = useEtherBalance(account);
-
-  useEffect(() => {
-    NavMenuItems.map((menuObject) => {
-      if (pathname === menuObject.link) {
-        setUserNavHeading(menuObject.name);
-      }
-    });
-  }, [pathname]);
 
   return (
     <VStack w="full">
@@ -73,6 +65,7 @@ export const Dashboard = () => {
                       onClick={() => {
                         onToggle();
                         navigate(menuObject.link);
+                        setUserNavHeading(menuObject.name);
                       }}
                     >
                       {menuObject?.name}
