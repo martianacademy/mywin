@@ -6,3 +6,4 @@ export * from "./UI";
 export * from "./AdminNav/AdminNav";
 export * from "./Nav/NavUser/NavUser";
 export * from "./UserIDCardDashboard";
+export * from "./UserReferralCard";

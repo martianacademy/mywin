@@ -37,11 +37,11 @@ export const useReferralAccountMap = (
 };
 
 export interface userIDAccountType {
-  id: number;
+  id: string;
   oldID: string;
   owner: string;
   refereeIDs: string[] | [];
-  refererID: number;
+  refererID: string;
   isDisabled: boolean;
   joiningTime: number;
   activationTime: number;
@@ -70,14 +70,14 @@ export interface userIDAccountType {
 export const useIDAccount = (id: string | undefined) => {
   const value = useCallHook("getIDAccount", [id ?? "0"]);
   const valueObject = {
-    id: value ? Number(value?.[0].id.toString()) : 0,
+    id: value ? value?.[0].id.toString() : 0,
     oldID: value ? value?.[0].oldID.toString() : "0",
     isDisabled: value ? value?.[0].isDisabled : false,
     owner: value ? value?.[0].owner : AddressZero,
     joiningTime: value ? Number(value?.[0].joiningTime.toString()) : 0,
     activationTime: value ? Number(value?.[0].activationTime.toString()) : 0,
     deactivateTime: value ? Number(value?.[0].deactivateTime.toString()) : 0,
-    refererID: value ? Number(value?.[0].refererID.toString()) : 0,
+    refererID: value ? value?.[0].refererID.toString() : 0,
     roiIDs: value ? value?.[0].roiIDs : [],
     refereeIDs: value ? value?.[0].refereeIDs : [],
     teamIDs: value ? value?.[0].teamIDs : [],

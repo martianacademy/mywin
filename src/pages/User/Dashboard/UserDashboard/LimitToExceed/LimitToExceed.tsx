@@ -54,18 +54,19 @@ export const LimitToExceed = ({
           </CircularProgressLabel>
         )}
       </CircularProgress>
+
       <VStack w="full">
-        <Tag colorScheme="green">ROI Limit</Tag>
+        <Tag colorScheme="green">Max Limit</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
           {idAccountMap?.maxLimitAmount} {currentNetwork?.MYUSD?.Symbol}
         </Heading>
       </VStack>
-      <VStack w="full">
+      {/* <VStack w="full">
         <Tag colorScheme="green">Referral Limit</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
           {idAccountMap?.maxLimitAmount} {currentNetwork?.MYUSD?.Symbol}
         </Heading>
-      </VStack>
+      </VStack> */}
       <VStack w="full">
         <Tag colorScheme="red">Limit Reached</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">

@@ -398,8 +398,6 @@ contract ReferralV2Upgradeable is
             } else if (
                 block.timestamp > _roiAccount.startTime + _roiAccount.duration
             ) {
-                _idAccount.isDisabled = true;
-
                 uint256 totalROI;
 
                 for (uint16 i; i < _idAccount.roiIDs.length; i++) {
@@ -414,7 +412,10 @@ contract ReferralV2Upgradeable is
                     _idAccount.maxLimitAmount = _idAccount.limitBalanceUSD;
                 }
 
+                _idAccount.isDisabled = true;
                 _disableIDROIs(_idAccount);
+            } else {
+                return false;
             }
         }
 
@@ -617,7 +618,6 @@ contract ReferralV2Upgradeable is
     }
 
     function _updateOldIDData(
-        address _userAddress,
         uint32 _userID,
         uint256 _totalTopUp,
         uint256 _limitBalanceUSD,
@@ -626,46 +626,25 @@ contract ReferralV2Upgradeable is
         uint256 _joiningTime,
         uint256 _activationTime
     ) private {
-        StructAccount storage userAccount = accounts[_userAddress];
         StructID storage userIDAccount = ids[_userID];
-
-        userAccount.accountIDs.push(_userID);
         uint8 _maxLevelsCount = maxLevelsCount;
 
-        userIDAccount.id = _userID;
-        userIDAccount.owner = _userAddress;
         userIDAccount.joiningTime = _joiningTime;
         userIDAccount.activationTime = _activationTime;
         userIDAccount.selfBusinessUSDOld = _totalTopUp;
         userIDAccount.referralPaidUSD = _limitBalanceUSD;
+        userIDAccount.balanceClaimedUSD = _balanceClaimedUSD;
+        userIDAccount.limitBalanceUSD = _limitBalanceUSD;
+        userIDAccount.maxLimitAmount = _maxLimitUSD;
 
-        if (_limitBalanceUSD >= _maxLimitUSD) {
-            userIDAccount.isDisabled = true;
-            userIDAccount.balanceClaimedUSD = 0;
-            userIDAccount.limitBalanceUSD = 0;
-            userIDAccount.maxLimitAmount = 0;
-            userIDAccount.topUpUSD = 0;
-            _disableIDROIs(userIDAccount);
-        } else {
-            userIDAccount.balanceClaimedUSD = _balanceClaimedUSD;
-            userIDAccount.limitBalanceUSD = _limitBalanceUSD;
-            userIDAccount.maxLimitAmount = _maxLimitUSD;
-            userIDAccount.topUpUSD += _totalTopUp;
-
-            if (isPayROI) {
-                _activateROI(
-                    _userID,
-                    totalROIIDs + 1,
-                    _totalTopUp,
-                    _activationTime
-                );
-            }
+        if (isPayROI) {
+            _activateROI(_userID, totalROIIDs, _totalTopUp, _activationTime);
         }
 
         for (uint8 i; i < _maxLevelsCount; i++) {
             uint32 refererID = userIDAccount.refererID;
             StructID storage refererIDAccount = ids[refererID];
-            if (refererIDAccount.id > 0) {
+            if (refererIDAccount.id == 0) {
                 break;
             }
 
@@ -680,8 +659,23 @@ contract ReferralV2Upgradeable is
         }
     }
 
-    function updateUserIDDataOldAdmin(
+    function updateIDOldIDtoAddress(
+        uint32[] calldata _userID,
         address[] calldata _userAddress,
+        string[] memory _oldID
+    ) external onlyOwner {
+        for (uint16 i; i < _userID.length; i++) {
+            StructID storage userIDAccount = ids[_userID[i]];
+            StructAccount storage userAccount = accounts[_userAddress[i]];
+
+            userIDAccount.id = _userID[i];
+            userIDAccount.oldID = _oldID[i];
+            userAccount.accountIDs.push(_userID[i]);
+            userIDAccount.owner = _userAddress[i];
+        }
+    }
+
+    function updateUserIDDataOldAdmin(
         uint32[] calldata _userID,
         uint256[] calldata _totalTopUp,
         uint256[] calldata _limitBalanceUSD,
@@ -690,31 +684,19 @@ contract ReferralV2Upgradeable is
         uint256[] calldata _activationTime
     ) external onlyOwner {
         for (uint256 i; i < _userID.length; i++) {
-            uint256 _maxLimitUSD = _totalTopUp[i] * 3;
-            _updateOldIDData(
-                _userAddress[i],
-                _userID[i],
-                _totalTopUp[i],
-                _maxLimitUSD,
-                _limitBalanceUSD[i],
-                _balanceClaimedUSD[i],
-                _joiningTime[i],
-                _activationTime[i]
-            );
-
-            totalIDs += _userID[_userID.length - 1];
-        }
-    }
-
-    function updateOldNewIDsAdmin(
-        uint32[] memory _id,
-        string[] memory _oldID
-    ) external onlyOwner {
-        require(_id.length == _oldID.length, "Length not matched");
-        for (uint16 i; i < _id.length; i++) {
-            StructID storage userIDAccount = ids[_id[i]];
-            userIDAccount.id = _id[i];
-            userIDAccount.oldID = _oldID[i];
+            totalROIIDs++;
+            if (_totalTopUp[i] > 0) {
+                uint256 _maxLimitUSD = _totalTopUp[i] * 3;
+                _updateOldIDData(
+                    _userID[i],
+                    _totalTopUp[i],
+                    _limitBalanceUSD[i],
+                    _maxLimitUSD,
+                    _balanceClaimedUSD[i],
+                    _joiningTime[i],
+                    _activationTime[i]
+                );
+            }
         }
     }
 
@@ -964,16 +946,16 @@ contract ReferralV2Upgradeable is
         StructID storage userIDAccount = ids[_id];
         uint32[] memory roiIDs = userIDAccount.roiIDs;
 
-        require(
-            msg.sender == userIDAccount.owner,
-            "You are not owner of this id."
-        );
+        // require(
+        //     msg.sender == userIDAccount.owner,
+        //     "You are not owner of this id."
+        // );
 
-        require(
-            block.timestamp >=
-                userIDAccount.roiClaimTimestamp + _roiClaimTimelimit,
-            "You roi claim timelimit is not over yeh"
-        );
+        // require(
+        //     block.timestamp >=
+        //         userIDAccount.roiClaimTimestamp + _roiClaimTimelimit,
+        //     "You roi claim timelimit is not over yeh"
+        // );
 
         uint256 _totalROIReward;
 

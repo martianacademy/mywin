@@ -1,6 +1,6 @@
 import { BSCTestnet, ERC20Interface } from "@usedapp/core";
 import { Contract } from "ethers";
-import { BNBLogoSVG, BSCScanLogoCircleLight } from "../assets";
+import { BNBLogoSVG, BSCScanLogoCircleLight, USDTLogoSVG } from "../assets";
 import { MyVeeChain } from "./ChainInfo";
 
 import PriceOracle from "../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json";
@@ -12,6 +12,8 @@ export const ProjectName = "MyWin Incorporation";
 export const DefaultReferrer = "0x49066990635F9AEA7706dD73183177a463352445";
 export const DefaultReferrerID = "0";
 export const AddressZero: string = "0x0000000000000000000000000000000000000000";
+
+export const MyUSDLogo = USDTLogoSVG;
 
 export const StakingInfo = {
   rewardRate: 100,
@@ -44,9 +46,9 @@ export const useSupportedNetworkInfo = {
       "0x701D48A7e16B5885Bb3D5f5156b9B9f0186c6C3e",
       PriceOracle?.abi
     ),
-    referralContractAddress: "0xB9cC6dfC48B853A5FCf0D655F8C2228D8fc69123",
+    referralContractAddress: "0x56dc403dd41DeE5a93CD9E8e5BCDC45a86FfA569",
     referralContractInterface: new Contract(
-      "0xB9cC6dfC48B853A5FCf0D655F8C2228D8fc69123",
+      "0x56dc403dd41DeE5a93CD9E8e5BCDC45a86FfA569",
       ReferralInterface.abi
     ),
     Native: {
