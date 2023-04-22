@@ -14,7 +14,7 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200,
+        runs: 50,
       },
     },
   },
@@ -38,7 +38,7 @@ module.exports = {
     ],
   },
 
-  defaultNetwork: "bscTestnet",
+  defaultNetwork: "myvee",
   networks: {
     hardhat: {
       gas: "auto",

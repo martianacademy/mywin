@@ -27,14 +27,10 @@ export const UserTeam = ({
           ])}, 1fr)`}
           gap={6}
         >
-          {" "}
           {idAccountMap?.teamIDs.length ? (
             idAccountMap?.teamIDs.map((userID: string, key: number) => {
               return (
-                <UserRefereeCard
-                  userID={Number(userID)}
-                  key={key}
-                ></UserRefereeCard>
+                <UserRefereeCard userID={userID} key={key}></UserRefereeCard>
               );
             })
           ) : (

@@ -26,30 +26,35 @@ export const useReferralAccountMap = (
   address: string
 ): {
   isDisabled: boolean;
-  accountInfoArray: number[];
+  accountIDs: number[];
 } => {
   const value = useCallHook("getUserAccount", [address]);
   const valueObject = {
     isDisabled: value ? value?.[0].isDisabled : false,
-    accountInfoArray: value ? value?.[0].accountInfoArray : [],
+    accountIDs: value ? value?.[0].accountIDs : [],
   };
   return valueObject;
 };
 
 export interface userIDAccountType {
   id: number;
+  oldID: string;
   owner: string;
   refereeIDs: string[] | [];
   refererID: number;
   isDisabled: boolean;
+  joiningTime: number;
   activationTime: number;
+  deactivateTime: number;
   roiIDs: string[] | [];
   roiClaimTimestamp: number;
   roiClaimedUSD: number;
-  selfBusinessUSDArray: BigNumber[] | [];
   selfBusinessUSD: number;
+  selfBusinessUSDOld: number;
   directBusinessUSD: number;
+  directBusinessUSDOld: number;
   teamBusinessUSD: number;
+  teamBusinessUSDOld: number;
   teamIDs: string[] | [];
   balanceClaimedUSD: number;
   limitBalanceUSD: number;
@@ -62,31 +67,64 @@ export interface userIDAccountType {
   timeStampRoyaltyClub: number;
 }
 
-export const useIDAccountMap = (id: string): userIDAccountType => {
-  const value = useCallHook("getIDAccount", [id]);
+export const useIDAccount = (id: string | undefined) => {
+  const value = useCallHook("getIDAccount", [id ?? "0"]);
   const valueObject = {
     id: value ? Number(value?.[0].id.toString()) : 0,
-    owner: value ? value?.[0].owner : AddressZero,
-    refereeIDs: value ? value?.[0].refereeIDs : [],
-    refererID: value ? Number(value?.[0].refererID.toString()) : 0,
+    oldID: value ? value?.[0].oldID.toString() : "0",
     isDisabled: value ? value?.[0].isDisabled : false,
+    owner: value ? value?.[0].owner : AddressZero,
+    joiningTime: value ? Number(value?.[0].joiningTime.toString()) : 0,
     activationTime: value ? Number(value?.[0].activationTime.toString()) : 0,
+    deactivateTime: value ? Number(value?.[0].deactivateTime.toString()) : 0,
+    refererID: value ? Number(value?.[0].refererID.toString()) : 0,
     roiIDs: value ? value?.[0].roiIDs : [],
+    refereeIDs: value ? value?.[0].refereeIDs : [],
+    teamIDs: value ? value?.[0].teamIDs : [],
     roiClaimTimestamp: value
       ? Number(value?.[0].roiClaimTimestamp.toString())
       : 0,
     roiClaimedUSD: value ? Number(formatEther(value?.[0].roiClaimedUSD)) : 0,
-    selfBusinessUSDArray: value ? value?.[0].selfBusinessUSDArray : [],
     selfBusinessUSD: value
       ? Number(formatEther(value?.[0].selfBusinessUSD))
+      : 0,
+    selfBusinessUSDOld: value
+      ? Number(formatEther(value?.[0].selfBusinessUSDOld))
       : 0,
     directBusinessUSD: value
       ? Number(formatEther(value?.[0].directBusinessUSD))
       : 0,
+    directBusinessUSDOld: value
+      ? Number(formatEther(value?.[0].directBusinessUSDOld))
+      : 0,
     teamBusinessUSD: value
       ? Number(formatEther(value?.[0].teamBusinessUSD))
       : 0,
-    teamIDs: value ? value?.[0].teamIDs : [],
+    teamBusinessUSDOld: value
+      ? Number(formatEther(value?.[0].teamBusinessUSDOld))
+      : 0,
+
+    royaltyClubBusinessUSD: value
+      ? Number(formatEther(value?.[0].royaltyClubBusinessUSD))
+      : 0,
+
+    timeStampRoyaltyClub: value
+      ? Number(value?.[0].timeStampRoyaltyClub.toString())
+      : 0,
+    royaltyClubPackageID: value
+      ? Number(value?.[0].royaltyClubPackageID.toString())
+      : 0,
+    royaltyClubListIndex: value
+      ? Number(value?.[0].royaltyClubListIndex.toString())
+      : 0,
+
+    referralPaidUSD: value
+      ? Number(formatEther(value?.[0].referralPaidUSD))
+      : 0,
+    rewardPaidRoyaltyClubUSD: value
+      ? Number(formatEther(value?.[0].rewardPaidRoyaltyClubUSD))
+      : 0,
+
     balanceClaimedUSD: value
       ? Number(formatEther(value?.[0].balanceClaimedUSD))
       : 0,
@@ -95,25 +133,8 @@ export const useIDAccountMap = (id: string): userIDAccountType => {
       ? Number(formatEther(value?.[0].limitBalanceUSD))
       : 0,
     maxLimitAmount: value ? Number(formatEther(value?.[0].maxLimitAmount)) : 0,
-    referralPaidUSD: value
-      ? Number(formatEther(value?.[0].referralPaidUSD))
-      : 0,
-    rewardPaidRoyaltyClubUSD: value
-      ? Number(formatEther(value?.[0].rewardPaidRoyaltyClubUSD))
-      : 0,
-    royaltyClubBusinessUSD: value
-      ? Number(formatEther(value?.[0].royaltyClubBusinessUSD))
-      : 0,
-    royaltyClubListIndex: value
-      ? Number(value?.[0].royaltyClubListIndex.toString())
-      : 0,
-    royaltyClubPackageID: value
-      ? Number(value?.[0].royaltyClubPackageID.toString())
-      : 0,
-    timeStampRoyaltyClub: value
-      ? Number(value?.[0].timeStampRoyaltyClub.toString())
-      : 0,
   };
+
   return valueObject;
 };
 

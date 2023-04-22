@@ -6,6 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import { DappConfig } from "./constants/DappConfig";
 import { Routes } from "./Navigation/Routes";
 import * as serviceWorker from "./serviceWorker";
+import "./index.css";
 
 const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");

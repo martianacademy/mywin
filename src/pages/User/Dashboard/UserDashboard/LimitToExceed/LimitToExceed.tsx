@@ -12,7 +12,10 @@ import { motion } from "framer-motion";
 import React from "react";
 import { CardContainer } from "../../../../../components";
 import { useSupportedNetworkInfo } from "../../../../../constants";
-import { userIDAccountType } from "../../../../../hooks/ReferralHooks";
+import {
+  useIDAccount,
+  userIDAccountType,
+} from "../../../../../hooks/ReferralHooks";
 
 const MotionCircularProgress = motion(CircularProgress);
 
@@ -25,18 +28,31 @@ export const LimitToExceed = ({
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const limitPercentage =
     (idAccountMap?.limitBalanceUSD / idAccountMap?.maxLimitAmount) * 100;
+
   return (
     <CardContainer>
       <Heading size="sm">Limit Reached</Heading>
       <CircularProgress
         size={200}
         thickness="15px"
-        color="orange.500"
-        value={limitPercentage > 0 ? limitPercentage : 0}
+        color={idAccountMap?.isDisabled ? "red" : "orange.500"}
+        value={
+          limitPercentage > 0
+            ? limitPercentage
+            : idAccountMap?.isDisabled
+            ? 100
+            : 0
+        }
       >
-        <CircularProgressLabel>
-          {limitPercentage > 0 ? limitPercentage : 0}%
-        </CircularProgressLabel>
+        {idAccountMap?.isDisabled ? (
+          <CircularProgressLabel color="red" fontSize="md" fontWeight={900}>
+            Limit Reached
+          </CircularProgressLabel>
+        ) : (
+          <CircularProgressLabel>
+            {limitPercentage > 0 ? limitPercentage.toFixed(0) : 0}%
+          </CircularProgressLabel>
+        )}
       </CircularProgress>
       <VStack w="full">
         <Tag colorScheme="green">ROI Limit</Tag>

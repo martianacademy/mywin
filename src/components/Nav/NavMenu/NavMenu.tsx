@@ -3,14 +3,12 @@ import {
   AvatarBadge,
   Button,
   Divider,
-  Heading,
   HStack,
   Icon,
   MenuItem,
   MenuList,
   Spacer,
   Text,
-  useClipboard,
   useColorMode,
   useColorModeValue,
   VStack,
@@ -30,11 +28,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import {
-  TokenSymbol,
-  useSupportedNetworkInfo,
-  website,
-} from "../../../constants";
+import { TokenSymbol } from "../../../constants";
 import { ConnectWalletButton } from "../../ConnectWalletButton/ConnectWalletButton";
 import { UserAddressActionButton } from "../../UI/UserAddressActionButton";
 
@@ -68,11 +62,9 @@ const MenuItemComponent = ({
 
 export const NavMenu = () => {
   const { toggleColorMode } = useColorMode();
-  const { account, chainId } = useEthers();
-  const currentNetwork = useSupportedNetworkInfo[chainId!];
+  const { account } = useEthers();
   const navigate = useNavigate();
-  const referralLink = website;
-  const { onCopy, hasCopied } = useClipboard(`${referralLink}/${account}`);
+
   return (
     <MenuList
       borderRadius="3xl"
@@ -123,7 +115,10 @@ export const NavMenu = () => {
           _hover={{
             bg: "orange.600",
           }}
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+          }}
+          as={MenuItem}
         >
           Join {TokenSymbol}
         </Button>

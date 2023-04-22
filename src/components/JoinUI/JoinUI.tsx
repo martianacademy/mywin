@@ -1,14 +1,16 @@
 import {
-  Box,
   Button,
   Divider,
   Heading,
   HStack,
-  Icon,
   Input,
   Modal,
   ModalContent,
   ModalOverlay,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
   Text,
   useColorModeValue,
   useDisclosure,
@@ -18,21 +20,17 @@ import {
 import { useContractFunction, useEtherBalance, useEthers } from "@usedapp/core";
 import { utils } from "ethers";
 import { formatEther } from "ethers/lib/utils";
-import { HTMLInputTypeAttribute, useEffect, useState } from "react";
-import { MdVerified } from "react-icons/md";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  DefaultReferrer,
   DefaultReferrerID,
   StakingInfo,
-  TokenName,
   useSupportedNetworkInfo,
 } from "../../constants";
 import { Logo } from "../Logo/Logo";
 import { ModalConfirmTransactionStake } from "../Modals";
 import { ModalTransactionInProgress } from "../Modals/ModalTransactionInProgress/ModalTransactionInProgress";
 import { ModalTransactionSuccess } from "../Modals/ModalTransactionSuccess/ModalTransactionSuccess";
-import { ValueSelectButtons } from "../ValueSelectButtons";
 
 const backgrounds = [
   `url("data:image/svg+xml, %3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'560\' height=\'185\' viewBox=\'0 0 560 185\' fill=\'none\'%3E%3Cellipse cx=\'102.633\' cy=\'61.0737\' rx=\'102.633\' ry=\'61.0737\' fill=\'%23ED64A6\' /%3E%3Cellipse cx=\'399.573\' cy=\'123.926\' rx=\'102.633\' ry=\'61.0737\' fill=\'%23F56565\' /%3E%3Cellipse cx=\'366.192\' cy=\'73.2292\' rx=\'193.808\' ry=\'73.2292\' fill=\'%2338B2AC\' /%3E%3Cellipse cx=\'222.705\' cy=\'110.585\' rx=\'193.808\' ry=\'73.2292\' fill=\'%23ED8936\' /%3E%3C/svg%3E")`,
@@ -46,7 +44,6 @@ export const JoinUI = () => {
   const toast = useToast();
   const { referrerAddress } = useParams();
   const { account, chainId, error } = useEthers();
-  console.log(error);
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const [input, setInput] = useState<{
     value: string;
@@ -77,16 +74,6 @@ export const JoinUI = () => {
     setInput((prev) => ({
       ...prev,
       value: e.target.value,
-    }));
-  };
-
-  const handleMaxButton = (perc: number) => {
-    setInput((prev) => ({
-      ...prev,
-      value: (
-        (Number(formatEther(userETHBalanceWei ?? 0)) * perc) /
-        100
-      ).toFixed(5),
     }));
   };
 
@@ -258,18 +245,16 @@ export const JoinUI = () => {
             fontSize="xl"
             fontStyle="oblique"
           ></Input>
-          <ValueSelectButtons
-            onClick25={() => handleMaxButton(25)}
-            onClick50={() => handleMaxButton(50)}
-            onClick75={() => handleMaxButton(75)}
-            onClickMax={() => handleMaxButton(100)}
-            style={{
-              isDisabled: !account,
-              size: "lg",
-              w: "full",
-              borderRadius: "xl",
-            }}
-          />
+          <HStack w="full" spacing={3}>
+            <Button borderRadius="xl">$100</Button>
+            <Slider onChange={(e) => console.log(e)}>
+              <SliderTrack bg="orange.100">
+                <SliderFilledTrack bg="orange.500" />
+              </SliderTrack>
+              <SliderThumb boxSize={6} bg="orange.500" />
+            </Slider>
+            <Button borderRadius="xl">Max</Button>
+          </HStack>
         </VStack>
 
         <Button

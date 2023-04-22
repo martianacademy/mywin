@@ -7,24 +7,23 @@ import { useReferralAccountMap } from "../../../hooks/ReferralHooks";
 export const UserIDDisplay = () => {
   const { account } = useEthers();
   const referralAccount = useReferralAccountMap(account!);
+  console.log(referralAccount);
   const navigate = useNavigate();
   return (
     <VStack w="full" p={5} spacing={10}>
-      {!referralAccount?.accountInfoArray.length ? (
+      {!referralAccount?.accountIDs.length ? (
         <Heading color="red">Your account is not active yet.</Heading>
       ) : (
         <>
           <Heading>Your IDs</Heading>
           <Wrap w="full" justify="center" p={5} spacing={10} overflow="visible">
-            {referralAccount?.accountInfoArray.map(
-              (id: number, key: number) => {
-                return (
-                  <VStack onClick={() => navigate(`dashboard/${id}`)} key={key}>
-                    <UserIDCardDashboard id={id}></UserIDCardDashboard>
-                  </VStack>
-                );
-              }
-            )}
+            {referralAccount?.accountIDs.map((id: number, key: number) => {
+              return (
+                <VStack onClick={() => navigate(`dashboard/${id}`)} key={key}>
+                  <UserIDCardDashboard id={id}></UserIDCardDashboard>
+                </VStack>
+              );
+            })}
           </Wrap>
         </>
       )}

@@ -44,9 +44,9 @@ export const useSupportedNetworkInfo = {
       "0x701D48A7e16B5885Bb3D5f5156b9B9f0186c6C3e",
       PriceOracle?.abi
     ),
-    referralContractAddress: "0xcA5FD81b5ac7555D1e5120b4e3C030B321E0F752",
+    referralContractAddress: "0xB9cC6dfC48B853A5FCf0D655F8C2228D8fc69123",
     referralContractInterface: new Contract(
-      "0xcA5FD81b5ac7555D1e5120b4e3C030B321E0F752",
+      "0xB9cC6dfC48B853A5FCf0D655F8C2228D8fc69123",
       ReferralInterface.abi
     ),
     Native: {
@@ -81,9 +81,9 @@ export const useSupportedNetworkInfo = {
       "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",
       PriceOracle?.abi
     ),
-    referralContractAddress: "0x2612A322DD2F3B3F8eAF77c9b5B7c1318f88f9a7",
+    referralContractAddress: "0x02EA7f23dDE72a26E96AaA141c87a4E1c6AB357B",
     referralContractInterface: new Contract(
-      "0x2612A322DD2F3B3F8eAF77c9b5B7c1318f88f9a7",
+      "0x02EA7f23dDE72a26E96AaA141c87a4E1c6AB357B",
       ReferralInterface.abi
     ),
     Native: {

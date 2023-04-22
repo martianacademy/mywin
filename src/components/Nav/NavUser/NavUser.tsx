@@ -1,5 +1,6 @@
 import {
   Avatar,
+  AvatarBadge,
   Button,
   Divider,
   HStack,
@@ -11,7 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { useEthers } from "@usedapp/core";
 import { BiLogInCircle } from "react-icons/bi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useIDAccount } from "../../../hooks/ReferralHooks";
 import { ConnectWalletButton } from "../../ConnectWalletButton/ConnectWalletButton";
 import { UserAddressActionButton } from "../../UI";
 import { NavMenuItems } from "../NavMenuItems";
@@ -20,6 +22,8 @@ export const NavUser = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { deactivate, account } = useEthers();
+  const { userID } = useParams();
+  const userIDAccount = useIDAccount(userID);
   return (
     <VStack
       w={250}
@@ -31,14 +35,27 @@ export const NavUser = () => {
       py={10}
       spacing={10}
     >
-      <VStack>
-        <Avatar></Avatar>
-        <ConnectWalletButton
-          style={{
-            colorScheme: "green",
-          }}
-        />
-        <UserAddressActionButton address={account}></UserAddressActionButton>
+      <VStack spacing={5}>
+        <VStack>
+          <Avatar>
+            <AvatarBadge
+              boxSize={5}
+              bg={userIDAccount?.isDisabled ? "red" : "green"}
+            ></AvatarBadge>
+          </Avatar>
+          <ConnectWalletButton
+            style={{
+              colorScheme: "green",
+            }}
+          />
+          <UserAddressActionButton address={account}></UserAddressActionButton>
+        </VStack>
+        <VStack color="orange.500">
+          <Text>ID: {userIDAccount?.id}</Text>
+          {Number(userIDAccount?.oldID) > 0 && (
+            <Text>oldID: {userIDAccount?.oldID}</Text>
+          )}
+        </VStack>
       </VStack>
       <Divider />
       <VStack flex={1}>

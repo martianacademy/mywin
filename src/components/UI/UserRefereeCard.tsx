@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { shortenAddress } from "@usedapp/core";
 import { FaUser } from "react-icons/fa";
-import { useIDAccountMap } from "../../hooks/ReferralHooks";
+import { useIDAccount } from "../../hooks/ReferralHooks";
 import { UserAddressActionButton } from "./UserAddressActionButton";
 
 export const UserRefereeCard = ({
@@ -21,11 +21,11 @@ export const UserRefereeCard = ({
   style,
   onClick,
 }: {
-  userID?: number;
+  userID?: string;
   style?: ButtonProps;
   onClick?: () => void;
 }) => {
-  const userIDAccount = useIDAccountMap(userID ? `${userID}` : "0");
+  const userIDAccount = useIDAccount(userID);
   const { onCopy, hasCopied } = useClipboard(userIDAccount?.owner);
   return (
     <VStack
