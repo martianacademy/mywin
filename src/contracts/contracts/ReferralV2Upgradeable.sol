@@ -236,6 +236,12 @@ contract ReferralV2Upgradeable is
         return ids[_id];
     }
 
+    function getROIAccount(
+        uint32 _roiID
+    ) external view returns (StructROI memory) {
+        return rois[_roiID];
+    }
+
     function setMaxLevelsCountAdmin(uint8 _valueInDecimals) external onlyOwner {
         maxLevelsCount = _valueInDecimals;
     }
@@ -925,7 +931,23 @@ contract ReferralV2Upgradeable is
         }
     }
 
-    function getUserIDROI(uint32 _id) external view returns (uint256 roi) {
+    function getUserTotalActiveROIValue(
+        uint32 _id
+    ) external view returns (uint256) {
+        uint32[] memory roiIDs = ids[_id].roiIDs;
+        uint256 totalActiveROIValue;
+
+        for (uint16 i; i < roiIDs.length; i++) {
+            StructROI storage roiAccount = rois[roiIDs[i]];
+            if (roiAccount.isActive) {
+                totalActiveROIValue += roiAccount.valueInUSD;
+            }
+        }
+
+        return totalActiveROIValue;
+    }
+
+    function getUserIDTotalROI(uint32 _id) external view returns (uint256 roi) {
         StructID storage userIDAccount = ids[_id];
         uint256 _roiReward = _getROIALL(_id);
         if (

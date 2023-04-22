@@ -46,7 +46,7 @@ export const Routes = createHashRouter([
                 element: <UserDashboard />,
               },
               {
-                path: "stakings",
+                path: "winning-rewards",
                 element: <Staking />,
               },
               {

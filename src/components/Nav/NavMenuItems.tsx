@@ -2,6 +2,7 @@ import {
   faChartArea,
   faCube,
   faIdBadge,
+  faTrophy,
   faUsers,
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
@@ -21,9 +22,9 @@ export const NavMenuItems = [
     icon: <FontAwesomeIcon icon={faChartArea} shake color={IconColor} />,
   },
   {
-    name: "Stakings",
-    link: "stakings",
-    icon: <FontAwesomeIcon icon={faCube} shake color={IconColor} />,
+    name: "Winning Reward",
+    link: "winning-rewards",
+    icon: <FontAwesomeIcon icon={faTrophy} shake color={IconColor} />,
   },
   {
     name: "Future Secure Wallet",

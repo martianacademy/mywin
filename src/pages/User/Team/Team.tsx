@@ -9,11 +9,10 @@ import { useIDAccount } from "../../../hooks/ReferralHooks";
 export const Team = () => {
   const { userID } = useParams();
   const userIDAccount = useIDAccount(userID);
-  const [id, setId] = useState(userIDAccount.id);
   return (
     <VStack py={10} px={5} spacing={10} w="full">
       <Heading>Your Team Object</Heading>
-      {userIDAccount.refererID > 0 && (
+      {Number(userIDAccount.refererID) > 0 && (
         <VStack spacing={10}>
           <UserReferralCard
             heading="Referrer"

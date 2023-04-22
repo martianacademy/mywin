@@ -67,7 +67,7 @@ export interface userIDAccountType {
   timeStampRoyaltyClub: number;
 }
 
-export const useIDAccount = (id: string | undefined) => {
+export const useIDAccount = (id: string | undefined): userIDAccountType => {
   const value = useCallHook("getIDAccount", [id ?? "0"]);
   const valueObject = {
     id: value ? value?.[0].id.toString() : 0,
@@ -136,6 +136,35 @@ export const useIDAccount = (id: string | undefined) => {
   };
 
   return valueObject;
+};
+
+export const useROIAccount = (roiID: string | undefined) => {
+  const value = useCallHook("getROIAccount", [roiID ?? "0"]);
+  const valueObject = {
+    isActive: value ? value?.[0]?.isActive : false,
+    ownerID: value ? value?.[0]?.ownerID : "0",
+    valueInUSD: value ? Number(formatEther(value?.[0]?.valueInUSD)) : 0,
+    roiRate: value ? Number(value?.[0]?.roiRate) : 0,
+    startTime: value ? Number(value?.[0]?.startTime) : 0,
+    duration: value ? Number(value?.[0]?.duration) : 0,
+    roiClaimed: value ? Number(formatEther(value?.[0]?.roiClaimed)) : 0,
+  };
+
+  return valueObject;
+};
+
+export const useGetUserAllActiveROIValue = (userID: string | undefined) => {
+  const value = useCallHook("getUserTotalActiveROIValue", [userID ?? "0"]);
+  const valueFormatted = value ? Number(formatEther(value?.[0] ?? 0)) : 0;
+
+  return valueFormatted;
+};
+
+export const useGetUserIDTotalROI = (userID: string | undefined) => {
+  const value = useCallHook("getUserIDTotalROI", [userID ?? "0"]);
+  const valueFormatted = value ? Number(formatEther(value?.[0] ?? 0)) : 0;
+
+  return valueFormatted;
 };
 
 export const useGetIDTotalBusiness = (id: number) => {

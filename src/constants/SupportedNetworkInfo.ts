@@ -14,6 +14,7 @@ export const DefaultReferrerID = "0";
 export const AddressZero: string = "0x0000000000000000000000000000000000000000";
 
 export const MyUSDLogo = USDTLogoSVG;
+export const MyUSDSymbol = "MYUSD";
 
 export const StakingInfo = {
   rewardRate: 100,
