@@ -13,7 +13,7 @@ export const UserDashboard = () => {
   const userIDAccount = useIDAccount(userID);
 
   return (
-    <Wrap w="full" p={5} spacing={5} justify="center">
+    <Wrap w="full" p={5} spacing={5} justify="center" overflow="visible">
       {/* <UserROI /> */}
       <LimitToExceed idAccountMap={userIDAccount} />
       <UserBalaces idAccountMap={userIDAccount} />

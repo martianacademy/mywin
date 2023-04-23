@@ -8,7 +8,7 @@ export const Counter = ({
   timeinseconds: number | undefined;
   size?: "sm" | "md" | "lg" | "xl" | string;
 }) => {
-  const buttonBgColor = "twitter.400";
+  const buttonBgColor = "orange.500";
   const counterSize =
     size === "sm"
       ? "50px"

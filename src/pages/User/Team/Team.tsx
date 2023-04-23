@@ -13,32 +13,32 @@ export const Team = () => {
     <VStack py={10} px={5} spacing={10} w="full">
       <Heading>Your Team Object</Heading>
       {Number(userIDAccount.refererID) > 0 && (
-        <VStack spacing={10}>
+        <VStack>
           <UserReferralCard
             heading="Referrer"
             icon={FaUserAstronaut}
             id={userIDAccount?.refererID}
-            scale={0.8}
           ></UserReferralCard>
           <Icon as={FaArrowDown} boxSize={10}></Icon>
         </VStack>
       )}
-      <UserReferralCard
-        heading="Your"
-        icon={FaUserCheck}
-        id={userIDAccount?.id}
-      ></UserReferralCard>
-      <Icon as={FaArrowDown} boxSize={10}></Icon>
+      <VStack>
+        <UserReferralCard
+          heading="Your"
+          icon={FaUserCheck}
+          id={userIDAccount?.id}
+        ></UserReferralCard>
+        <Icon as={FaArrowDown} boxSize={10}></Icon>
+      </VStack>
       <VStack w="full">
         {userIDAccount?.refereeIDs.length > 0 ? (
-          <Wrap align="center" justify="center" w="full">
+          <Wrap justify="center" w="full" spacing={5} overflow="visible">
             {userIDAccount?.refereeIDs.map((id: string, key: number) => {
               return (
                 <UserReferralCard
                   heading="Referee"
                   icon={HiUsers}
                   id={id}
-                  scale={0.8}
                 ></UserReferralCard>
               );
             })}

@@ -1,5 +1,14 @@
-import { Button, Heading, HStack, Tag, Text, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  HStack,
+  StackDivider,
+  Tag,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
+import { CardContainer } from "../../../components";
 import { Counter } from "../../../components/Counter";
 import { MyUSDSymbol } from "../../../constants";
 import {
@@ -27,49 +36,84 @@ export const Staking = () => {
 
   console.log(roiAccount);
   return (
-    <VStack w="full" py={10} spacing={10} px={5}>
+    <VStack py={[3, 5, 7, 10]} spacing={5}>
       <Heading textAlign="center">Winning Rewards Stats</Heading>
-      <Heading textAlign="center" size="md">
-        Total Value Locked For Winning Rewards
-      </Heading>
-      <Tag p={3} borderRadius="3xl">
-        <HStack>
-          <Heading size="lg">{userTotalValueLocked}</Heading>
-          <Heading
-            fontWeight={500}
-            fontStyle="oblique"
-            color="pink.500"
-            size="lg"
-          >
-            {MyUSDSymbol}
+      <CardContainer>
+        <VStack>
+          <Heading textAlign="center" color="pink.500" size="md">
+            Value Locked
           </Heading>
-        </HStack>
-      </Tag>
-      <Counter timeinseconds={roiEndTimeInSeconds}></Counter>
-      <Heading textAlign="center">Live Winning Rewards</Heading>
-      <HStack>
-        <Heading size="md">{liveROI}</Heading>
-        <Heading
-          fontWeight={500}
-          fontStyle="oblique"
-          color="pink.500"
-          size="lg"
+          <HStack>
+            <Heading size="md" fontWeight={300} fontStyle="italic">
+              {userTotalValueLocked}
+            </Heading>
+
+            <Heading
+              fontWeight={500}
+              fontStyle="oblique"
+              color="pink.500"
+              size="md"
+            >
+              {MyUSDSymbol}
+            </Heading>
+          </HStack>
+        </VStack>
+        <VStack>
+          <Heading color="pink.500" size="md">
+            Max Duration
+          </Heading>
+          <Counter timeinseconds={roiEndTimeInSeconds}></Counter>
+        </VStack>
+        <VStack>
+          <Heading color="pink.500" size="md">
+            Reward Claimed
+          </Heading>
+          <HStack>
+            <Heading size="md" fontWeight={300} fontStyle="italic">
+              {IDAccount?.roiClaimedUSD}
+            </Heading>
+
+            <Heading
+              fontWeight={500}
+              fontStyle="oblique"
+              color="pink.500"
+              size="sm"
+            >
+              {MyUSDSymbol}
+            </Heading>
+          </HStack>
+        </VStack>
+        <VStack>
+          <Heading textAlign="center" color="pink.500" size="md">
+            Pending Rewards
+          </Heading>
+          <HStack>
+            <Heading size="md" fontWeight={300} fontStyle="italic">
+              {liveROI}
+            </Heading>
+            <Heading
+              fontWeight={500}
+              fontStyle="oblique"
+              color="pink.500"
+              size="sm"
+            >
+              {MyUSDSymbol}
+            </Heading>
+          </HStack>
+        </VStack>
+        <Button
+          px={10}
+          h={14}
+          borderRadius="xl"
+          colorScheme="pink"
+          bg="pink.500"
+          _hover={{
+            bg: "pink.600",
+          }}
         >
-          {MyUSDSymbol}
-        </Heading>
-      </HStack>
-      <Button
-        px={10}
-        h={14}
-        borderRadius="xl"
-        colorScheme="pink"
-        bg="pink.500"
-        _hover={{
-          bg: "pink.600",
-        }}
-      >
-        Claim Winning Reward
-      </Button>
+          Claim Winning Reward
+        </Button>
+      </CardContainer>
     </VStack>
   );
 };
