@@ -10,16 +10,11 @@ import {
 import { useEthers } from "@usedapp/core";
 import { motion } from "framer-motion";
 import React from "react";
-import { CardContainer } from "../../../../../components";
-import { useSupportedNetworkInfo } from "../../../../../constants";
-import {
-  useIDAccount,
-  userIDAccountType,
-} from "../../../../../hooks/ReferralHooks";
+import { useSupportedNetworkInfo } from "../../constants";
+import { userIDAccountType } from "../../hooks/ReferralHooks";
+import { CardContainer } from "../UI";
 
-const MotionCircularProgress = motion(CircularProgress);
-
-export const LimitToExceed = ({
+export const LimitToExceedComponent = ({
   idAccountMap,
 }: {
   idAccountMap: userIDAccountType;
@@ -62,11 +57,11 @@ export const LimitToExceed = ({
         </Heading>
       </VStack>
       {/* <VStack w="full">
-        <Tag colorScheme="green">Referral Limit</Tag>
-        <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
-          {idAccountMap?.maxLimitAmount} {currentNetwork?.MYUSD?.Symbol}
-        </Heading>
-      </VStack> */}
+          <Tag colorScheme="green">Referral Limit</Tag>
+          <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
+            {idAccountMap?.maxLimitAmount} {currentNetwork?.MYUSD?.Symbol}
+          </Heading>
+        </VStack> */}
       <VStack w="full">
         <Tag colorScheme="red">Limit Reached</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">

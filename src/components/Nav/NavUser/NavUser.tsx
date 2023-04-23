@@ -64,7 +64,11 @@ export const NavUser = () => {
             <Button
               w="full"
               key={key}
-              variant={pathname === itemsOject?.link ? "solid" : "ghost"}
+              variant={
+                pathname === `/user/dashboard/${userID}/${itemsOject?.link}`
+                  ? "solid"
+                  : "ghost"
+              }
               fontSize="sm"
               borderRadius="xl"
               onClick={() => navigate(itemsOject?.link)}

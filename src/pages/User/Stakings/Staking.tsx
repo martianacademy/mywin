@@ -40,7 +40,7 @@ export const Staking = () => {
       <Heading textAlign="center">Winning Rewards Stats</Heading>
       <CardContainer>
         <VStack>
-          <Heading textAlign="center" color="pink.500" size="md">
+          <Heading textAlign="center" color="orange.500" size="md">
             Value Locked
           </Heading>
           <HStack>
@@ -51,7 +51,7 @@ export const Staking = () => {
             <Heading
               fontWeight={500}
               fontStyle="oblique"
-              color="pink.500"
+              color="orange.500"
               size="md"
             >
               {MyUSDSymbol}
@@ -59,13 +59,13 @@ export const Staking = () => {
           </HStack>
         </VStack>
         <VStack>
-          <Heading color="pink.500" size="md">
+          <Heading color="orange.500" size="md">
             Max Duration
           </Heading>
-          <Counter timeinseconds={roiEndTimeInSeconds}></Counter>
+          <Counter timeinseconds={roiEndTimeInSeconds} size="sm"></Counter>
         </VStack>
         <VStack>
-          <Heading color="pink.500" size="md">
+          <Heading color="orange.500" size="md">
             Reward Claimed
           </Heading>
           <HStack>
@@ -76,7 +76,7 @@ export const Staking = () => {
             <Heading
               fontWeight={500}
               fontStyle="oblique"
-              color="pink.500"
+              color="orange.500"
               size="sm"
             >
               {MyUSDSymbol}
@@ -84,7 +84,7 @@ export const Staking = () => {
           </HStack>
         </VStack>
         <VStack>
-          <Heading textAlign="center" color="pink.500" size="md">
+          <Heading textAlign="center" color="orange.500" size="md">
             Pending Rewards
           </Heading>
           <HStack>
@@ -94,7 +94,7 @@ export const Staking = () => {
             <Heading
               fontWeight={500}
               fontStyle="oblique"
-              color="pink.500"
+              color="orange.500"
               size="sm"
             >
               {MyUSDSymbol}
@@ -105,10 +105,10 @@ export const Staking = () => {
           px={10}
           h={14}
           borderRadius="xl"
-          colorScheme="pink"
-          bg="pink.500"
+          colorScheme="orange"
+          bg="orange.500"
           _hover={{
-            bg: "pink.600",
+            bg: "orange.600",
           }}
         >
           Claim Winning Reward

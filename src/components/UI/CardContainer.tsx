@@ -1,7 +1,8 @@
-import { StackProps, useColorModeValue, VStack } from "@chakra-ui/react";
+import { Flex, StackProps, useColorModeValue, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React, { ReactNode } from "react";
 
+const MotionFlex = motion(Flex);
 const MotionVStack = motion(VStack);
 
 const backgrounds = [
@@ -14,56 +15,59 @@ const backgrounds = [
 export const CardContainer = ({
   children,
   props,
+  onClick,
 }: {
   children: ReactNode;
   props?: StackProps;
+  onClick?: () => void;
 }) => {
   let randomNumber = Math.floor(Math.random() * 10 + 1);
 
-  console.log(randomNumber);
-
   return (
-    <VStack
-      zIndex={1}
-      position={"relative"}
-      _before={{
-        content: '""',
-        position: "absolute",
-        zIndex: "-1",
-        height: "full",
-        width: "full",
-        filter: "blur(40px)",
-        backgroundSize: "cover",
-        transform: "scale(0.9)",
-        top: 0,
-        left: 0,
-        backgroundImage: backgrounds[randomNumber % 4],
-      }}
-    >
-      <MotionVStack
-        p={2}
-        spacing={5}
-        borderRadius="50px"
-        bgColor={useColorModeValue("gray.100", "gray.900")}
-        whileHover={{
-          scale: 0.95,
+    <VStack cursor="pointer" onClick={onClick}>
+      <VStack
+        zIndex={1}
+        position={"relative"}
+        _before={{
+          content: '""',
+          position: "absolute",
+          zIndex: "-1",
+          height: "full",
+          width: "full",
+          filter: "blur(40px)",
+          backgroundSize: "cover",
+          transform: "scale(0.9)",
+          top: 0,
+          left: 0,
+          backgroundImage: backgrounds[randomNumber % 4],
         }}
-        whileTap={{
-          scale: 0.95,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 700,
-          staggerChildren: 0.5,
-        }}
-        borderWidth="thin"
-        align="center"
-        {...props}
       >
-        <MotionVStack borderRadius="50px" spacing={5} py={7} px={5}>
-          {children}
-        </MotionVStack>
-      </MotionVStack>
+        <MotionFlex
+          p={2}
+          spacing={5}
+          borderRadius="50px"
+          bgColor={useColorModeValue("white", "gray.900")}
+          borderWidth="1px"
+          borderColor="orange.500"
+          whileHover={{
+            scale: 0.95,
+          }}
+          whileTap={{
+            scale: 0.95,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 700,
+            staggerChildren: 0.5,
+          }}
+          align="center"
+          {...props}
+        >
+          <MotionVStack borderRadius="50px" spacing={5} py={7} px={5}>
+            {children}
+          </MotionVStack>
+        </MotionFlex>
+      </VStack>
     </VStack>
   );
 };

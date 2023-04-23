@@ -25,6 +25,7 @@ import { NavUser } from "../../../components";
 import { NavMenuItems } from "../../../components/Nav/NavMenuItems";
 import { useSupportedNetworkInfo } from "../../../constants";
 import { useReferralAccountMap } from "../../../hooks/ReferralHooks";
+import { NavUserSmall } from "../../../components/Nav/NavUser/NavUserSmall";
 
 export const Dashboard = () => {
   const { chainId } = useEthers();
@@ -39,44 +40,7 @@ export const Dashboard = () => {
   return (
     <VStack w="full">
       <Show below="md">
-        <VStack
-          w="full"
-          position="sticky"
-          top="80px"
-          zIndex={1111}
-          filter="auto"
-          backdropFilter="blur(25px) "
-          p={2}
-        >
-          <HStack w="full" px={5} onClick={onToggle}>
-            <Tag colorScheme="orange">{userNavHeading}</Tag>
-            <Spacer />
-            <Icon as={isOpen ? ChevronUpIcon : ChevronDownIcon}></Icon>
-          </HStack>
-          {isOpen && <Divider />}
-          <Collapse in={isOpen} animateOpacity>
-            <VStack divider={<StackDivider />} w={300}>
-              {NavMenuItems.map((menuObject, key) => {
-                return (
-                  <HStack w="full" px={5} key={key}>
-                    <Text
-                      w="full"
-                      fontSize="sm"
-                      onClick={() => {
-                        onToggle();
-                        navigate(menuObject.link);
-                        setUserNavHeading(menuObject.name);
-                      }}
-                    >
-                      {menuObject?.name}
-                    </Text>
-                    {menuObject.icon}
-                  </HStack>
-                );
-              })}
-            </VStack>
-          </Collapse>
-        </VStack>
+        <NavUserSmall />
       </Show>
       <VStack p={5} w="full">
         <HStack w="full" align="flex-start" spacing={5}>
@@ -95,7 +59,7 @@ export const Dashboard = () => {
             <HStack w="full">
               <Heading size="md">Hey! Welcome</Heading>
               <Spacer />
-              <Tag p={2} colorScheme="pink" borderRadius="xl">
+              {/* <Tag p={2} colorScheme="pink" borderRadius="xl">
                 <HStack>
                   <Icon as={IoIosWallet} boxSize={5}></Icon>
                   <Text color="pink.500">
@@ -103,7 +67,7 @@ export const Dashboard = () => {
                     {currentNetwork?.Native?.Symbol}
                   </Text>
                 </HStack>
-              </Tag>
+              </Tag> */}
             </HStack>
             <Divider />
             <Outlet />

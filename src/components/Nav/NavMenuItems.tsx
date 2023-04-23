@@ -36,4 +36,9 @@ export const NavMenuItems = [
     link: "team",
     icon: <FontAwesomeIcon icon={faUsers} shake color={IconColor} />,
   },
+  {
+    name: "TopUp ID",
+    link: "top-up-id",
+    icon: <FontAwesomeIcon icon={faUsers} shake color={IconColor} />,
+  },
 ];

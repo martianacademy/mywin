@@ -22,7 +22,7 @@ export const Nav = () => {
       boxShadow="sm"
       position="sticky"
       top={0}
-      zIndex={11111}
+      zIndex={11}
     >
       <Logo />
       <Spacer></Spacer>
