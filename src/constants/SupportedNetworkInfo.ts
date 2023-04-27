@@ -1,6 +1,6 @@
 import { BSCTestnet, ERC20Interface } from "@usedapp/core";
 import { Contract } from "ethers";
-import { BNBLogoSVG, BSCScanLogoCircleLight, USDTLogoSVG } from "../assets";
+import { BNBLogoSVG, BSCScanLogoCircleLight, MyUSDSVG, tokenLogoSVG, USDTLogoSVG } from "../assets";
 import { MyVeeChain } from "./ChainInfo";
 
 import PriceOracle from "../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json";
@@ -58,7 +58,7 @@ export const useSupportedNetworkInfo = {
       Name: "MYVEE",
       Symbol: "MYVEE",
       Decimals: 18,
-      Logo: BNBLogoSVG,
+      Logo: tokenLogoSVG,
     },
     MYUSD: {
       ContractAddress: "0xD2F6a7C009A9B112e451DA05BBd16357a3D323ea",
@@ -69,14 +69,14 @@ export const useSupportedNetworkInfo = {
       Name: "MyUSD",
       Symbol: "MYUSD",
       Decimals: 18,
-      Logo: BNBLogoSVG,
+      Logo: MyUSDSVG,
     },
     Network: MyVeeChain,
     NetworkRPCUrl: "https://rpc.blockchain.myveex.com",
     NetworkColor: "yellow.500",
     NetworkExplorerLink: MyVeeChain.blockExplorerUrl,
     NetworkExplorerName: "MyVeeScan",
-    NetworkExplorerLogo: BSCScanLogoCircleLight,
+    NetworkExplorerLogo: tokenLogoSVG,
   },
   [BSCTestnet.chainId]: {
     priceOracleContractAddress: "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",

@@ -22,9 +22,7 @@ export const Logo = () => {
         stiffness: 700,
       }}
     >
-      <Center boxSize={10} borderWidth="medium" borderRadius="full">
-        <FontAwesomeIcon icon={faCrown} color="#DD6B20" />
-      </Center>
+        <FontAwesomeIcon icon={faCrown} color="#DD6B20" size="xl" />
       <Center h={7}>
         <Divider orientation="vertical" />
       </Center>
