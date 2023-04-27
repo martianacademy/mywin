@@ -25,7 +25,7 @@ export const NavUserSmall = () => {
       w="full"
       position="sticky"
       top="80px"
-      zIndex={1111}
+      zIndex={10}
       filter="auto"
       backdropFilter="blur(25px) "
       p={2}
