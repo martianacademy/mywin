@@ -11,7 +11,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 /// @custom:security-contact security@mywin.io
-contract MyUSD is
+contract MyUSDUpgradeable is
     Initializable,
     ERC20Upgradeable,
     ERC20BurnableUpgradeable,

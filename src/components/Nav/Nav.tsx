@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 import { CiMenuKebab } from "react-icons/ci";
+import { useParams } from "react-router-dom";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
 import { ConnectWalletButton } from "../ConnectWalletButton/ConnectWalletButton";
 import { Logo } from "../Logo/Logo";

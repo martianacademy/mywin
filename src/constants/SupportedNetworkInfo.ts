@@ -42,14 +42,14 @@ export interface tokenType {
 
 export const useSupportedNetworkInfo = {
   [MyVeeChain.chainId]: {
-    priceOracleContractAddress: "0x701D48A7e16B5885Bb3D5f5156b9B9f0186c6C3e",
+    priceOracleContractAddress: "0x286d6392042B4D7180Fd6d20F8D35c8776815774",
     priceOracleContractInterface: new Contract(
-      "0x701D48A7e16B5885Bb3D5f5156b9B9f0186c6C3e",
+      "0x286d6392042B4D7180Fd6d20F8D35c8776815774",
       PriceOracle?.abi
     ),
-    referralContractAddress: "0x56dc403dd41DeE5a93CD9E8e5BCDC45a86FfA569",
+    referralContractAddress: "0xE82D70137Fc7f16dbbB9eF2D6902748e47ccAef2",
     referralContractInterface: new Contract(
-      "0x56dc403dd41DeE5a93CD9E8e5BCDC45a86FfA569",
+      "0xE82D70137Fc7f16dbbB9eF2D6902748e47ccAef2",
       ReferralInterface.abi
     ),
     Native: {
@@ -61,9 +61,9 @@ export const useSupportedNetworkInfo = {
       Logo: BNBLogoSVG,
     },
     MYUSD: {
-      ContractAddress: "0xF42F09f9BCD61D46B743C1A204c6eE5eaF8023e8",
+      ContractAddress: "0xD2F6a7C009A9B112e451DA05BBd16357a3D323ea",
       ContractInterface: new Contract(
-        "0xF42F09f9BCD61D46B743C1A204c6eE5eaF8023e8",
+        "0xD2F6a7C009A9B112e451DA05BBd16357a3D323ea",
         ERC20Interface
       ),
       Name: "MyUSD",
@@ -72,7 +72,7 @@ export const useSupportedNetworkInfo = {
       Logo: BNBLogoSVG,
     },
     Network: MyVeeChain,
-    NetworkRPCUrl: "https://rpc.myveescan.com",
+    NetworkRPCUrl: "https://rpc.blockchain.myveex.com",
     NetworkColor: "yellow.500",
     NetworkExplorerLink: MyVeeChain.blockExplorerUrl,
     NetworkExplorerName: "MyVeeScan",

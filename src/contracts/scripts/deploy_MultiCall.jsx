@@ -12,8 +12,8 @@ async function main() {
 
   console.log("Account balance:", formatedBalance.toString(), "ETH");
 
-  const Token = await ethers.getContractFactory("MyUSDUpgradeable");
-  const mc = await upgrades.deployProxy(Token, { gasPrice: gas });
+  const contract = await ethers.getContractFactory("MultiCall");
+  const mc = await contract.deploy();
 
   await mc.deployed();
   console.log("Contract deployed to:", mc.address);

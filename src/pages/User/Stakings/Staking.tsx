@@ -1,12 +1,4 @@
-import {
-  Button,
-  Heading,
-  HStack,
-  StackDivider,
-  Tag,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Heading, HStack, VStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { CardContainer } from "../../../components";
 import { Counter } from "../../../components/Counter";
@@ -20,7 +12,8 @@ import {
 
 export const Staking = () => {
   const { userID } = useParams();
-  const userTotalValueLocked = useGetUserAllActiveROIValue(userID);
+  const userTotalValueLocked = useGetUserAllActiveROIValue("15");
+  console.log(userTotalValueLocked);
   const IDAccount = useIDAccount(userID);
 
   const roiIDs =
@@ -31,10 +24,7 @@ export const Staking = () => {
     ];
   const roiAccount = useROIAccount(roiIDs);
   const roiEndTimeInSeconds = roiAccount?.startTime + roiAccount?.duration;
-
   const liveROI = useGetUserIDTotalROI(userID);
-
-  console.log(roiAccount);
   return (
     <VStack py={[3, 5, 7, 10]} spacing={5}>
       <Heading textAlign="center">Winning Rewards Stats</Heading>

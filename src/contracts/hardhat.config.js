@@ -29,9 +29,9 @@ module.exports = {
     customChains: [
       {
         network: "myvee",
-        chainId: 7878,
+        chainId: 50000,
         urls: {
-          apiURL: "https://myveescan.com/api",
+          apiURL: "https://myveex.com/api",
           browserURL: "https://myveescan.com.io",
         },
       },
@@ -45,8 +45,8 @@ module.exports = {
     },
 
     myvee: {
-      url: "https://rpc.myveescan.com/",
-      chainId: 7878,
+      url: "https://rpc.blockchain.myveex.com/",
+      chainId: 50000,
       accounts: [PRIVATE_KEY],
     },
 

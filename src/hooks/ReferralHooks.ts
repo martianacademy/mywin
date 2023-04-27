@@ -147,7 +147,6 @@ export const useROIAccount = (roiID: string | undefined) => {
     roiRate: value ? Number(value?.[0]?.roiRate) : 0,
     startTime: value ? Number(value?.[0]?.startTime) : 0,
     duration: value ? Number(value?.[0]?.duration) : 0,
-    roiClaimed: value ? Number(formatEther(value?.[0]?.roiClaimed)) : 0,
   };
 
   return valueObject;
