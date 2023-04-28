@@ -2,14 +2,18 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Grid,
   Heading,
+  HStack,
   Icon,
+  Tag,
+  Text,
   useBreakpointValue,
   VStack,
   Wrap,
 } from '@chakra-ui/react';
 import { useEthers } from '@usedapp/core';
 import { useEffect, useState } from 'react';
-import { FaUser } from 'react-icons/fa';
+import { FaUser, FaUsers } from 'react-icons/fa';
+import { HiUserGroup, HiUsers } from 'react-icons/hi';
 import { CardContainer } from '../../../../../components';
 import { UserRefereeCard } from '../../../../../components/UI/UserRefereeCard';
 import { userIDAccountType } from '../../../../../hooks/ReferralHooks';
@@ -30,6 +34,22 @@ export const UserTeam = ({
   return (
     <CardContainer>
       <Heading size="sm">Team</Heading>
+      <HStack justify="center" align="center">
+      <Tag p={3} borderRadius="3xl">
+        <VStack>
+          <Heading size="md" color="pink.500">{idAccountMap.refereeIDs.length}</Heading>
+          <Text >Referee</Text>
+          <Icon as={HiUsers} boxSize={10}></Icon>
+        </VStack>
+      </Tag>
+      <Tag p={3} borderRadius="3xl">
+        <VStack>
+          <Heading size="md" color="pink.500">{idAccountMap.teamIDs.length}</Heading>
+          <Text >Team</Text>
+          <Icon as={FaUsers} boxSize={10}></Icon>
+        </VStack>
+      </Tag>
+      </HStack>
       <Icon as={FaUser} boxSize={7}></Icon>
       <VStack p={2} justify="Center" align="center" w="full">
         <Grid
