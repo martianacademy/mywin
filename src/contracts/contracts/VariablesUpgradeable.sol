@@ -33,13 +33,7 @@ contract VariablesUpgradeable is
     uint256 private _adminFees;
 
     function initialize() public initializer {
-        _presaleContract = 0x5e8F3980E638fC5df657E33194cE428936d635a0;
-        _referralContract = 0x58469D0d27aAE15cf611966b89E072E49d359097;
-        _stakingContract = 0xB361d6D49694161c413E60E140309F20AF19CefD;
-        _tokenContract = 0xda0948903D239FB9EA25B73B573800630f863520;
-        _usdtContract;
-        _uniswapV2Router = 0xDE2Db97D54a3c3B008a097B2260633E6cA7DB1AF;
-        _adminFees = 2000000000000000000;
+        _referralContract = 0xE82D70137Fc7f16dbbB9eF2D6902748e47ccAef2;
         __Ownable_init();
         __UUPSUpgradeable_init();
     }

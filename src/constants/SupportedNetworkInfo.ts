@@ -5,6 +5,8 @@ import { MyVeeChain } from "./ChainInfo";
 
 import PriceOracle from "../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json";
 import ReferralInterface from "../contracts/artifacts/contracts/ReferralV2Upgradeable.sol/ReferralV2Upgradeable.json";
+import VariablesInterface from "../contracts/artifacts/contracts/VariablesUpgradeable.sol/VariablesUpgradeable.json"
+import StakingInterface from "../contracts/artifacts/contracts/StakingUpgradeable.sol/StakingUpgradeable.json"
 
 export const TokenName = "MyWin";
 export const TokenSymbol = "MYWIN";
@@ -42,6 +44,8 @@ export interface tokenType {
 
 export const useSupportedNetworkInfo = {
   [MyVeeChain.chainId]: {
+    variablesContractAddress: "0xaB6F06762e382eBe0Bb47715F028B2b032Ad3291",
+    variablesContractInterface: new Contract("0xaB6F06762e382eBe0Bb47715F028B2b032Ad3291", VariablesInterface.abi),
     priceOracleContractAddress: "0x286d6392042B4D7180Fd6d20F8D35c8776815774",
     priceOracleContractInterface: new Contract(
       "0x286d6392042B4D7180Fd6d20F8D35c8776815774",
@@ -52,6 +56,8 @@ export const useSupportedNetworkInfo = {
       "0xE82D70137Fc7f16dbbB9eF2D6902748e47ccAef2",
       ReferralInterface.abi
     ),
+    stakingContractAddress: "0x404bbE8eD6Cc5D771f428cBd4471549B6783545C",
+    stakingContractInterface: new Contract("0x404bbE8eD6Cc5D771f428cBd4471549B6783545C", StakingInterface.abi),
     Native: {
       ContractAddress: "",
       ContractInterface: "",
@@ -79,6 +85,8 @@ export const useSupportedNetworkInfo = {
     NetworkExplorerLogo: tokenLogoSVG,
   },
   [BSCTestnet.chainId]: {
+    variablesContractAddress: "0xaB6F06762e382eBe0Bb47715F028B2b032Ad3291",
+    variablesContractInterface: new Contract("0xaB6F06762e382eBe0Bb47715F028B2b032Ad3291", VariablesInterface.abi),
     priceOracleContractAddress: "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",
     priceOracleContractInterface: new Contract(
       "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",

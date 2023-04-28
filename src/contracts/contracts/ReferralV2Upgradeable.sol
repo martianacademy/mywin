@@ -10,6 +10,13 @@ interface IPriceOracle {
     function getPriceInUSD() external view returns (uint256);
 }
 
+interface IFutureWallet {
+    function stakeByAdmin(
+        address _userAddress,
+        uint256 _value
+    ) external;
+}
+
 contract ReferralV2Upgradeable is
     Initializable,
     OwnableUpgradeable,
@@ -580,46 +587,81 @@ contract ReferralV2Upgradeable is
         uint256 _currenTime,
         uint8 _levelsLength
     ) private {
-        // StructID storage userIDAccount = ids[_id];
-        // userIDAccount.id = _id;
-        // userIDAccount.refererID = _referrerID;
-        // userIDAccount.owner = _owner;
-        // userIDAccount.joiningTime = _currenTime;
-        // userIDAccount.activationTime = _currenTime;
-        // userIDAccount.maxLimitAmount = _maxLimitUSD;
-        // userIDAccount.selfBusinessUSD += _valueInUSD;
-        // userIDAccount.oldID = _oldID;
-        // for (uint8 i; i < _levelsLength; i++) {
-        //     uint32 refererID = userIDAccount.refererID;
-        //     StructID storage refererIDAccount = ids[refererID];
-        //     if (refererIDAccount.id == 0) {
-        //         break;
-        //     }
-        //     if (i == 0) {
-        //         refererIDAccount.directBusinessUSD += _valueInUSD;
-        //         refererIDAccount.refereeIDs.push(_id);
-        //         refererIDAccount.oldID = _refererOldID;
-        //     }
-        //     refererIDAccount.teamBusinessUSD += _valueInUSD;
-        //     refererIDAccount.teamIDs.push(_id);
-        //     emit RegisteredTeamAddress(
-        //         refererIDAccount.owner,
-        //         userIDAccount.refererID,
-        //         _referrerID,
-        //         _id
-        //     );
-        //     if (isPayRoyaltyClubBonus) {
-        //         _updateIDInRoyaltyClub(
-        //             refererIDAccount,
-        //             refererID,
-        //             _valueInUSD,
-        //             _currenTime
-        //         );
-        //     }
-        //     _updateCompanyTurnOver(_valueInUSD, _currenTime);
-        //     userIDAccount = refererIDAccount;
-        // }
-        // totalIDs++;
+        StructID storage userIDAccount = ids[_id];
+        userIDAccount.id = _id;
+        userIDAccount.refererID = _referrerID;
+        userIDAccount.owner = _owner;
+        userIDAccount.joiningTime = _currenTime;
+        userIDAccount.activationTime = _currenTime;
+        userIDAccount.maxLimitAmount = _maxLimitUSD;
+        userIDAccount.selfBusinessUSD += _valueInUSD;
+        userIDAccount.oldID = _oldID;
+        for (uint8 i; i < _levelsLength; i++) {
+            uint32 refererID = userIDAccount.refererID;
+            StructID storage refererIDAccount = ids[refererID];
+            if (refererIDAccount.id == 0) {
+                break;
+            }
+            if (i == 0) {
+                refererIDAccount.directBusinessUSD += _valueInUSD;
+                refererIDAccount.refereeIDs.push(_id);
+                refererIDAccount.oldID = _refererOldID;
+            }
+            refererIDAccount.teamBusinessUSD += _valueInUSD;
+            refererIDAccount.teamIDs.push(_id);
+            emit RegisteredTeamAddress(
+                refererIDAccount.owner,
+                userIDAccount.refererID,
+                _referrerID,
+                _id
+            );
+            if (isPayRoyaltyClubBonus) {
+                _updateIDInRoyaltyClub(
+                    refererIDAccount,
+                    refererID,
+                    _valueInUSD,
+                    _currenTime
+                );
+            }
+            _updateCompanyTurnOver(_valueInUSD, _currenTime);
+            userIDAccount = refererIDAccount;
+        }
+        totalIDs++;
+    }
+
+    function activateID(uint32 _refererID) external payable {
+        uint256 _valueInWei = msg.value;
+        uint256 _valueInUSD = _ethToUSD(_valueInWei);
+
+        require(
+            _valueInWei >= _usdToETH(minContributionInUSD),
+            "Value should be greate then 100"
+        );
+
+        address _msgSender = msg.sender;
+        uint256 _currenTime = block.timestamp;
+        uint32 _id = totalIDs + 1;
+        uint32 _roiID = totalROIIDs + 1;
+
+        StructAccount storage userAccount = accounts[_msgSender];
+
+        if (isPayROI) {
+            _activateROI(_id, _roiID, _valueInUSD, _currenTime);
+        }
+
+        _activateID(
+            _id,
+            "",
+            _refererID,
+            "",
+            _msgSender,
+            _valueInUSD,
+            _valueInUSD * 3,
+            _currenTime,
+            maxLevelsCount
+        );
+
+        userAccount.accountIDs.push(_id);
     }
 
     function _topUpID(
@@ -663,40 +705,7 @@ contract ReferralV2Upgradeable is
         }
     }
 
-    function activateID(uint32 _refererID) external payable {
-        uint256 _valueInWei = msg.value;
-        uint256 _valueInUSD = _ethToUSD(_valueInWei);
-
-        require(
-            _valueInWei >= _usdToETH(minContributionInUSD),
-            "Value should be greate then 100"
-        );
-
-        address _msgSender = msg.sender;
-        uint256 _currenTime = block.timestamp;
-        uint32 _id = totalIDs + 1;
-        uint32 _roiID = totalROIIDs + 1;
-
-        StructAccount storage userAccount = accounts[_msgSender];
-
-        if (isPayROI) {
-            _activateROI(_id, _roiID, _valueInUSD, _currenTime);
-        }
-
-        _activateID(
-            _id,
-            "",
-            _refererID,
-            "",
-            _msgSender,
-            _valueInUSD,
-            _valueInUSD * 3,
-            _currenTime,
-            maxLevelsCount
-        );
-
-        userAccount.accountIDs.push(_id);
-    }
+    
 
     function topUpID(uint32 _id) external payable {
         uint256 _valueInWei = msg.value;
