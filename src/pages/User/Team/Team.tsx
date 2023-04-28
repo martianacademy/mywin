@@ -59,7 +59,7 @@ export const Team = () => {
       </VStack>
       <VStack w="full">
         {userIDAccount?.refereeIDs.length > 0 ? (
-          <Wrap justify="center" w="full" spacing={5} overflow="visible">
+          <Wrap justify="center"  w="full" spacing={5} overflow="visible">
             {userIDAccount?.refereeIDs.map((id: string, key: number) => {
               return (
                 <UserReferralCard

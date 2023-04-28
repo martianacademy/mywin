@@ -17,26 +17,25 @@ export const UserTeam = ({
   idAccountMap: userIDAccountType;
 }) => {
   return (
-    <CardContainer>
+    <CardContainer >
       <Heading size="sm">Team</Heading>
       <Icon as={FaUser} boxSize={7}></Icon>
-      <Wrap p={2} justify="Center" align="center">
+      <Wrap p={2} justify="Center" align="center" w="full">
         <Grid
           templateColumns={`repeat(${useBreakpointValue([
             1, 2, 3, 4, 5,
           ])}, 1fr)`}
           gap={6}
         >
-          {idAccountMap?.teamIDs.length ? (
+          {idAccountMap?.teamIDs.length > 0 && (
             idAccountMap?.teamIDs.map((userID: string, key: number) => {
               return (
                 <UserRefereeCard userID={userID} key={key}></UserRefereeCard>
               );
             })
-          ) : (
-            <Heading>You have no team</Heading>
           )}
         </Grid>
+        {!idAccountMap?.teamIDs.length && <Heading w="full" textAlign="center">You have no team</Heading>}
       </Wrap>
     </CardContainer>
   );

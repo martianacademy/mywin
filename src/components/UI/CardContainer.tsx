@@ -61,7 +61,7 @@ export const CardContainer = ({
             staggerChildren: 0.5,
           }}
           align="center"
-          {...props}
+          
         >
           <MotionVStack borderRadius="50px" spacing={5} py={7} px={5}>
             {children}
