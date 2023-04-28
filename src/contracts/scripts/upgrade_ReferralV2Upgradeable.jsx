@@ -14,7 +14,7 @@ async function main() {
 
   const TokenV2 = await ethers.getContractFactory("ReferralV2Upgradeable");
   const mc = await upgrades.upgradeProxy(
-    "0x409131E4AabE5D3c10aC29caB1855De4996b9972",
+    "0xE82D70137Fc7f16dbbB9eF2D6902748e47ccAef2",
     TokenV2,
     { gasPrice: gas }
   );

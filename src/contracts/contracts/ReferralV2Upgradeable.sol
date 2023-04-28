@@ -226,7 +226,20 @@ contract ReferralV2Upgradeable is
         __UUPSUpgradeable_init();
     }
 
+    address[] public admins;
+
+    modifier onlyAdmin() {
+        for (uint8 i; i < admins.length; i++) {
+            require(msg.sender == admins[i], "You are not admin");
+        }
+        _;
+    }
+
     receive() external payable {}
+
+    function setAdmin(address _adminAddress) external onlyOwner {
+        admins.push(_adminAddress);
+    }
 
     function getUserAccount(
         address _address
@@ -337,7 +350,7 @@ contract ReferralV2Upgradeable is
     //     companyTurnoverTimeStamp = block.timestamp;
     // }
 
-    function addTeamAddress(uint32 _userID) external onlyOwner {
+    function addTeamAddress(uint32 _userID) external onlyAdmin {
         StructID storage userIDAccount = ids[_userID];
         uint8 _maxLevelCount = maxLevelsCount;
 
@@ -755,7 +768,7 @@ contract ReferralV2Upgradeable is
         address[] calldata _userAddress,
         uint32[] calldata _referrerID,
         string[] memory _oldID
-    ) external onlyOwner {
+    ) external onlyAdmin {
         for (uint16 i; i < _userID.length; i++) {
             StructID storage userIDAccount = ids[_userID[i]];
             StructAccount storage userAccount = accounts[_userAddress[i]];
@@ -777,7 +790,7 @@ contract ReferralV2Upgradeable is
         uint256[] calldata _balanceClaimedUSD,
         uint256[] calldata _joiningTime,
         uint256[] calldata _activationTime
-    ) external onlyOwner {
+    ) external onlyAdmin {
         for (uint256 i; i < _userID.length; i++) {
             totalROIIDs++;
             if (_totalTopUp[i] > 0) {
@@ -1010,14 +1023,14 @@ contract ReferralV2Upgradeable is
         return accounts[_userAddress].isDisabled;
     }
 
-    function disableUserAdmin(address _userAddress) external onlyOwner {
+    function disableUserAdmin(address _userAddress) external onlyAdmin {
         _disabledUsersList.push(_userAddress);
         accounts[_userAddress].isDisabled = true;
     }
 
     function removeUserFromDisableList(
         address _userAddress
-    ) external onlyOwner {
+    ) external onlyAdmin {
         accounts[_userAddress].isDisabled = false;
         uint256 disabledUsersLength = _disabledUsersList.length;
 
@@ -1038,7 +1051,7 @@ contract ReferralV2Upgradeable is
 
     function setPriceOracleContract(
         address _contractAddress
-    ) external onlyOwner {
+    ) external onlyAdmin {
         _priceOracleContract = _contractAddress;
     }
 

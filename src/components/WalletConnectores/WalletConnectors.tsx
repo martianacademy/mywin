@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import {
   CoinbaseWalletLogoSVG,
   MetamaskWalletLogoSVG,
+  TrustWalletLogoSVG,
   WalletConnectLogoSVG,
 } from "../../assets";
 import { DeepLinks } from "../../constants";
@@ -93,23 +94,25 @@ export const WalletConnectors = () => {
   };
   return (
     <Wrap py={10} spacing={5} justify="center">
-      <Hide below="sm">
+      
         <WalletContainer
           logo={MetamaskWalletLogoSVG}
           name="Metamask"
           onClick={handleConnectMetamask}
         ></WalletContainer>
-        {/* <WalletContainer
+        <Hide above="sm">
+        <WalletContainer
           logo={TrustWalletLogoSVG}
           name="Trustwallet"
           onClick={handleConnectTrustWallet}
-        ></WalletContainer> */}
+        ></WalletContainer>
+        </Hide>
         <WalletContainer
           logo={CoinbaseWalletLogoSVG}
           name="Coinbase"
           onClick={handleConnectCoinbaseWallet}
         ></WalletContainer>
-      </Hide>
+      
       <WalletContainer
         logo={WalletConnectLogoSVG}
         name="WalletConnect"
