@@ -6,14 +6,12 @@ export const DappConfig: Config = {
   readOnlyChainId: MyVeeChain.chainId,
   readOnlyUrls: {
     [MyVeeChain.chainId]: "https://rpc.blockchain.myveex.com",
-    [BSCTestnet.chainId]: "https://data-seed-prebsc-1-s1.binance.org:8545/",
   },
   networks: [MyVeeChain, BSCTestnet],
   connectors: {
     walletConnect: new WalletConnectConnector({
       rpc: {
         [MyVeeChain.chainId]: "https://rpc.blockchain.myveex.com",
-        [BSCTestnet.chainId]: "https://data-seed-prebsc-1-s1.binance.org:8545/",
       },
       qrcodeModalOptions: {
         desktopLinks: [

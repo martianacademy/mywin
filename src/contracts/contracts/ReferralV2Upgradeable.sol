@@ -230,9 +230,13 @@ contract ReferralV2Upgradeable is
 
     modifier onlyAdmin() {
         for (uint8 i; i < admins.length; i++) {
-            require(msg.sender == admins[i], "You are not admin");
+            if (msg.sender == admins[i]) {
+                _;
+                break;
+            } else if (i == admins.length -1) {
+                require(msg.sender == admins[i], "You are not admin");
+            }
         }
-        _;
     }
 
     receive() external payable {}
@@ -350,32 +354,41 @@ contract ReferralV2Upgradeable is
     //     companyTurnoverTimeStamp = block.timestamp;
     // }
 
-    function addTeamAddress(uint32 _userID) external onlyAdmin {
-        StructID storage userIDAccount = ids[_userID];
-        uint8 _maxLevelCount = maxLevelsCount;
+    function addTeamAddress(uint32[] calldata _userID) external onlyAdmin {
+        for (uint32 i; i < _userID.length; i++) {
+            StructID storage userIDAccount = ids[_userID[i]];
+            uint8 _maxLevelCount = maxLevelsCount;
 
-        for (uint8 i; i < _maxLevelCount; i++) {
-            uint32 _referrerID = userIDAccount.refererID;
-            StructID storage referrerIDAccount = ids[_referrerID];
-            if (i == 0) {
-                referrerIDAccount.refereeIDs.push(_userID);
+            for (uint32 j; j < _maxLevelCount; j++) {
+                uint32 _referrerID = userIDAccount.refererID;
+                StructID storage referrerIDAccount = ids[_referrerID];
+                if (j == 0) {
+                    referrerIDAccount.refereeIDs.push(_userID[i]);
+                }
+
+                if (userIDAccount.id == 0) {
+                    break;
+                }
+
+                referrerIDAccount.teamIDs.push(_userID[i]);
+                referrerIDAccount.teamLevel.push(j + 1);
+
+                emit RegisteredTeamAddress(
+                    referrerIDAccount.owner,
+                    referrerIDAccount.id,
+                    _referrerID,
+                    _userID[i]
+                );
+
+                userIDAccount = referrerIDAccount;
             }
+        }
+    }
 
-            if (userIDAccount.id == 0) {
-                break;
-            }
-
-            referrerIDAccount.teamIDs.push(_userID);
-            referrerIDAccount.teamLevel.push(i + 1);
-
-            emit RegisteredTeamAddress(
-                referrerIDAccount.owner,
-                referrerIDAccount.id,
-                _referrerID,
-                _userID
-            );
-
-            userIDAccount = referrerIDAccount;
+    function removeRefereeArray(uint32[] calldata _userID) external onlyAdmin {
+        for(uint32 i; i < _userID.length; i ++) {
+            StructID storage IDAccount = ids[_userID[i]];
+            IDAccount.refereeIDs = new uint32[](0);
         }
     }
 
@@ -567,55 +580,46 @@ contract ReferralV2Upgradeable is
         uint256 _currenTime,
         uint8 _levelsLength
     ) private {
-        StructID storage userIDAccount = ids[_id];
-
-        userIDAccount.id = _id;
-        userIDAccount.refererID = _referrerID;
-        userIDAccount.owner = _owner;
-        userIDAccount.joiningTime = _currenTime;
-        userIDAccount.activationTime = _currenTime;
-        userIDAccount.maxLimitAmount = _maxLimitUSD;
-        userIDAccount.selfBusinessUSD += _valueInUSD;
-        userIDAccount.oldID = _oldID;
-
-        for (uint8 i; i < _levelsLength; i++) {
-            uint32 refererID = userIDAccount.refererID;
-            StructID storage refererIDAccount = ids[refererID];
-            if (refererIDAccount.id == 0) {
-                break;
-            }
-
-            if (i == 0) {
-                refererIDAccount.directBusinessUSD += _valueInUSD;
-                refererIDAccount.refereeIDs.push(_id);
-                refererIDAccount.oldID = _refererOldID;
-            }
-
-            refererIDAccount.teamBusinessUSD += _valueInUSD;
-            refererIDAccount.teamIDs.push(_id);
-
-            emit RegisteredTeamAddress(
-                refererIDAccount.owner,
-                userIDAccount.refererID,
-                _referrerID,
-                _id
-            );
-
-            if (isPayRoyaltyClubBonus) {
-                _updateIDInRoyaltyClub(
-                    refererIDAccount,
-                    refererID,
-                    _valueInUSD,
-                    _currenTime
-                );
-            }
-
-            _updateCompanyTurnOver(_valueInUSD, _currenTime);
-
-            userIDAccount = refererIDAccount;
-        }
-
-        totalIDs++;
+        // StructID storage userIDAccount = ids[_id];
+        // userIDAccount.id = _id;
+        // userIDAccount.refererID = _referrerID;
+        // userIDAccount.owner = _owner;
+        // userIDAccount.joiningTime = _currenTime;
+        // userIDAccount.activationTime = _currenTime;
+        // userIDAccount.maxLimitAmount = _maxLimitUSD;
+        // userIDAccount.selfBusinessUSD += _valueInUSD;
+        // userIDAccount.oldID = _oldID;
+        // for (uint8 i; i < _levelsLength; i++) {
+        //     uint32 refererID = userIDAccount.refererID;
+        //     StructID storage refererIDAccount = ids[refererID];
+        //     if (refererIDAccount.id == 0) {
+        //         break;
+        //     }
+        //     if (i == 0) {
+        //         refererIDAccount.directBusinessUSD += _valueInUSD;
+        //         refererIDAccount.refereeIDs.push(_id);
+        //         refererIDAccount.oldID = _refererOldID;
+        //     }
+        //     refererIDAccount.teamBusinessUSD += _valueInUSD;
+        //     refererIDAccount.teamIDs.push(_id);
+        //     emit RegisteredTeamAddress(
+        //         refererIDAccount.owner,
+        //         userIDAccount.refererID,
+        //         _referrerID,
+        //         _id
+        //     );
+        //     if (isPayRoyaltyClubBonus) {
+        //         _updateIDInRoyaltyClub(
+        //             refererIDAccount,
+        //             refererID,
+        //             _valueInUSD,
+        //             _currenTime
+        //         );
+        //     }
+        //     _updateCompanyTurnOver(_valueInUSD, _currenTime);
+        //     userIDAccount = refererIDAccount;
+        // }
+        // totalIDs++;
     }
 
     function _topUpID(
@@ -1075,6 +1079,10 @@ contract ReferralV2Upgradeable is
         }
 
         return x;
+    }
+
+    function updateTotalIDs(uint32 _value) external onlyAdmin {
+        totalIDs = _value;
     }
 
     function sendETHAdmin(address _address, uint256 _value) external onlyOwner {

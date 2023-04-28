@@ -1,31 +1,19 @@
 import {
-  Collapse,
   Divider,
   Heading,
   Hide,
-  HStack,
-  Icon,
-  Show,
-  Spacer,
-  StackDivider,
-  Tag,
-  Text,
-  useColorModeValue,
+  HStack, Show,
+  Spacer, useColorModeValue,
   useDisclosure,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { useEtherBalance, useEthers } from "@usedapp/core";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import { formatEther } from "ethers/lib/utils";
-import { useEffect, useState } from "react";
-import { IoIosWallet } from "react-icons/io";
+import { useState } from "react";
 import { NavUser } from "../../../components";
-import { NavMenuItems } from "../../../components/Nav/NavMenuItems";
-import { useSupportedNetworkInfo } from "../../../constants";
-import { useReferralAccountMap } from "../../../hooks/ReferralHooks";
 import { NavUserSmall } from "../../../components/Nav/NavUser/NavUserSmall";
+import { useSupportedNetworkInfo } from "../../../constants";
 
 export const Dashboard = () => {
   const { chainId } = useEthers();
