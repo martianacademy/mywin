@@ -53,8 +53,8 @@ export const BalancesCard = ({
             </Heading>
           </VStack>
           <Spacer />
-          {logo && <Image src={logo} boxSize={7} color="orange.500"></Image>}
-          {icon && <Icon as={icon} boxSize={7} color="orange.500"></Icon>}
+          {logo && <Image src={logo} boxSize={10} color="orange.500"></Image>}
+          {icon && <Icon as={icon} boxSize={10} color="orange.500"></Icon>}
         </HStack>
       </Card>
     </Skeleton>

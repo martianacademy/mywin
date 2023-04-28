@@ -39,7 +39,7 @@ const backgrounds = [
   `url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='185' viewBox='0 0 560 185' fill='none'%3E%3Cellipse cx='457.367' cy='123.926' rx='102.633' ry='61.0737' transform='rotate(-180 457.367 123.926)' fill='%23ECC94B'/%3E%3Cellipse cx='160.427' cy='61.0737' rx='102.633' ry='61.0737' transform='rotate(-180 160.427 61.0737)' fill='%239F7AEA'/%3E%3Cellipse cx='193.808' cy='111.771' rx='193.808' ry='73.2292' transform='rotate(-180 193.808 111.771)' fill='%234299E1'/%3E%3Cellipse cx='337.295' cy='74.415' rx='193.808' ry='73.2292' transform='rotate(-180 337.295 74.415)' fill='%2348BB78'/%3E%3C/svg%3E")`,
 ];
 
-export const JoinUI = () => {
+export const TopUpIDUI = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const { referrerAddress } = useParams();
@@ -179,8 +179,7 @@ export const JoinUI = () => {
       }}
     >
       <VStack
-        w="90%"
-        maxW={350}
+        w={300}
         bgColor={useColorModeValue("white", "gray.900")}
         borderRadius="50px"
         p={5}
@@ -188,46 +187,11 @@ export const JoinUI = () => {
         borderWidth="thin"
       >
         <HStack>
-          <Heading size="md">Join</Heading>
+          <Heading size="md">Top Up ID</Heading>
           <Logo />
         </HStack>
 
         <Divider />
-        
-        <VStack w="full">
-          <Input
-            h={20}
-            placeholder="Please enter valid referrer ID."
-            borderRadius="3xl"
-            value={input?.referrer}
-            onChange={handleReferrerInput}
-            fontSize="xl"
-            isReadOnly={referrerAddress ? true : false}
-          ></Input>
-          <HStack w="full">
-            <Button
-              size="lg"
-              borderRadius="xl"
-              colorScheme="red"
-              onClick={() => setInput((prev) => ({ ...prev, referrer: "" }))}
-              isDisabled={referrerAddress ? true : false}
-            >
-              Clear
-            </Button>
-            <Button
-              w="full"
-              size="lg"
-              borderRadius="xl"
-              colorScheme="green"
-              onClick={() =>
-                setInput((prev) => ({ ...prev, referrer: DefaultReferrerID }))
-              }
-              isDisabled={referrerAddress ? true : false}
-            >
-              Default Referrer
-            </Button>
-          </HStack>
-        </VStack>
         <VStack w="full">
           <HStack w="full" justify="space-between">
             <Text>You have</Text>
@@ -267,7 +231,7 @@ export const JoinUI = () => {
         >
           {account ? " Stake" : "Please connect wallet"}
         </Button>
-        <Text color="red" fontSize="xs" py={5}>* For new user joining only. If you want to top up please do from dashboard only.</Text>
+        <Text color="red" fontSize="xs" py={5}>* For top-up existing accounts only.</Text>
 
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />

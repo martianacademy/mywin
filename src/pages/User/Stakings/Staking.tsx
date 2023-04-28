@@ -1,8 +1,8 @@
-import { Button, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Button, Heading, HStack, Image, VStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { CardContainer } from "../../../components";
 import { Counter } from "../../../components/Counter";
-import { MyUSDSymbol } from "../../../constants";
+import { MyUSDLogo, MyUSDSymbol } from "../../../constants";
 import {
   useGetUserAllActiveROIValue,
   useGetUserIDTotalROI,
@@ -12,7 +12,7 @@ import {
 
 export const Staking = () => {
   const { userID } = useParams();
-  const userTotalValueLocked = useGetUserAllActiveROIValue("15");
+  const userTotalValueLocked = useGetUserAllActiveROIValue(userID);
   console.log(userTotalValueLocked);
   const IDAccount = useIDAccount(userID);
 
@@ -46,6 +46,7 @@ export const Staking = () => {
             >
               {MyUSDSymbol}
             </Heading>
+            <Image src={MyUSDLogo} boxSize={10}></Image>
           </HStack>
         </VStack>
         <VStack>

@@ -1,15 +1,16 @@
 import { createHashRouter } from "react-router-dom";
 import { App } from "../App";
-import { JoinPage, Stake, User } from "../pages";
+import { JoinPage, User } from "../pages";
 import {
   Dashboard,
   FutureSecureWallet,
   Staking,
   Team,
   Transactions,
-  UserIDDisplay,
+  UserIDDisplay
 } from "../pages/User";
 import { UserDashboard } from "../pages/User/Dashboard/UserDashboard/UserDashboard";
+import { TopUpID } from "../pages/User/TopUpID/TopUpID";
 import { ProtectedNavigation } from "./ProtectedNavigation";
 
 export const Routes = createHashRouter([
@@ -57,6 +58,10 @@ export const Routes = createHashRouter([
               {
                 path: "team",
                 element: <Team />,
+              },
+              {
+                path: "top-up-id",
+                element: <TopUpID />,
               },
               {
                 path: "transactions",

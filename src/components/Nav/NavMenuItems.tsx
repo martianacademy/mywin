@@ -26,11 +26,11 @@ export const NavMenuItems = [
     link: "winning-rewards",
     icon: <FontAwesomeIcon icon={faTrophy} shake color={IconColor} />,
   },
-  {
-    name: "Future Secure Wallet",
-    link: "future-secure-wallet",
-    icon: <FontAwesomeIcon icon={faWallet} shake color={IconColor} />,
-  },
+  // {
+  //   name: "Future Secure Wallet",
+  //   link: "future-secure-wallet",
+  //   icon: <FontAwesomeIcon icon={faWallet} shake color={IconColor} />,
+  // },
   {
     name: "Team",
     link: "team",

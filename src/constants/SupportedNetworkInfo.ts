@@ -13,7 +13,7 @@ export const DefaultReferrer = "0x49066990635F9AEA7706dD73183177a463352445";
 export const DefaultReferrerID = "0";
 export const AddressZero: string = "0x0000000000000000000000000000000000000000";
 
-export const MyUSDLogo = USDTLogoSVG;
+export const MyUSDLogo = MyUSDSVG;
 export const MyUSDSymbol = "MYUSD";
 
 export const StakingInfo = {
