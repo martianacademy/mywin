@@ -7,30 +7,35 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
+  NumberInput,
+  NumberInputField,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Tag,
   Text,
   useColorModeValue,
   useDisclosure,
   useToast,
   VStack,
-} from "@chakra-ui/react";
-import { useContractFunction, useEtherBalance, useEthers } from "@usedapp/core";
-import { utils } from "ethers";
-import { formatEther } from "ethers/lib/utils";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+} from '@chakra-ui/react';
+import { useContractFunction, useEtherBalance, useEthers } from '@usedapp/core';
+import { utils } from 'ethers';
+import { formatEther } from 'ethers/lib/utils';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   DefaultReferrerID,
   StakingInfo,
   useSupportedNetworkInfo,
-} from "../../constants";
-import { Logo } from "../Logo/Logo";
-import { ModalConfirmTransactionStake } from "../Modals";
-import { ModalTransactionInProgress } from "../Modals/ModalTransactionInProgress/ModalTransactionInProgress";
-import { ModalTransactionSuccess } from "../Modals/ModalTransactionSuccess/ModalTransactionSuccess";
+} from '../../constants';
+import { useCoinPrice } from '../../hooks/PriceOracleHooks';
+import { useMinContributionETH } from '../../hooks/ReferralHooks';
+import { Logo } from '../Logo/Logo';
+import { ModalConfirmTransactionStake } from '../Modals';
+import { ModalTransactionInProgress } from '../Modals/ModalTransactionInProgress/ModalTransactionInProgress';
+import { ModalTransactionSuccess } from '../Modals/ModalTransactionSuccess/ModalTransactionSuccess';
 
 const backgrounds = [
   `url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='185' viewBox='0 0 560 185' fill='none'%3E%3Cellipse cx='102.633' cy='61.0737' rx='102.633' ry='61.0737' fill='%23ED64A6' /%3E%3Cellipse cx='399.573' cy='123.926' rx='102.633' ry='61.0737' fill='%23F56565' /%3E%3Cellipse cx='366.192' cy='73.2292' rx='193.808' ry='73.2292' fill='%2338B2AC' /%3E%3Cellipse cx='222.705' cy='110.585' rx='193.808' ry='73.2292' fill='%23ED8936' /%3E%3C/svg%3E")`,
@@ -43,23 +48,33 @@ export const JoinUI = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const { referrerAddress } = useParams();
-  const { account, chainId, error } = useEthers();
+  const { account, chainId } = useEthers();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
+  const minContributionETH = useMinContributionETH();
+  const coinPrice = useCoinPrice();
   const [input, setInput] = useState<{
     value: string;
     referrer: string;
   }>({
-    value: "",
-    referrer: referrerAddress ?? "",
+    value: '',
+    referrer: referrerAddress ?? '',
   });
 
   const [transactionStatus, setTransactionStatus] = useState<
-    "No" | "Loading" | "Mining" | "Success"
-  >("No");
+    'No' | 'Loading' | 'Mining' | 'Success'
+  >('No');
 
-  const [transactionHash, setTransactionHash] = useState("");
+  const [transactionHash, setTransactionHash] = useState('');
 
   const userETHBalanceWei = useEtherBalance(account);
+
+  const errors = {
+    minValueError: Number(formatEther(userETHBalanceWei ?? 0)) < minContributionETH,
+    valueIncreasingBalance: Number(input?.value ?? 0) > Number(formatEther(userETHBalanceWei ?? 0)),
+    valueLessThenBalance: Number(input?.value ?? 0) < Number(formatEther(userETHBalanceWei ?? 0)),
+    valueLessThanMinContribution: Number(input?.value ?? 0) < minContributionETH
+   
+  }
 
   const {
     send: sendJoin,
@@ -67,7 +82,7 @@ export const JoinUI = () => {
     resetState: resetStateJoin,
   } = useContractFunction(
     currentNetwork?.referralContractInterface,
-    "activateID"
+    'activateID'
   );
 
   const handleInput = (e: any) => {
@@ -84,9 +99,9 @@ export const JoinUI = () => {
   const handleStake = () => {
     if (input?.referrer.length === 0) {
       toast({
-        title: "No referrer address selected.",
-        description: "Please enter the referrer address or select default one.",
-        status: "error",
+        title: 'No referrer address selected.',
+        description: 'Please enter the referrer address or select default one.',
+        status: 'error',
         duration: 9000,
         isClosable: true,
       });
@@ -94,25 +109,25 @@ export const JoinUI = () => {
       Number(formatEther(userETHBalanceWei ?? 0)) < StakingInfo?.minValue
     ) {
       toast({
-        title: "Your balance is low.",
-        description: "Your balance is less than min staking balance.",
-        status: "error",
+        title: 'Your balance is low.',
+        description: 'Your balance is less than min staking balance.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
     } else if (input?.value > formatEther(userETHBalanceWei ?? 0)) {
       toast({
-        title: "Your balance is low.",
-        description: "Please enter the value less or equal to your balance.",
-        status: "error",
+        title: 'Your balance is low.',
+        description: 'Please enter the value less or equal to your balance.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
     } else if (Number(input?.value) < StakingInfo?.minValue) {
       toast({
-        title: "Value less then min staking value.",
-        description: "Please enter the value above min staking value.",
-        status: "error",
+        title: 'Value less then min staking value.',
+        description: 'Please enter the value above min staking value.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
@@ -123,38 +138,38 @@ export const JoinUI = () => {
 
   const proceedSwap = () => {
     try {
-      setTransactionStatus("Loading");
+      setTransactionStatus('Loading');
       sendJoin(input?.referrer, {
         value: utils.parseEther(input.value),
       });
     } catch (err) {
-      setTransactionStatus("No");
+      setTransactionStatus('No');
       console.log(err);
     }
   };
 
   useEffect(() => {
-    if (stateJoin?.status === "Exception") {
+    if (stateJoin?.status === 'Exception') {
       toast({
-        title: "Error",
+        title: 'Error',
         description: `${stateJoin?.errorMessage}`,
-        status: "error",
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
-      setTransactionStatus("No");
+      setTransactionStatus('No');
     }
 
-    if (stateJoin?.status === "Mining") {
-      setTransactionStatus("Mining");
+    if (stateJoin?.status === 'Mining') {
+      setTransactionStatus('Mining');
     }
-    if (stateJoin?.status === "Success") {
-      setTransactionStatus("Success");
-      setTransactionHash(stateJoin?.receipt?.transactionHash ?? "");
+    if (stateJoin?.status === 'Success') {
+      setTransactionStatus('Success');
+      setTransactionHash(stateJoin?.receipt?.transactionHash ?? '');
       setTimeout(() => {
         onClose();
-        setTransactionStatus("No");
-        setTransactionHash("");
+        setTransactionStatus('No');
+        setTransactionHash('');
         resetStateJoin();
       }, 15000);
     }
@@ -163,16 +178,16 @@ export const JoinUI = () => {
   return (
     <VStack
       zIndex={1}
-      position={"relative"}
+      position={'relative'}
       _before={{
         content: '""',
-        position: "absolute",
-        zIndex: "-1",
-        height: "full",
-        maxW: "640px",
-        width: "full",
-        filter: "blur(40px)",
-        backgroundSize: "cover",
+        position: 'absolute',
+        zIndex: '-1',
+        height: 'full',
+        maxW: '640px',
+        width: 'full',
+        filter: 'blur(40px)',
+        backgroundSize: 'cover',
         top: 0,
         left: 0,
         backgroundImage: backgrounds[6 % 4],
@@ -181,7 +196,7 @@ export const JoinUI = () => {
       <VStack
         w="90%"
         maxW={350}
-        bgColor={useColorModeValue("white", "gray.900")}
+        bgColor={useColorModeValue('white', 'gray.900')}
         borderRadius="50px"
         p={5}
         spacing={5}
@@ -191,9 +206,7 @@ export const JoinUI = () => {
           <Heading size="md">Join</Heading>
           <Logo />
         </HStack>
-
         <Divider />
-        
         <VStack w="full">
           <Input
             h={20}
@@ -209,7 +222,7 @@ export const JoinUI = () => {
               size="lg"
               borderRadius="xl"
               colorScheme="red"
-              onClick={() => setInput((prev) => ({ ...prev, referrer: "" }))}
+              onClick={() => setInput((prev) => ({ ...prev, referrer: '' }))}
               isDisabled={referrerAddress ? true : false}
             >
               Clear
@@ -232,22 +245,74 @@ export const JoinUI = () => {
           <HStack w="full" justify="space-between">
             <Text>You have</Text>
             <Text>
-              {Number(formatEther(userETHBalanceWei ?? 0)).toFixed(3)}{" "}
+              {Number(formatEther(userETHBalanceWei ?? 0)).toFixed(3)}{' '}
               {currentNetwork?.Native?.Symbol}
             </Text>
           </HStack>
-          <Input
+          <NumberInput
+            w="full"
+            defaultValue={minContributionETH}
+            min={minContributionETH}
+            max={Number(formatEther(userETHBalanceWei ?? 0))}
+            isDisabled={errors?.minValueError}
+            isInvalid={
+              errors?.minValueError || Number(input?.value) < minContributionETH || errors?.valueIncreasingBalance
+            }
+          >
+            <NumberInputField
+              h={20}
+              borderRadius="3xl"
+              onChange={handleInput}
+            />
+          </NumberInput>
+          {/* <Input
             h={20}
-            placeholder="Please enter the value to stake."
+            placeholder={
+              minValueError
+                ? `* You don't have sufficient ${currentNetwork?.Native?.Symbol}`
+                : 'Please enter the value to stake.'
+            }
             borderRadius="3xl"
             value={input?.value}
             onChange={handleInput}
-            fontSize="xl"
+            fontSize="sm"
             fontStyle="oblique"
-          ></Input>
+            isDisabled={minValueError}
+            isInvalid={
+              minValueError || Number(input?.value) < minContributionETH
+            }
+          ></Input> */}
+          {errors?.minValueError && (
+            <Text color="red">
+              * You don't have sufficient {currentNetwork?.Native?.Symbol}
+            </Text>
+          )}
+          {
+            errors?.valueLessThanMinContribution && <Text color="red">
+            * Value less than min contribution {minContributionETH} {currentNetwork?.Native?.Symbol}.
+          </Text>
+          }
+
+          {
+            errors?.valueIncreasingBalance && <Text color="red">
+            * Value increasing your balance.
+          </Text>
+          }
+          <HStack>
+            <Text color="green" fontSize="sm">
+              Value In {currentNetwork?.MYUSD?.Symbol}:
+            </Text>
+            <Tag colorScheme="green" borderRadius="xl">
+              {Number(input?.value) > 0
+                ? Number(Number(input?.value) * Number(coinPrice)).toFixed(2)
+                : 0}{' '}
+              {currentNetwork?.MYUSD?.Symbol}
+            </Tag>
+          </HStack>
+
           <HStack w="full" spacing={3}>
             <Button borderRadius="xl">Min</Button>
-            <Slider onChange={(e) => console.log(e)}>
+            <Slider onChange={(e) => console.log(e)} isDisabled={errors?.minValueError}>
               <SliderTrack bg="orange.100">
                 <SliderFilledTrack bg="orange.500" />
               </SliderTrack>
@@ -256,7 +321,6 @@ export const JoinUI = () => {
             <Button borderRadius="xl">Max</Button>
           </HStack>
         </VStack>
-
         <Button
           w="full"
           h={20}
@@ -265,33 +329,35 @@ export const JoinUI = () => {
           onClick={handleStake}
           borderRadius="3xl"
         >
-          {account ? " Stake" : "Please connect wallet"}
+          {account ? 'Join' : 'Please connect wallet'}
         </Button>
-        <Text color="red" fontSize="xs" py={5}>* For new user joining only. If you want to top up please do from dashboard only.</Text>
-
+        <Text color="red" fontSize="xs" py={5}>
+          * For new user joining only. If you want to top up please do from
+          dashboard only.
+        </Text>
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
           <ModalContent borderRadius="3xl" w="95%">
-            {transactionStatus === "Success" && (
+            {transactionStatus === 'Success' && (
               <ModalTransactionSuccess
                 transactionHash={transactionHash}
                 onClose={() => {
                   onClose();
-                  setTransactionStatus("No");
+                  setTransactionStatus('No');
                   resetStateJoin();
                 }}
               />
             )}
-            {transactionStatus === "Mining" && <ModalTransactionInProgress />}
-            {(transactionStatus === "No" ||
-              transactionStatus === "Loading") && (
+            {transactionStatus === 'Mining' && <ModalTransactionInProgress />}
+            {(transactionStatus === 'No' ||
+              transactionStatus === 'Loading') && (
               <ModalConfirmTransactionStake
                 currencySymbol={currentNetwork?.Native?.Symbol}
                 onClose={() => {
                   onClose();
                   resetStateJoin();
                 }}
-                isLoading={transactionStatus === "Loading"}
+                isLoading={transactionStatus === 'Loading'}
                 value={Number(input?.value).toFixed(3)}
                 onConfirm={proceedSwap}
               />

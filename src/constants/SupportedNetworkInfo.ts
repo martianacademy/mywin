@@ -1,6 +1,6 @@
 import { BSCTestnet, ERC20Interface } from "@usedapp/core";
 import { Contract } from "ethers";
-import { BNBLogoSVG, BSCScanLogoCircleLight, MyUSDSVG, tokenLogoSVG, USDTLogoSVG } from "../assets";
+import { BNBLogoSVG, BSCScanLogoCircleLight, MyUSDSVG, tokenLogoSVG } from "../assets";
 import { MyVeeChain } from "./ChainInfo";
 
 import PriceOracle from "../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json";

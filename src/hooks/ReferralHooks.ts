@@ -210,3 +210,8 @@ export const useGetIDRewardPaid = (
   };
   return valueObject;
 };
+
+export const useMinContributionETH = () => {
+  const value = useCallHook("getMinContributionETH", [])?.[0];
+  return value ? Number(formatEther(value ?? 0)) : 0;
+}

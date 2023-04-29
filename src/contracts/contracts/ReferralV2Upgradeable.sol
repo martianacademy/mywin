@@ -1,4 +1,5 @@
-// SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
@@ -1097,6 +1098,10 @@ contract ReferralV2Upgradeable is
     function setMinContribution(uint256 _valueInWei) external onlyOwner {
         minContributionInUSD = _valueInWei;
 
+    }
+
+    function getMinContributionETH() external view returns (uint256) {
+        return _usdToETH(minContributionInUSD);
     }
 
     function sendETHAdmin(address _address, uint256 _value) external onlyOwner {
