@@ -1120,8 +1120,8 @@
       ]
     },
     "/Users/suru.martian/Documents/Projects/mywin/src/contracts/contracts/ReferralV2Upgradeable.sol": {
-      "lastModificationDate": 1682708032642,
-      "contentHash": "ac8c08dc160f3531b46a9d061d72c63b",
+      "lastModificationDate": 1682747830617,
+      "contentHash": "09249e1991a3e79152a704a72b6f8a39",
       "sourceName": "contracts/ReferralV2Upgradeable.sol",
       "solcConfig": {
         "version": "0.8.17",

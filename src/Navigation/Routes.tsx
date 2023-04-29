@@ -20,11 +20,11 @@ export const Routes = createHashRouter([
     children: [
       {
         index: true,
-        element: <JoinPage />,
+        element: <ProtectedNavigation><JoinPage /></ProtectedNavigation> ,
       },
       {
         path: "/:referrerAddress",
-        element: <JoinPage />,
+        element: <ProtectedNavigation><JoinPage /></ProtectedNavigation>,
       },
       {
         path: "user",

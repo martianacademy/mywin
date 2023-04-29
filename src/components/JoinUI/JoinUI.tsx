@@ -246,7 +246,7 @@ export const JoinUI = () => {
             fontStyle="oblique"
           ></Input>
           <HStack w="full" spacing={3}>
-            <Button borderRadius="xl">$100</Button>
+            <Button borderRadius="xl">Min</Button>
             <Slider onChange={(e) => console.log(e)}>
               <SliderTrack bg="orange.100">
                 <SliderFilledTrack bg="orange.500" />

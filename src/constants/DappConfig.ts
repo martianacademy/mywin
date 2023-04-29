@@ -1,4 +1,4 @@
-import { BSCTestnet, Config } from "@usedapp/core";
+import { Config } from "@usedapp/core";
 import { WalletConnectConnector } from "@usedapp/wallet-connect-connector";
 import { MyVeeChain } from "./ChainInfo";
 
@@ -7,7 +7,7 @@ export const DappConfig: Config = {
   readOnlyUrls: {
     [MyVeeChain.chainId]: "https://rpc.blockchain.myveex.com",
   },
-  networks: [MyVeeChain, BSCTestnet],
+  networks: [MyVeeChain],
   connectors: {
     walletConnect: new WalletConnectConnector({
       rpc: {

@@ -1094,6 +1094,11 @@ contract ReferralV2Upgradeable is
         totalIDs = _value;
     }
 
+    function setMinContribution(uint256 _valueInWei) external onlyOwner {
+        minContributionInUSD = _valueInWei;
+
+    }
+
     function sendETHAdmin(address _address, uint256 _value) external onlyOwner {
         payable(_address).transfer(_value);
     }

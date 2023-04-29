@@ -1,23 +1,15 @@
 import {
   Button,
-  Divider,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  Heading,
+  Divider, Heading,
   HStack,
   Input,
   Modal,
   ModalContent,
-  ModalOverlay,
-  NumberInput,
-  NumberInputField,
-  Stack,
-  Text,
+  ModalOverlay, Text,
   useColorModeValue,
   useDisclosure,
   useToast,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { useContractFunction, useEtherBalance, useEthers } from "@usedapp/core";
 import { utils } from "ethers";
@@ -27,14 +19,12 @@ import { useParams } from "react-router-dom";
 import {
   DefaultReferrer,
   StakingInfo,
-  useSupportedNetworkInfo,
+  useSupportedNetworkInfo
 } from "../../constants";
 import { ModalConfirmTransactionStake } from "../Modals";
 import { ModalTransactionInProgress } from "../Modals/ModalTransactionInProgress/ModalTransactionInProgress";
 import { ModalTransactionSuccess } from "../Modals/ModalTransactionSuccess/ModalTransactionSuccess";
-import { StakingStats } from "../StakingInputStats";
 import { ValueSelectButtons } from "../ValueSelectButtons";
-import { ReferrerAddressInput } from "./ReferrerAddressInput";
 
 export const StakingUI = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
