@@ -63,10 +63,11 @@ export const WalletConnectors = () => {
     }
   };
   const handleConnectTrustWallet = async () => {
+    const MetamaskProvider = new MetamaskConnector();
     if (window.ethereum) {
       try {
-        activateBrowserWallet();
-      } catch (err) {
+        await activate(MetamaskProvider);
+      } catch (err: any) {
         console.log(err);
       }
     } else {
