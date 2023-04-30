@@ -4,7 +4,7 @@ import { BNBLogoSVG, BSCScanLogoCircleLight, MyUSDSVG, tokenLogoSVG } from "../a
 import { MyVeeChain } from "./ChainInfo";
 
 import PriceOracle from "../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json";
-import ReferralInterface from "../contracts/artifacts/contracts/ReferralV2Upgradeable.sol/ReferralV2Upgradeable.json";
+import ReferralInterface from "../contracts/artifacts/contracts/ReferralV3Upgradeable.sol/ReferralV3Upgradeable.json";
 import VariablesInterface from "../contracts/artifacts/contracts/VariablesUpgradeable.sol/VariablesUpgradeable.json"
 import StakingInterface from "../contracts/artifacts/contracts/StakingUpgradeable.sol/StakingUpgradeable.json"
 
@@ -51,9 +51,9 @@ export const useSupportedNetworkInfo = {
       "0x286d6392042B4D7180Fd6d20F8D35c8776815774",
       PriceOracle?.abi
     ),
-    referralContractAddress: "0xE82D70137Fc7f16dbbB9eF2D6902748e47ccAef2",
+    referralContractAddress: "0xf72BBf777076BBfE2f779EEC69Eee9578399e353",
     referralContractInterface: new Contract(
-      "0xE82D70137Fc7f16dbbB9eF2D6902748e47ccAef2",
+      "0xf72BBf777076BBfE2f779EEC69Eee9578399e353",
       ReferralInterface.abi
     ),
     stakingContractAddress: "0x404bbE8eD6Cc5D771f428cBd4471549B6783545C",

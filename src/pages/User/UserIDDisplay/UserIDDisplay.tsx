@@ -7,7 +7,6 @@ import { useReferralAccountMap } from "../../../hooks/ReferralHooks";
 export const UserIDDisplay = () => {
   const { account } = useEthers();
   const referralAccount = useReferralAccountMap(account!);
-  console.log(referralAccount);
   const navigate = useNavigate();
   return (
     <VStack w="full" p={5} spacing={10}>
@@ -20,7 +19,7 @@ export const UserIDDisplay = () => {
             {referralAccount?.accountIDs.map((id: number, key: number) => {
               return (
                 <VStack onClick={() => navigate(`dashboard/${id}`)} key={key}>
-                  <UserIDCardDashboard id={id}></UserIDCardDashboard>
+                  <UserIDCardDashboard id={`${id}`}></UserIDCardDashboard>
                 </VStack>
               );
             })}

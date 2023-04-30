@@ -1,9 +1,11 @@
 import { Box, useColorModeValue, VStack } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { Footer, Nav } from "./components";
+import { useIDAccount } from "./hooks/ReferralHooks";
 import { ScrollToTop } from "./Navigation";
 
 export const App = () => {
+
   return (
     <VStack
       w="full"

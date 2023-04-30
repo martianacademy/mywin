@@ -18,7 +18,7 @@ import { IconType } from "react-icons";
 import { FaShoppingCart, FaUsers } from "react-icons/fa";
 import { GiStairsGoal } from "react-icons/gi";
 import { HiUser, HiUsers } from "react-icons/hi";
-import { AddressZero, MyUSDLogo } from "../constants";
+import { AddressZero, MyUSDLogo} from "../constants";
 import { useIDAccount } from "../hooks/ReferralHooks";
 import { CardContainer, UserAddressActionButton } from "./UI";
 
@@ -62,7 +62,7 @@ export const UserReferralCard = ({
             <Avatar icon={<Icon as={icon} boxSize={7}></Icon>} bg="orange.500">
               <AvatarBadge
                 boxSize={5}
-                bgColor={userIDAccount?.isDisabled ? "red" : "green.400"}
+                bgColor={userIDAccount?.isActive ? "green" : "red"}
               ></AvatarBadge>
             </Avatar>
 
@@ -92,8 +92,8 @@ export const UserReferralCard = ({
               ></UserAddressActionButton>
             )}
 
-            <Tag colorScheme={userIDAccount?.isDisabled ? "red" : "green"}>
-              Status: {userIDAccount?.isDisabled ? "Inactive" : "Active"}
+            <Tag colorScheme={userIDAccount?.isActive ? "green" : "red"}>
+              Status: {userIDAccount?.isActive ? "green" : "red"}
             </Tag>
             <HStack>
               <Tag p={2} borderRadius="xl">
@@ -124,8 +124,8 @@ export const UserReferralCard = ({
                 <Icon as={HiUser}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
                 <Text>
-                  {userIDAccount?.selfBusinessUSDOld +
-                    userIDAccount?.selfBusinessUSD}
+                  {userIDAccount?.selfBusinessOld +
+                    userIDAccount?.selfBusiness}
                 </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>
@@ -141,8 +141,8 @@ export const UserReferralCard = ({
                 <Icon as={HiUsers}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
                 <Text>
-                  {userIDAccount?.directBusinessUSDOld +
-                    userIDAccount?.directBusinessUSD}
+                  {userIDAccount?.directBusinessOld +
+                    userIDAccount?.directBusiness}
                 </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>
@@ -158,8 +158,8 @@ export const UserReferralCard = ({
                 <Icon as={FaUsers}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
                 <Text>
-                  {userIDAccount?.teamBusinessUSDOld +
-                    userIDAccount?.teamBusinessUSD}
+                  {userIDAccount?.teamBusinessOld +
+                    userIDAccount?.teamBusiness}
                 </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>

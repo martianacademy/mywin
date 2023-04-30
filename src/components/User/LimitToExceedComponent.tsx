@@ -22,24 +22,23 @@ export const LimitToExceedComponent = ({
   const { chainId } = useEthers();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const limitPercentage =
-    (idAccountMap?.limitBalanceUSD / idAccountMap?.maxLimitAmount) * 100;
-
+    (idAccountMap?.totalIncome / idAccountMap?.totalMaxLimitAmount) * 100;
   return (
     <CardContainer>
       <Heading size="sm">Limit Reached</Heading>
       <CircularProgress
         size={200}
         thickness="15px"
-        color={idAccountMap?.isDisabled ? "red" : "orange.500"}
+        color={idAccountMap?.isActive ? "orange.500" : "red"}
         value={
           limitPercentage > 0
             ? limitPercentage
-            : idAccountMap?.isDisabled
+            : !idAccountMap?.isActive
             ? 100
             : 0
         }
       >
-        {idAccountMap?.isDisabled ? (
+        {!idAccountMap?.isActive ? (
           <CircularProgressLabel color="red" fontSize="md" fontWeight={900}>
             Limit Reached
           </CircularProgressLabel>
@@ -53,7 +52,7 @@ export const LimitToExceedComponent = ({
       <VStack w="full">
         <Tag colorScheme="green">Max Limit</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
-          {idAccountMap?.maxLimitAmount} {currentNetwork?.MYUSD?.Symbol}
+          {idAccountMap?.totalMaxLimitAmount} {currentNetwork?.MYUSD?.Symbol}
         </Heading>
       </VStack>
       {/* <VStack w="full">
@@ -65,7 +64,7 @@ export const LimitToExceedComponent = ({
       <VStack w="full">
         <Tag colorScheme="red">Limit Reached</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
-          {idAccountMap?.limitBalanceUSD} {currentNetwork?.MYUSD?.Symbol}
+          {idAccountMap?.totalIncome} {currentNetwork?.MYUSD?.Symbol}
         </Heading>
       </VStack>
     </CardContainer>

@@ -10,6 +10,7 @@ import { UserTeam } from "./UserTeam/UserTeam";
 export const UserDashboard = () => {
   const { userID } = useParams();
   const userIDAccount = useIDAccount(userID);
+  console.log(userIDAccount)
 
   return (
     <Wrap w="full" p={5} spacing={5} justify="center" overflow="visible">

@@ -40,7 +40,7 @@ export const NavUser = () => {
           <Avatar>
             <AvatarBadge
               boxSize={5}
-              bg={userIDAccount?.isDisabled ? "red" : "green"}
+              bg={userIDAccount?.isActive ? "green" : "red"}
             ></AvatarBadge>
           </Avatar>
           <ConnectWalletButton

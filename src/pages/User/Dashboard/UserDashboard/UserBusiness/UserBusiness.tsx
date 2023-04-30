@@ -20,7 +20,7 @@ export const UserBusiness = ({
       <BalancesCard
         heading="Self Business"
         currencyValue={Number(
-          idAccountMap?.selfBusinessUSD + idAccountMap?.selfBusinessUSDOld
+          idAccountMap?.selfBusiness + idAccountMap?.selfBusinessOld
         ).toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={FaUserAlt}
@@ -29,7 +29,7 @@ export const UserBusiness = ({
       <BalancesCard
         heading="Direct Business"
         currencyValue={Number(
-          idAccountMap?.directBusinessUSD + idAccountMap?.directBusinessUSDOld
+          idAccountMap?.directBusiness + idAccountMap?.directBusinessOld
         ).toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={FaUserFriends}
@@ -38,7 +38,7 @@ export const UserBusiness = ({
       <BalancesCard
         heading="Team Business"
         currencyValue={Number(
-          idAccountMap?.teamBusinessUSD + idAccountMap?.teamBusinessUSDOld
+          idAccountMap?.teamBusiness + idAccountMap?.teamBusinessOld
         ).toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={FaUsers}

@@ -20,19 +20,19 @@ export const UserRewards = ({
       <Heading size="sm">Rewards</Heading>
       <BalancesCard
         heading="Referral Rewards"
-        currencyValue={idAccountMap.referralPaidUSD.toFixed(2)}
+        currencyValue={idAccountMap.referralPaid.toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={FaUsers}
       ></BalancesCard>
       <BalancesCard
         heading="Royalty Club Rewards"
-        currencyValue={idAccountMap.rewardPaidRoyaltyClubUSD.toFixed(2)}
+        currencyValue={idAccountMap.rewardPaidRoyaltyClub.toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={FaCrown}
       ></BalancesCard>
       <BalancesCard
         heading="ROI"
-        currencyValue={idAccountMap.roiClaimedUSD.toFixed(2)}
+        currencyValue={idAccountMap.roiClaimed.toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={GiCubes}
       ></BalancesCard>

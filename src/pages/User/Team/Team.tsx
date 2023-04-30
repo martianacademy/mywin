@@ -25,7 +25,7 @@ import { useIDAccount } from "../../../hooks/ReferralHooks";
 
 export const Team = () => {
   const { userID } = useParams();
-  const userIDAccount = useIDAccount(userID);
+  const userIDAccount = useIDAccount(userID!);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalID, setModalID] = useState("");
   return (

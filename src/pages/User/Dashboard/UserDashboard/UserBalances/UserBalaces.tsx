@@ -37,7 +37,7 @@ export const UserBalaces = ({
       <BalancesCard
         heading={"Wallet Balance"}
         currencyValue={Number(
-          idAccountMap.limitBalanceUSD - idAccountMap.balanceClaimedUSD
+          idAccountMap.totalIncome - idAccountMap.balanceClaimed
         ).toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         logo={currentNetwork?.MYUSD?.Logo}

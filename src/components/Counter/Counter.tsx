@@ -22,6 +22,7 @@ export const Counter = ({
 
   const now = new Date().getTime();
   const nowSeconds = Math.round(now / 1000);
+
   const [SecondsCounter, setSecondsCounter] = useState(0);
   const [MinutesCounter, setMinutesCounter] = useState(0);
   const [HoursCounter, setHoursCounter] = useState(0);
