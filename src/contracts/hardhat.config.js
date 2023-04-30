@@ -31,8 +31,8 @@ module.exports = {
         network: "myvee",
         chainId: 50000,
         urls: {
-          apiURL: "https://myveex.com/api",
-          browserURL: "https://myveescan.com.io",
+          apiURL: "https://old.myveescan.com/api",
+          browserURL: "https://myveescan.com",
         },
       },
     ],

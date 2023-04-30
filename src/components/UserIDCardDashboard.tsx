@@ -1,4 +1,5 @@
 import {
+  Badge,
   CircularProgress,
   Divider,
   Heading,
@@ -7,14 +8,15 @@ import {
   useColorModeValue,
   VStack,
   Wrap,
-} from "@chakra-ui/react";
-import { motion } from "framer-motion";
-import React from "react";
+} from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import React from 'react';
 import {
   useGetIDRewardPaid,
   useGetIDTeam,
   useGetIDTotalBusiness,
-} from "../hooks/ReferralHooks";
+  useIDAccount,
+} from '../hooks/ReferralHooks';
 
 const MotionVStack = motion(VStack);
 
@@ -29,20 +31,21 @@ export const UserIDCardDashboard = ({ id }: { id: number }) => {
   const getIDBusiness = useGetIDTotalBusiness(id);
   const getIDTeam = useGetIDTeam(id);
   const getIDReward = useGetIDRewardPaid(id);
+  const getIDAccount = useIDAccount(id);
 
   return (
     <VStack
       zIndex={1}
-      position={"relative"}
+      position={'relative'}
       _before={{
         content: '""',
-        position: "absolute",
-        zIndex: "-1",
-        height: "full",
-        width: "full",
-        filter: "blur(40px)",
-        backgroundSize: "cover",
-        transform: "scale(0.9)",
+        position: 'absolute',
+        zIndex: '-1',
+        height: 'full',
+        width: 'full',
+        filter: 'blur(40px)',
+        backgroundSize: 'cover',
+        transform: 'scale(0.9)',
         top: 0,
         left: 0,
         backgroundImage: backgrounds[id % 4],
@@ -54,7 +57,7 @@ export const UserIDCardDashboard = ({ id }: { id: number }) => {
         borderRadius="50px"
         cursor="pointer"
         spacing={5}
-        bgColor={useColorModeValue("white", "gray.900")}
+        bgColor={useColorModeValue('white', 'gray.900')}
         maxW={300}
         whileHover={{
           y: -10,
@@ -64,13 +67,18 @@ export const UserIDCardDashboard = ({ id }: { id: number }) => {
           scale: 0.97,
         }}
         transition={{
-          type: "spring",
+          type: 'spring',
           stiffness: 700,
         }}
       >
         <HStack w="full" justify="space-around">
           <VStack>
-            <Heading>{id}</Heading>
+            <HStack>
+              <Heading>{id}</Heading>
+              <Badge colorScheme="pink" borderRadius="xl">
+                New ID
+              </Badge>
+            </HStack>
             <Tag colorScheme="green">active</Tag>
           </VStack>
           <CircularProgress
@@ -80,6 +88,12 @@ export const UserIDCardDashboard = ({ id }: { id: number }) => {
           ></CircularProgress>
         </HStack>
         <Divider />
+        <HStack>
+          <Heading size="sm">{getIDAccount?.oldID}</Heading>
+          <Badge colorScheme="pink" borderRadius="xl">
+            Old ID
+          </Badge>
+        </HStack>
         <Wrap justify="center" align="center" maxW={300}>
           <Tag colorScheme="blue">Value: ${getIDBusiness.selfBusinessUSD}</Tag>
           <Tag colorScheme="blue">

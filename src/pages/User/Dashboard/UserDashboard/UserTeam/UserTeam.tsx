@@ -1,5 +1,6 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
+  Divider,
   Grid,
   Heading,
   HStack,
@@ -34,6 +35,8 @@ export const UserTeam = ({
   return (
     <CardContainer>
       <Heading size="sm">Team</Heading>
+      <Icon as={FaUser} boxSize={7}></Icon>
+      <Divider/>
       <HStack justify="center" align="center">
       <Tag p={3} borderRadius="3xl">
         <VStack>
@@ -50,7 +53,7 @@ export const UserTeam = ({
         </VStack>
       </Tag>
       </HStack>
-      <Icon as={FaUser} boxSize={7}></Icon>
+      {/* <Divider/>
       <VStack p={2} justify="Center" align="center" w="full">
         <Grid
           templateColumns={`repeat(${useBreakpointValue([
@@ -82,7 +85,7 @@ export const UserTeam = ({
             You have no team
           </Heading>
         )}
-      </VStack>
+      </VStack> */}
     </CardContainer>
   );
 };

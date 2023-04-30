@@ -258,11 +258,13 @@ export const JoinUI = () => {
             isInvalid={
               errors?.minValueError || Number(input?.value) < minContributionETH || errors?.valueIncreasingBalance
             }
+            value={input?.value}
           >
             <NumberInputField
               h={20}
               borderRadius="3xl"
               onChange={handleInput}
+              
             />
           </NumberInput>
           {/* <Input
@@ -292,7 +294,6 @@ export const JoinUI = () => {
             * Value less than min contribution {minContributionETH} {currentNetwork?.Native?.Symbol}.
           </Text>
           }
-
           {
             errors?.valueIncreasingBalance && <Text color="red">
             * Value increasing your balance.
@@ -312,7 +313,7 @@ export const JoinUI = () => {
 
           <HStack w="full" spacing={3}>
             <Button borderRadius="xl">Min</Button>
-            <Slider onChange={(e) => console.log(e)} isDisabled={errors?.minValueError}>
+            <Slider onChange={(e) => setInput((prev) => ({...prev, value: `${Number(formatEther(userETHBalanceWei ?? 0)) * e / 100}`}))} isDisabled={errors?.minValueError}>
               <SliderTrack bg="orange.100">
                 <SliderFilledTrack bg="orange.500" />
               </SliderTrack>

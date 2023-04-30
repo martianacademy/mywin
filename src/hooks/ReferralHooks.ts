@@ -67,7 +67,7 @@ export interface userIDAccountType {
   timeStampRoyaltyClub: number;
 }
 
-export const useIDAccount = (id: string | undefined): userIDAccountType => {
+export const useIDAccount = (id: number | string | undefined): userIDAccountType => {
   const value = useCallHook("getIDAccount", [id ?? "0"]);
   const valueObject = {
     id: value ? value?.[0].id.toString() : 0,

@@ -49,17 +49,17 @@ export const CardContainer = ({
           bgColor={useColorModeValue("white", "gray.900")}
           borderWidth="1px"
           borderColor="orange.500"
-          whileHover={{
-            scale: 0.95,
-          }}
-          whileTap={{
-            scale: 0.95,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 700,
-            staggerChildren: 0.5,
-          }}
+          // whileHover={{
+          //   scale: 0.95,
+          // }}
+          // whileTap={{
+          //   scale: 0.95,
+          // }}
+          // transition={{
+          //   type: "spring",
+          //   stiffness: 700,
+          //   staggerChildren: 0.5,
+          // }}
           align="center"
           
         >
