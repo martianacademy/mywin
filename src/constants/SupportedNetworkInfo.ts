@@ -97,6 +97,8 @@ export const useSupportedNetworkInfo = {
       "0x02EA7f23dDE72a26E96AaA141c87a4E1c6AB357B",
       ReferralInterface.abi
     ),
+    stakingContractAddress: "0x404bbE8eD6Cc5D771f428cBd4471549B6783545C",
+    stakingContractInterface: new Contract("0x404bbE8eD6Cc5D771f428cBd4471549B6783545C", StakingInterface.abi),
     Native: {
       ContractAddress: "",
       ContractInterface: "",
