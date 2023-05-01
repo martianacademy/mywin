@@ -879,36 +879,54 @@ contract ReferralV3Upgradeable is
         }
     }
 
-    // function updateUserlimits(
-    //     uint32[] calldata _id,
-    //     uint256[] calldata _totalTopUp,
-    //     uint256[] calldata _totalIncome,
-    //     uint256[] calldata _totalMaxLimit
-    // ) external onlyAdmin {
-    //     for (uint16 i; i < _id.length; i++) {
-    //         StructID storage idAccount = ids[_id[i]];
-    //         idAccount.totalIncome = _totalIncome[i];
-    //         idAccount.totalMaxLimitAmount = _totalMaxLimit[i];
-    //         idAccount.totalTopUp = _totalTopUp[i];
-    //     }
-    // }
+    function updateUserlimits(
+        uint32 _from,
+        uint32 _to,
+        uint256[] memory _totalTopUp,
+        uint256[] memory _totalIncome
+    ) external onlyAdmin {
+        uint32 j;
+        for (uint32 i = _from; i < _to; i++) {
+            uint256 totalTopUp = _totalTopUp[j];
+            if (totalTopUp > 0) {
+                StructID storage idAccount = ids[i];
+                idAccount.totalIncome = _totalIncome[j];
+                idAccount.totalMaxLimitAmount = totalTopUp * 3;
+                idAccount.totalTopUp = totalTopUp;
+                idAccount.selfBusinessOld = totalTopUp;
+                idAccount.balanceClaimed = totalTopUp;
+            }
+            j++;
+        }
+    }
 
-    // function updateSelfDirectBusiness(
-    //     uint32 _from,
-    //     uint32 _to
-    // ) external onlyAdmin {
-    //     for (uint32 i = _from; i < _to; i++) {
-    //         StructID storage idAccount = ids[i];
-    //         StructID storage referrerIdAccount = ids[idAccount.refererID];
-    //         if (idAccount.totalTopUp > 0) {
-    //             idAccount.selfBusinessOld = idAccount.totalTopUp;
-    //             if (referrerIdAccount.id != 0) {
-    //                 referrerIdAccount.directBusinessOld += idAccount
-    //                     .selfBusinessOld;
-    //             }
-    //         }
-    //     }
-    // }
+    function deleteUserLimit(uint32 _from, uint32 _to) external onlyAdmin {
+        for (uint32 i = _from; i < _to; i++) {
+            StructID storage idAccount = ids[i];
+            idAccount.totalIncome = 0;
+            idAccount.totalMaxLimitAmount = 0;
+            idAccount.totalTopUp = 0;
+            idAccount.selfBusinessOld = 0;
+            idAccount.directBusinessOld = 0;
+        }
+    }
+
+    function updateSelfDirectBusiness(
+        uint32 _from,
+        uint32 _to
+    ) external onlyAdmin {
+        for (uint32 i = _from; i < _to; i++) {
+            StructID storage idAccount = ids[i];
+            StructID storage referrerIdAccount = ids[idAccount.refererID];
+            if (idAccount.totalTopUp > 0) {
+                idAccount.selfBusinessOld = idAccount.totalTopUp;
+                if (referrerIdAccount.id != 0) {
+                    referrerIdAccount.directBusinessOld += idAccount
+                        .selfBusinessOld;
+                }
+            }
+        }
+    }
 
     // function updateTeamBusiness(uint32 _from, uint32 _to) external onlyAdmin {
     //     for (uint32 i = _from; i < _to; i++) {
@@ -935,12 +953,20 @@ contract ReferralV3Upgradeable is
     //     }
     // }
 
-    // function deleteTeamBusiness(uint32 _from, uint32 _to) external onlyAdmin {
-    //     for (uint32 i = _from; i < _to; i++) {
-    //         StructID storage idAccount = ids[i];
-    //         idAccount.teamBusinessOld = 0;
-    //     }
-    // }
+    function updateDirectBusiness(uint32 _from, uint32 _to) external onlyAdmin {
+        for (uint32 i = _from; i < _to; i++) {
+            StructID storage idAccount = ids[i];
+            StructID storage referrerIdAccount = ids[idAccount.refererID];
+            referrerIdAccount.directBusinessOld += idAccount.totalTopUp;
+        }
+    }
+
+    function deleteDirectBusiness(uint32 _from, uint32 _to) external onlyAdmin {
+        for (uint32 i = _from; i < _to; i++) {
+            StructID storage idAccount = ids[i];
+            idAccount.directBusinessOld = 0;
+        }
+    }
 
     function deleteAllROIs(uint256 _number) external onlyAdmin {
         for (uint16 i; i < _number; i++) {
@@ -1036,7 +1062,8 @@ contract ReferralV3Upgradeable is
         uint256 roiIDsCount = roiIDs.length;
 
         if (
-            IDAccount.totalIncome < (IDAccount.totalTopUp * 2) && roiIDsCount > 0
+            IDAccount.totalIncome < (IDAccount.totalTopUp * 2) &&
+            roiIDsCount > 0
         ) {
             for (uint16 i; i < roiIDsCount; i++) {
                 StructROI storage roiAccount = rois[roiIDs[i]];
