@@ -5,7 +5,7 @@
   "abi": [
     {
       "inputs": [],
-      "name": "getPriceIn",
+      "name": "getPriceInUSD",
       "outputs": [
         {
           "internalType": "uint256",

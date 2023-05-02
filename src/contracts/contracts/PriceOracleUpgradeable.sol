@@ -30,7 +30,7 @@ contract PriceOracleUpgradeable is
     }
 
     function initialize() public initializer {
-        _priceInUSD = 40000000000000000000;
+        _priceInUSD = 7500000000000000000;
         _currencyDecimals = 18;
         __Ownable_init();
         __UUPSUpgradeable_init();

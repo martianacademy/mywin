@@ -13,22 +13,13 @@ import {
 export const Staking = () => {
   const { userID } = useParams();
   const userTotalValueLocked = useGetUserAllActiveROIValue(userID);
-  const IDAccount = useIDAccount(userID);
-
-  const roiID =
-    IDAccount.roiIDs?.[
-      Number(IDAccount.roiIDs?.length) > 0
-        ? Number(IDAccount.roiIDs?.length) - 1
-        : 0
-    ];
-  const roiAccount = useROIAccount(`${roiID}`);
-  // const roiEndTimeInSeconds = roiAccount?.startTime + roiAccount?.duration;
+  const IDAccount = useIDAccount(userID ?? "0");
   const liveROI = useGetUserIDTotalROI(userID);
   return (
     <VStack py={[3, 5, 7, 10]} spacing={5}>
       <Heading textAlign="center">Winning Rewards Stats</Heading>
       <CardContainer>
-        <VStack>
+        {/* <VStack>
           <Heading textAlign="center" color="orange.500" size="md">
             Value Locked
           </Heading>
@@ -47,7 +38,7 @@ export const Staking = () => {
             </Heading>
             <Image src={MyUSDLogo} boxSize={10}></Image>
           </HStack>
-        </VStack>
+        </VStack> */}
         {/* <VStack>
           <Heading color="orange.500" size="md">
             Max Duration

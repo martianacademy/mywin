@@ -25,13 +25,13 @@ export const UserRewards = ({
         icon={FaUsers}
       ></BalancesCard>
       <BalancesCard
-        heading="Royalty Club Rewards"
+        heading="Royalty Rewards"
         currencyValue={idAccountMap.rewardPaidRoyaltyClub.toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={FaCrown}
       ></BalancesCard>
       <BalancesCard
-        heading="ROI"
+        heading="Winning Rewards"
         currencyValue={idAccountMap.roiClaimed.toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={GiCubes}

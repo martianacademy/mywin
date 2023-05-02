@@ -1,6 +1,7 @@
 {
   "files": {
-    "main.js": "/static/js/main.c9a547bc.js",
+    "main.css": "/static/css/main.96034e66.css",
+    "main.js": "/static/js/main.c050e049.js",
     "static/media/tokenLogoPNG.png": "/static/media/tokenLogoPNG.6999972956d8a78ae30e.png",
     "static/media/QuickSwapLogoSVG.svg": "/static/media/QuickSwapLogoSVG.aa0f5ef593b1a9f00bab835581e318f3.svg",
     "static/media/QuickSwapLogoJPG.jpeg": "/static/media/QuickSwapLogoJPG.ed4853fc16ed019d9cd0.jpeg",
@@ -16,14 +17,18 @@
     "static/media/polygon.svg": "/static/media/polygon.97ff139cc7379a42cf141d74a6595fff.svg",
     "static/media/bscscan-logo-light-circle.svg": "/static/media/bscscan-logo-light-circle.04a16bf21cd324fa1574378859b7a166.svg",
     "static/media/walletconnect.svg": "/static/media/walletconnect.a1aae2e6951e60f34926642947a36f84.svg",
+    "index.html": "/index.html",
     "static/media/usdt.svg": "/static/media/usdt.6dc09781df56f4a369623b3cb8349479.svg",
     "static/media/coinbase.svg": "/static/media/coinbase.3b075142db763b24c3930abc1070fada.svg",
     "static/media/trustwallet.svg": "/static/media/trustwallet.123a236026ee4659d3c2875ac0068c6d.svg",
-    "index.html": "/index.html",
+    "static/media/tokenLogoSVG.svg": "/static/media/tokenLogoSVG.73d64ebdc36507eb15e6a9f4cf97c01e.svg",
+    "static/media/myusd.svg": "/static/media/myusd.0b84074c9e03089863508f29d4c815c3.svg",
     "static/media/busd.svg": "/static/media/busd.b78b8434d519268b6737f8925da76473.svg",
-    "main.c9a547bc.js.map": "/static/js/main.c9a547bc.js.map"
+    "main.96034e66.css.map": "/static/css/main.96034e66.css.map",
+    "main.c050e049.js.map": "/static/js/main.c050e049.js.map"
   },
   "entrypoints": [
-    "static/js/main.c9a547bc.js"
+    "static/css/main.96034e66.css",
+    "static/js/main.c050e049.js"
   ]
 }

@@ -16,7 +16,7 @@ const useCallHook = (methodName: string, arg: any[]) => {
     ) ?? {};
 
   if (error) {
-    console.error('Referral Hooks', error.message);
+    console.error('Referral Hooks Error', error.message);
     return undefined;
   }
   return value;
@@ -36,7 +36,7 @@ export const useReferralAccountMap = (
   return valueObject;
 };
 
-export interface userIDAccountType {
+export type userIDAccountType = {
   id: string;
   oldID: string;
   isActive: boolean;
@@ -65,17 +65,16 @@ export interface userIDAccountType {
   currentTopUp: number;
   currentTopUpTime: number;
   totalROIClaimed: number;
-  activationTime: number;
   roiIDs: BigNumber[] | [];
   roiClaimed: number;
   roiClaimedTimestamp: number;
   balanceClaimed: number;
-}
+};
 
-export const useIDAccount = (id: string | undefined) => {
-  const value = useCallHook('getIDAccount', [id ?? '0'])?.[0];
+export const useIDAccount = (id: string): userIDAccountType => {
+  const value = useCallHook('getIDAccount', [id])?.[0];
   const valueObject: userIDAccountType = {
-    id: value ? value.id : "0",
+    id: value ? value.id : '0',
     oldID: value ? value?.oldID : '0',
     isActive: value ? value?.isActive : false,
     owner: value ? value?.owner : AddressZero,
@@ -86,28 +85,20 @@ export const useIDAccount = (id: string | undefined) => {
     teamIDs: value ? value?.teamIDs : [],
     teamLevel: value ? value?.teamLevel : [],
     selfBusiness: value ? Number(formatEther(value?.selfBusiness)) : 0,
-    selfBusinessOld: value
-      ? Number(formatEther(value?.selfBusinessOld))
-      : 0,
-    directBusiness: value
-      ? Number(formatEther(value?.directBusiness))
-      : 0,
+    selfBusinessOld: value ? Number(formatEther(value?.selfBusinessOld)) : 0,
+    directBusiness: value ? Number(formatEther(value?.directBusiness)) : 0,
     directBusinessOld: value
       ? Number(formatEther(value?.directBusinessOld))
       : 0,
     teamBusiness: value ? Number(formatEther(value?.teamBusiness)) : 0,
-    teamBusinessOld: value
-      ? Number(formatEther(value?.teamBusinessOld))
-      : 0,
+    teamBusinessOld: value ? Number(formatEther(value?.teamBusinessOld)) : 0,
     royaltyClubBusiness: value
       ? Number(formatEther(value?.royaltyClubBusiness))
       : 0,
     timeStampRoyaltyClub: value
       ? Number(value?.timeStampRoyaltyClub?.toString())
       : 0,
-    royaltyClubPackageID: value
-      ? Number(value?.royaltyClubPackageID)
-      : 0,
+    royaltyClubPackageID: value ? Number(value?.royaltyClubPackageID) : 0,
     royaltyClubListIndex: value
       ? Number(value?.royaltyClubListIndex?.toString())
       : 0,
@@ -123,7 +114,6 @@ export const useIDAccount = (id: string | undefined) => {
     currentTopUp: value ? Number(formatEther(value?.currentTopUp)) : 0,
     currentTopUpTime: value ? Number(value?.currentTopUp?.toString()) : 0,
     totalROIClaimed: value ? Number(formatEther(value?.totalROIClaimed)) : 0,
-    activationTime: value ? Number(value?.activationTime?.toString()) : 0,
     roiIDs: value ? value?.roiIDs : [],
     roiClaimed: value ? Number(formatEther(value?.roiClaimed)) : 0,
     roiClaimedTimestamp: value
@@ -138,53 +128,57 @@ export const useIDAccount = (id: string | undefined) => {
 export const useROIAccount = (roiID: string | undefined) => {
   const value = useCallHook('getROIAccount', [roiID ?? '0']);
   const valueObject = {
+    id: value ? value?.[0]?.id : 0,
     isActive: value ? value?.[0]?.isActive : false,
     ownerID: value ? value?.[0]?.ownerID : '0',
     value: value ? Number(formatEther(value?.[0]?.value)) : 0,
     roiRate: value ? Number(value?.[0]?.roiRate) : 0,
-    startTime: value ? Number(value?.[0]?.startTime) : 0
+    startTime: value ? Number(value?.[0]?.startTime) : 0,
   };
-
   return valueObject;
 };
 
 export const useGetUserAllActiveROIValue = (userID: string | undefined) => {
-  const value = useCallHook('getUserTotalActiveROIValue', [userID ?? '0']);
+  const value = useCallHook('getUserTotalActiveROIValue', [userID ?? '0'])?.[0];
   const valueFormatted = value ? Number(formatEther(value?.[0] ?? 0)) : 0;
 
   return valueFormatted;
 };
 
 export const useGetUserIDTotalROI = (userID: string | undefined) => {
-  const value = useCallHook('getUserIDTotalROI', [userID ?? '0']);
-  const valueFormatted = value ? Number(formatEther(value?.[0] ?? 0)) : 0;
+  const value = useCallHook('getUserIDTotalROI', [userID ?? '0'])?.[0];
+  const valueFormatted = value ? Number(formatEther(value ?? 0)) : 0;
 
   return valueFormatted;
 };
 
-export const useGetIDTotalBusiness = (id: string) => {
-  const value = useCallHook('getIDTotalBusiness', [id]);
-  const valueObject = {
-    selfBusinessUSDArray: value ? value?.selfBusinessUSDArray : [],
-    selfBusinessUSD: value ? Number(formatEther(value?.selfBusinessUSD)) : 0,
-    directBusinessUSD: value
-      ? Number(formatEther(value?.directBusinessUSD))
-      : 0,
-    teamBusinessUSD: value ? Number(formatEther(value?.teamBusinessUSD)) : 0,
-  };
-  return valueObject;
-};
+// export const useGetIDTotalBusiness = (id: string) => {
+//   const value = useCallHook('getIDTotalBusiness', [id]);
+
+//   const valueObject = {
+//     selfBusiness: value ? Number(formatEther(value?.selfBusiness)) : 0,
+//     selfBusinessOld: value ? Number(formatEther(value?.selfBusinessOld)) : 0,
+//     directBusiness: value ? Number(formatEther(value?.directBusiness)) : 0,
+//     directBusinessOld: value ? Number(formatEther(value?.directBusinessOld)) : 0,
+//     teamBusiness: value ? Number(formatEther(value?.teamBusiness)) : 0,
+//     teamBusinessOld: value ? Number(formatEther(value?.teamBusinessOld)) : 0,
+//   };
+  
+//   return valueObject;
+// };
 
 export const useGetIDTeam = (
   id: string
 ): {
-  team: number[];
+  teamIDs: number[];
+  teamLevels: number[];
   teamCount: number;
 } => {
   const value = useCallHook('getIDTeam', [id]);
   const valueObject = {
-    team: value ? value?.team : [],
-    teamCount: value ? Number(value?.teamCount?.toString()) : 0,
+    teamIDs: value ? value?.teamIDs : [],
+    teamLevels: value ? value?.teamLevels : [],
+    teamCount: value ? Number(value?.teamCount) : 0,
   };
   return valueObject;
 };
@@ -192,16 +186,18 @@ export const useGetIDTeam = (
 export const useGetIDRewardPaid = (
   id: string
 ): {
-  referralUSD: number;
-  roiUSD: number;
-  royaltyUSD: number;
+  referralPaid: number;
+  totalROIClaimed: number;
+  rewardPaidRoyaltyClub: number;
   totalRewardPaid: number;
 } => {
   const value = useCallHook('getIDRewardPaid', [id]);
   const valueObject = {
-    referralUSD: value ? Number(formatEther(value?.referralUSD)) : 0,
-    roiUSD: value ? Number(formatEther(value?.roiUSD)) : 0,
-    royaltyUSD: value ? Number(formatEther(value?.royaltyUSD)) : 0,
+    referralPaid: value ? Number(formatEther(value?.referralPaid)) : 0,
+    totalROIClaimed: value ? Number(formatEther(value?.totalROIClaimed)) : 0,
+    rewardPaidRoyaltyClub: value
+      ? Number(formatEther(value?.rewardPaidRoyaltyClub))
+      : 0,
     totalRewardPaid: value ? Number(formatEther(value?.totalRewardPaid)) : 0,
   };
   return valueObject;
@@ -209,5 +205,5 @@ export const useGetIDRewardPaid = (
 
 export const useMinContributionETH = () => {
   const value = useCallHook('getMinContributionETH', [])?.[0];
-  return value ? Number(formatEther(value ?? 0)) : 0;
+  return value ? Number(formatEther(value)) : 0;
 };

@@ -1,6 +1,7 @@
 import {
   Badge,
   CircularProgress,
+  CircularProgressLabel,
   Divider,
   Heading,
   HStack,
@@ -14,7 +15,6 @@ import React from 'react';
 import {
   useGetIDRewardPaid,
   useGetIDTeam,
-  useGetIDTotalBusiness,
   useIDAccount,
 } from '../hooks/ReferralHooks';
 
@@ -28,10 +28,20 @@ const backgrounds = [
 ];
 
 export const UserIDCardDashboard = ({ id }: { id: string }) => {
-  const getIDBusiness = useGetIDTotalBusiness(id);
   const getIDTeam = useGetIDTeam(id);
   const getIDReward = useGetIDRewardPaid(id);
-  const getIDAccount = useIDAccount(id);
+  const idAccountMap = useIDAccount(id);
+
+  const limitPercentage =
+    (idAccountMap?.totalIncome / idAccountMap?.totalMaxLimitAmount) * 100;
+  const circularColor =
+    limitPercentage <= 25
+      ? 'orange.300'
+      : limitPercentage > 25 && limitPercentage <= 50
+      ? 'green.300'
+      : limitPercentage > 50 && limitPercentage <= 75
+      ? 'yellow.300'
+      : 'red.300';
 
   return (
     <VStack
@@ -73,36 +83,58 @@ export const UserIDCardDashboard = ({ id }: { id: string }) => {
       >
         <HStack w="full" justify="space-around">
           <VStack>
-            <HStack>
-              <Heading>{id}</Heading>
-              <Badge colorScheme="pink" borderRadius="xl">
-                New ID
+            <VStack>
+            <Badge colorScheme="pink" borderRadius="xl">
+                User ID
               </Badge>
-            </HStack>
+              <Heading size="md">{id}</Heading>
+            </VStack>
             <Tag colorScheme="green">active</Tag>
           </VStack>
           <CircularProgress
-            value={30}
-            size="100px"
+            size={100}
             thickness="15px"
-          ></CircularProgress>
+            color={circularColor}
+            value={
+              limitPercentage > 0
+                ? limitPercentage
+                : idAccountMap?.isActive
+                ? 100
+                : 0
+            }
+          >
+            {!idAccountMap?.isActive ? (
+              <CircularProgressLabel
+                color={circularColor}
+                fontSize="4xl"
+                fontWeight={900}
+              >
+                {limitPercentage > 0 ? limitPercentage?.toFixed(0) : 0}%
+              </CircularProgressLabel>
+            ) : (
+              <CircularProgressLabel>
+                {limitPercentage > 0 ? limitPercentage.toFixed(0) : 0}%
+              </CircularProgressLabel>
+            )}
+          </CircularProgress>
         </HStack>
         <Divider />
-        <HStack>
-          <Heading size="sm">{getIDAccount?.oldID}</Heading>
-          <Badge colorScheme="pink" borderRadius="xl">
-            Old ID
-          </Badge>
-        </HStack>
+        {idAccountMap.oldID && (
+          <HStack>
+            <Heading size="sm">{idAccountMap?.oldID}</Heading>
+            <Badge colorScheme="pink" borderRadius="xl">
+              Old ID
+            </Badge>
+          </HStack>
+        )}
+
         <Wrap justify="center" align="center" maxW={300}>
-          <Tag colorScheme="blue">Value: ${getIDBusiness.selfBusinessUSD}</Tag>
+          <Tag colorScheme="blue">Value: ${idAccountMap.selfBusiness}</Tag>
           <Tag colorScheme="blue">
             Reward: ${getIDReward.totalRewardPaid.toFixed(2)}
           </Tag>
           <Tag colorScheme="blue">Team: {getIDTeam.teamCount}</Tag>
-          <Tag colorScheme="blue">
-            Business: ${getIDBusiness.teamBusinessUSD}
-          </Tag>
+          <Tag colorScheme="blue">Business: ${idAccountMap.teamBusiness}</Tag>
         </Wrap>
       </MotionVStack>
     </VStack>

@@ -23,7 +23,7 @@ export const NavUser = () => {
   const navigate = useNavigate();
   const { deactivate, account } = useEthers();
   const { userID } = useParams();
-  const userIDAccount = useIDAccount(userID);
+  const userIDAccount = useIDAccount(userID ?? "0");
   return (
     <VStack
       w={250}

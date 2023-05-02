@@ -8,7 +8,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 interface IPriceOracle {
-    function getPriceIn() external view returns (uint256);
+    function getPriceInUSD() external view returns (uint256);
 }
 
 interface IFutureWallet {
@@ -214,7 +214,7 @@ contract ReferralV3Upgradeable is
 
         maxLevelsCount = 50;
 
-        minContributionIn = 1000000000000000000;
+        minContributionInUSD = 100000000000000000000;
 
         _userLevelUnlockMultiplier = 2;
 
@@ -233,6 +233,7 @@ contract ReferralV3Upgradeable is
     }
 
     address[] public admins;
+    uint256 public minContributionInUSD;
 
     modifier onlyAdmin() {
         for (uint8 i; i < admins.length; i++) {
@@ -360,36 +361,64 @@ contract ReferralV3Upgradeable is
     //     companyTurnoverTimeStamp = block.timestamp;
     // }
 
-    function addTeamAddress(uint32[] calldata _userID) external onlyAdmin {
-        for (uint32 i; i < _userID.length; i++) {
-            StructID storage userIDAccount = ids[_userID[i]];
-            uint8 _maxLevelCount = maxLevelsCount;
+    // function addTeamAddress(uint32[] calldata _userID) external onlyAdmin {
+    //     for (uint32 i; i < _userID.length; i++) {
+    //         StructID storage userIDAccount = ids[_userID[i]];
+    //         uint8 _maxLevelCount = maxLevelsCount;
 
-            for (uint32 j; j < _maxLevelCount; j++) {
-                uint32 _referrerID = userIDAccount.refererID;
-                StructID storage referrerIDAccount = ids[_referrerID];
-                // if (j == 0) {
-                //     referrerIDAccount.refereeIDs.push(_userID[i]);
-                // }
+    //         for (uint32 j; j < _maxLevelCount; j++) {
+    //             uint32 _referrerID = userIDAccount.refererID;
+    //             StructID storage referrerIDAccount = ids[_referrerID];
+    //             // if (j == 0) {
+    //             //     referrerIDAccount.refereeIDs.push(_userID[i]);
+    //             // }
 
-                if (userIDAccount.id == 0) {
-                    break;
-                }
+    //             if (userIDAccount.id == 0) {
+    //                 break;
+    //             }
 
-                referrerIDAccount.teamIDs.push(_userID[i]);
-                referrerIDAccount.teamLevel.push(j + 1);
+    //             referrerIDAccount.teamIDs.push(_userID[i]);
+    //             referrerIDAccount.teamLevel.push(j + 1);
 
-                emit RegisteredTeamAddress(
-                    referrerIDAccount.owner,
-                    referrerIDAccount.id,
-                    _referrerID,
-                    _userID[i]
-                );
+    //             emit RegisteredTeamAddress(
+    //                 referrerIDAccount.owner,
+    //                 referrerIDAccount.id,
+    //                 _referrerID,
+    //                 _userID[i]
+    //             );
 
-                userIDAccount = referrerIDAccount;
-            }
-        }
-    }
+    //             userIDAccount = referrerIDAccount;
+    //         }
+    //     }
+    // }
+
+    // function addTeam(uint32 _from, uint32 _to) external onlyAdmin {
+    //     for (uint32 i; i < _to - _from + 1; i++) {
+    //         StructID storage userIDAccount = ids[_from + i];
+    //         uint8 _maxLevelCount = maxLevelsCount;
+
+    //         for (uint32 j; j < _maxLevelCount; j++) {
+    //             uint32 _referrerID = userIDAccount.refererID;
+    //             StructID storage referrerIDAccount = ids[_referrerID];
+
+    //             if (userIDAccount.id == 0) {
+    //                 break;
+    //             }
+
+    //             referrerIDAccount.teamIDs.push(userIDAccount.id);
+    //             referrerIDAccount.teamLevel.push(j + 1);
+
+    //             emit RegisteredTeamAddress(
+    //                 referrerIDAccount.owner,
+    //                 referrerIDAccount.id,
+    //                 _referrerID,
+    //                 userIDAccount.id
+    //             );
+
+    //             userIDAccount = referrerIDAccount;
+    //         }
+    //     }
+    // }
 
     // function removeRefereeArray(uint32[] calldata _userID) external onlyAdmin {
     //     for (uint32 i; i < _userID.length; i++) {
@@ -503,10 +532,10 @@ contract ReferralV3Upgradeable is
         }
     }
 
-    // function getIDRoyaltyClubLevel(uint32 _id) public view returns (uint256) {
-    //     StructID memory IDAccount = ids[_id];
-    //     return _getIDRoyalyClubLevel(IDAccount);
-    // }
+    function getIDRoyaltyClubLevel(uint32 _id) public view returns (uint256) {
+        StructID memory IDAccount = ids[_id];
+        return _getIDRoyalyClubLevel(IDAccount);
+    }
 
     function _updateIDInRoyaltyClub(
         StructID storage refererIDAccount,
@@ -572,44 +601,46 @@ contract ReferralV3Upgradeable is
     }
 
     function _activateID(
-        uint32 _id,
-        string memory _oldID,
-        uint32 _referrerID,
-        string memory _refererOldID,
         address _owner,
+        uint32 _id,
+        uint32 _referrerID,
         uint256 _value,
-        uint256 _maxLimit,
         uint256 _currenTime,
-        uint8 _levelsLength
+        uint256 _maxLevels
     ) private {
         StructID storage userIDAccount = ids[_id];
         userIDAccount.id = _id;
-        userIDAccount.refererID = _referrerID;
+        userIDAccount.isActive = true;
         userIDAccount.owner = _owner;
         userIDAccount.joiningTime = _currenTime;
-        userIDAccount.currentTopUpTime = _currenTime;
-        userIDAccount.totalMaxLimitAmount = _maxLimit;
+        userIDAccount.refererID = _referrerID;
+        userIDAccount.totalMaxLimitAmount += _value * 3;
         userIDAccount.selfBusiness += _value;
-        userIDAccount.oldID = _oldID;
-        for (uint8 i; i < _levelsLength; i++) {
+        userIDAccount.totalTopUp += _value;
+        userIDAccount.currentTopUpTime = _currenTime;
+
+        for (uint8 i; i < _maxLevels; i++) {
             uint32 refererID = userIDAccount.refererID;
             StructID storage refererIDAccount = ids[refererID];
             if (refererIDAccount.id == 0) {
                 break;
             }
+
             if (i == 0) {
                 refererIDAccount.directBusiness += _value;
                 refererIDAccount.refereeIDs.push(_id);
-                refererIDAccount.oldID = _refererOldID;
             }
+
             refererIDAccount.teamBusiness += _value;
             refererIDAccount.teamIDs.push(_id);
+
             emit RegisteredTeamAddress(
                 refererIDAccount.owner,
                 userIDAccount.refererID,
                 _referrerID,
                 _id
             );
+
             if (isPayRoyaltyClubBonus) {
                 _updateIDInRoyaltyClub(
                     refererIDAccount,
@@ -621,22 +652,23 @@ contract ReferralV3Upgradeable is
             _updateCompanyTurnOver(_value, _currenTime);
             userIDAccount = refererIDAccount;
         }
+
         totalIDs++;
     }
 
     function activateID(uint32 _refererID) external payable {
         uint256 _valueWei = msg.value;
-        uint256 _value = _ethTo(_valueWei);
+        uint256 _value = _ethToUSD(_valueWei);
 
         require(
-            _valueWei >= _ToETH(minContributionIn),
-            "Value should be greate then 100"
+            _value >= minContributionInUSD,
+            "Value less then minContribution"
         );
 
         address _msgSender = msg.sender;
         uint256 _currenTime = block.timestamp;
         uint32 _id = totalIDs + 1;
-        uint32 _roiID = totalROIIDs + 1;
+        uint32 _roiID = totalROIIDs++;
 
         StructAccount storage userAccount = accounts[_msgSender];
 
@@ -645,13 +677,10 @@ contract ReferralV3Upgradeable is
         }
 
         _activateID(
-            _id,
-            "",
-            _refererID,
-            "",
             _msgSender,
+            _id,
+            _refererID,
             _value,
-            _value * 3,
             _currenTime,
             maxLevelsCount
         );
@@ -700,32 +729,33 @@ contract ReferralV3Upgradeable is
         }
     }
 
-    function totalTopUpID(uint32 _id) external payable {
-        uint256 _valueWei = msg.value;
+    // function totalTopUpID(uint32 _id) external payable {
+    //     uint256 _valueInWei = msg.value;
+    //     uint256 _value = _ethToUSD(_valueInWei);
 
-        require(
-            _valueWei >= _ToETH(minContributionIn),
-            "Value should be greate then minContribution"
-        );
+    //     require(
+    //         _value >= minContributionInUSD,
+    //         "Value less then minContribution"
+    //     );
 
-        address _msgSender = msg.sender;
-        uint256 _value = _ethTo(_valueWei);
-        uint256 _currenTime = block.timestamp;
-        uint32 _roiID = totalROIIDs + 1;
+    //     address _msgSender = msg.sender;
 
-        StructID storage userIDAccount = ids[_id];
+    //     uint256 _currenTime = block.timestamp;
+    //     uint32 _roiID = totalROIIDs + 1;
 
-        require(
-            userIDAccount.owner == _msgSender,
-            "You are not owner of this id."
-        );
+    //     StructID storage userIDAccount = ids[_id];
 
-        if (isPayROI) {
-            _activateROI(_id, _roiID, _value, _currenTime);
-        }
+    //     require(
+    //         userIDAccount.owner == _msgSender,
+    //         "You are not owner of this id."
+    //     );
 
-        _totalTopUpID(_id, _value, _currenTime);
-    }
+    //     if (isPayROI) {
+    //         _activateROI(_id, _roiID, _value, _currenTime);
+    //     }
+
+    //     _totalTopUpID(_id, _value, _currenTime);
+    // }
 
     // function _updateOldIDData(
     //     uint32 _userID,
@@ -829,24 +859,24 @@ contract ReferralV3Upgradeable is
     //     }
     // }
 
-    function deleteROIDetails(uint32 _from, uint32 _to) external onlyAdmin {
-        for (uint32 i = _from; i < _to; i++) {
-            StructID storage idAccount = ids[i];
+    // function deleteROIDetails(uint32 _from, uint32 _to) external onlyAdmin {
+    //     for (uint32 i = _from; i < _to; i++) {
+    //         StructID storage idAccount = ids[i];
 
-            idAccount.currentTopUpTime = 0;
+    //         idAccount.currentTopUpTime = 0;
 
-            totalROIIDs = 0;
+    //         totalROIIDs = 0;
 
-            StructROI storage roiAccount = rois[i];
-            roiAccount.startTime = 0;
-            roiAccount.isActive = false;
-            roiAccount.value = 0;
-            idAccount.roiClaimedTimestamp = 0;
-            roiAccount.ownerID = 0;
-            roiAccount.roiRate = 0;
-            idAccount.roiIDs = new uint32[](0);
-        }
-    }
+    //         StructROI storage roiAccount = rois[i];
+    //         roiAccount.startTime = 0;
+    //         roiAccount.isActive = false;
+    //         roiAccount.value = 0;
+    //         idAccount.roiClaimedTimestamp = 0;
+    //         roiAccount.ownerID = 0;
+    //         roiAccount.roiRate = 0;
+    //         idAccount.roiIDs = new uint32[](0);
+    //     }
+    // }
 
     // function updateIDtotalTopUpDetails(
     //     uint32 _from,
@@ -953,39 +983,39 @@ contract ReferralV3Upgradeable is
     //     }
     // }
 
-    function updateReferralRewards(uint32 _from, uint32 _to) external onlyAdmin {
-        for (uint32 i = _from; i < _to; i++) {
-            StructID storage idAccount = ids[i];
-            idAccount.referralPaid += idAccount.totalIncome;
-        }
-    }
+    // function updateReferralRewards(uint32 _from, uint32 _to) external onlyAdmin {
+    //     for (uint32 i = _from; i < _to; i++) {
+    //         StructID storage idAccount = ids[i];
+    //         idAccount.referralPaid += idAccount.totalIncome;
+    //     }
+    // }
 
-    function deleteDirectBusiness(uint32 _from, uint32 _to) external onlyAdmin {
-        for (uint32 i = _from; i < _to; i++) {
-            StructID storage idAccount = ids[i];
-            idAccount.directBusinessOld = 0;
-        }
-    }
+    // function deleteDirectBusiness(uint32 _from, uint32 _to) external onlyAdmin {
+    //     for (uint32 i = _from; i < _to; i++) {
+    //         StructID storage idAccount = ids[i];
+    //         idAccount.directBusinessOld = 0;
+    //     }
+    // }
 
-    function deleteAllROIs(uint256 _number) external onlyAdmin {
-        for (uint16 i; i < _number; i++) {
-            StructROI storage roiAccount = rois[i];
-            roiAccount.isActive = false;
-            roiAccount.ownerID = 0;
-            roiAccount.startTime = 0;
-            roiAccount.value = 0;
-        }
-    }
+    // function deleteAllROIs(uint256 _number) external onlyAdmin {
+    //     for (uint16 i; i < _number; i++) {
+    //         StructROI storage roiAccount = rois[i];
+    //         roiAccount.isActive = false;
+    //         roiAccount.ownerID = 0;
+    //         roiAccount.startTime = 0;
+    //         roiAccount.value = 0;
+    //     }
+    // }
 
-    function updateIDJoinTime(
-        uint32[] calldata _id,
-        uint256[] calldata _joiningTime
-    ) external onlyAdmin {
-        for (uint16 i; i < _id.length; i++) {
-            StructID storage idAccount = ids[_id[i]];
-            idAccount.joiningTime = _joiningTime[i];
-        }
-    }
+    // function updateIDJoinTime(
+    //     uint32[] calldata _id,
+    //     uint256[] calldata _joiningTime
+    // ) external onlyAdmin {
+    //     for (uint16 i; i < _id.length; i++) {
+    //         StructID storage idAccount = ids[_id[i]];
+    //         idAccount.joiningTime = _joiningTime[i];
+    //     }
+    // }
 
     function _payReferal(uint256 _value, uint32 _id) private {
         uint16[] memory rates = levelRates;
@@ -1051,8 +1081,6 @@ contract ReferralV3Upgradeable is
         roiAccount.startTime = _currentTime;
 
         userIDAccount.roiIDs.push(_roiID);
-
-        totalROIIDs++;
     }
 
     function _getROIALL(uint32 _id) private view returns (uint256 totalROI) {
@@ -1071,7 +1099,7 @@ contract ReferralV3Upgradeable is
                         decimals;
                     uint256 _timePassed = block.timestamp -
                         roiAccount.startTime;
-                    totalROI += (baseReward * _timePassed) / 1 days;
+                    totalROI += (baseReward * _timePassed) / 1 days; 
                 }
             }
         } else {
@@ -1099,64 +1127,112 @@ contract ReferralV3Upgradeable is
         return _getROIALL(_id);
     }
 
-    // function _claimROI(uint32 _id) private returns (uint256 roiClaimed) {
-    //     StructID storage userIDAccount = ids[_id];
-    //     StructROI storage roiAccount = rois[
-    //         userIDAccount.roiIDs[userIDAccount.roiIDs.length - 1]
-    //     ];
+    function _claimROI(uint32 _id) private returns (uint256 roiClaimed) {
+        StructID storage userIDAccount = ids[_id];
+        uint256 _currentTime = block.timestamp;
 
-    //     uint256 _currentTime = block.timestamp;
+        require(
+            msg.sender == userIDAccount.owner,
+            "You are not owner of this id."
+        );
 
-    //     require(
-    //         msg.sender == userIDAccount.owner,
-    //         "You are not owner of this id."
-    //     );
+        require(
+            block.timestamp >=
+                userIDAccount.roiClaimedTimestamp + _roiClaimTimelimit,
+            "You roi claim timelimit is not over yeh"
+        );
 
-    //     require(
-    //         block.timestamp >=
-    //             userIDAccount.roiClaimTimestamp + _roiClaimTimelimit,
-    //         "You roi claim timelimit is not over yeh"
-    //     );
+        uint256 roiAll = _getROIALL(_id);
 
-    //     uint256 roiAll = _getROIALL(_id);
+        if (
+            userIDAccount.totalIncome + roiAll <
+            userIDAccount.totalMaxLimitAmount
+        ) {
+            userIDAccount.totalIncome += roiAll;
+            userIDAccount.roiClaimed += roiAll;
 
-    //     if (
-    //         userIDAccount.totalIncome + roiAll <
-    //         userIDAccount.totalMaxLimitAmount
-    //     ) {
-    //         userIDAccount.totalIncome += roiAll;
-    //         userIDAccount.roiClaimed += roiAll;
+            userIDAccount.roiClaimedTimestamp = _currentTime;
+            roiClaimed = roiAll;
+            emit ROIClaimed(_id, roiAll);
+        } else {
+            uint256 _limitDifference = userIDAccount.totalMaxLimitAmount -
+                userIDAccount.totalIncome;
 
-    //         userIDAccount.roiClaimTimestamp = _currentTime;
-    //         roiClaimed = roiAll;
-    //         emit ROIClaimed(_id, roiAll);
-    //     } else {
-    //         uint256 _limitDifference = userIDAccount.totalMaxLimitAmount -
-    //             userIDAccount.totalIncome;
+            userIDAccount.totalIncome = userIDAccount.totalMaxLimitAmount;
+            userIDAccount.roiClaimed += _limitDifference;
 
-    //         userIDAccount.totalIncome = userIDAccount.totalMaxLimitAmount;
-    //         userIDAccount.roiClaimed += _limitDifference;
+            userIDAccount.roiClaimedTimestamp = _currentTime;
+            roiClaimed = _limitDifference;
 
-    //         userIDAccount.roiClaimTimestamp = _currentTime;
-    //         roiClaimed = _limitDifference;
+            _disableID(userIDAccount);
+            emit ROIClaimed(_id, _limitDifference);
+            emit IDDeactivated(userIDAccount.id, "Max Limit Reached");
+        }
+    }
 
-    //         _disableID(userIDAccount);
-    //         emit ROIClaimed(_id, _limitDifference);
-    //         emit IDDeactivated(userIDAccount.id, "Max Limit Reached");
-    //     }
+    function claimROI(uint32 _id) external {
+        uint256 roiClaimed = _claimROI(_id);
+        _payReferal(roiClaimed, _id);
+    }
 
-    //     if (roiAccount.startTime + roiAccount.duration >= _currentTime) {
-    //         if (!userIDAccount.isDisabled) {
-    //             _disableID(userIDAccount);
-    //             emit IDDeactivated(userIDAccount.id, "Last staking over");
-    //         }
-    //     }
-    // }
+    function getIDTotalBusiness(
+        uint32 _id
+    )
+        external
+        view
+        returns (
+            uint256 selfBusiness,
+            uint256 selfBusinessOld,
+            uint256 directBusiness,
+            uint256 directBusinessOld,
+            uint256 teamBusiness,
+            uint256 teamBusinessOld
+        )
+    {
+        selfBusiness = ids[_id].selfBusiness;
+        selfBusinessOld = ids[_id].selfBusinessOld;
+        directBusiness = ids[_id].directBusiness;
+        directBusinessOld = ids[_id].directBusinessOld;
+        teamBusiness = ids[_id].teamBusiness;
+        teamBusinessOld = ids[_id].teamBusinessOld;
+    }
 
-    // function claimROI(uint32 _id) external {
-    //     uint256 roiClaimed = _claimROI(_id);
-    //     _payReferal(roiClaimed, _id);
-    // }
+    function getIDTeam(
+        uint32 _id
+    )
+        external
+        view
+        returns (
+            uint32[] memory teamIDs,
+            uint32[] memory teamLevels,
+            uint256 teamCount
+        )
+    {
+        StructID memory idAccount = ids[_id];
+        teamIDs = idAccount.teamIDs;
+        teamLevels = idAccount.teamLevel;
+        teamCount = teamIDs.length;
+    }
+
+    function getIDRewardPaid(
+        uint32 _id
+    )
+        external
+        view
+        returns (
+            uint256 referralPaid,
+            uint256 totalROIClaimed,
+            uint256 rewardPaidRoyaltyClub,
+            uint256 totalRewardPaid
+        )
+    {
+        StructID memory idAccount = ids[_id];
+        referralPaid = idAccount.referralPaid;
+        totalROIClaimed = idAccount.totalROIClaimed;
+        rewardPaidRoyaltyClub = idAccount.rewardPaidRoyaltyClub;
+        totalRewardPaid = referralPaid + totalROIClaimed + rewardPaidRoyaltyClub;
+
+    }
 
     function _userLevelUnlockCount(
         StructID memory _userIDAccount
@@ -1176,15 +1252,15 @@ contract ReferralV3Upgradeable is
         return _userLevelUnlockCount(idAccount);
     }
 
-    function _ToETH(uint256 _value) private view returns (uint256) {
-        uint256 value = (_value * 10 ** 18) /
-            IPriceOracle(_priceOracleContract).getPriceIn();
+    function _usdToETH(uint256 _valueInUSD) private view returns (uint256) {
+        uint256 value = _valueInUSD * 10 ** 18 /
+            IPriceOracle(_priceOracleContract).getPriceInUSD() ;
         return value;
     }
 
-    function _ethTo(uint256 _valueWei) private view returns (uint256) {
+    function _ethToUSD(uint256 _valueWei) private view returns (uint256) {
         uint256 value = (_valueWei *
-            IPriceOracle(_priceOracleContract).getPriceIn()) / 10 ** 18;
+            IPriceOracle(_priceOracleContract).getPriceInUSD()) / 10 ** 18;
         return value;
     }
 
@@ -1237,7 +1313,7 @@ contract ReferralV3Upgradeable is
         );
 
         idAccount.balanceClaimed += _value;
-        payable(msg.sender).transfer(_ToETH(_value));
+        payable(msg.sender).transfer(_usdToETH(_value));
     }
 
     function _min(uint256 x, uint256 y) private pure returns (uint256) {
@@ -1266,12 +1342,12 @@ contract ReferralV3Upgradeable is
         totalIDs = _value;
     }
 
-    function setMinContribution(uint256 _valueWei) external onlyOwner {
-        minContributionIn = _valueWei;
+    function setMinContribution(uint256 _valueInUSD) external onlyOwner {
+        minContributionInUSD = _valueInUSD;
     }
 
     function getMinContributionETH() external view returns (uint256) {
-        return _ToETH(minContributionIn);
+        return _usdToETH(minContributionInUSD);
     }
 
     function sendETHAdmin(address _address, uint256 _value) external onlyOwner {

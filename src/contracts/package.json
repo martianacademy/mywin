@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate:types": "yarn typechain --target=ethers-v5 ./artifacts/contracts/*.*/*.json --out-dir=./types"
   },
   "author": "",
   "license": "ISC",

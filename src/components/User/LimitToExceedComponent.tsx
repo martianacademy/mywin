@@ -23,24 +23,25 @@ export const LimitToExceedComponent = ({
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const limitPercentage =
     (idAccountMap?.totalIncome / idAccountMap?.totalMaxLimitAmount) * 100;
+  const circularColor = (limitPercentage <= 25) ? "orange.300" : limitPercentage > 25 && limitPercentage <= 50 ? "green.300" : limitPercentage > 50 && limitPercentage <= 75 ? "yellow.300" : "red.300";
   return (
     <CardContainer>
-      <Heading size="sm">Limit Reached</Heading>
+      <Heading size="sm">Limit Stats</Heading>
       <CircularProgress
         size={200}
         thickness="15px"
-        color={idAccountMap?.isActive ? "orange.500" : "red"}
+        color={circularColor}
         value={
           limitPercentage > 0
             ? limitPercentage
-            : !idAccountMap?.isActive
+            : idAccountMap?.isActive
             ? 100
             : 0
         }
       >
         {!idAccountMap?.isActive ? (
-          <CircularProgressLabel color="red" fontSize="md" fontWeight={900}>
-            Limit Reached
+          <CircularProgressLabel color={circularColor} fontSize="4xl" fontWeight={900}>
+            {limitPercentage > 0 ? limitPercentage?.toFixed(0) : 0}%
           </CircularProgressLabel>
         ) : (
           <CircularProgressLabel>

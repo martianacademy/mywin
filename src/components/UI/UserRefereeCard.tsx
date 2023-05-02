@@ -25,7 +25,7 @@ export const UserRefereeCard = ({
   style?: ButtonProps;
   onClick?: () => void;
 }) => {
-  const userIDAccount = useIDAccount(userID);
+  const userIDAccount = useIDAccount(userID ?? "0");
   const { onCopy, hasCopied } = useClipboard(userIDAccount?.owner);
   return (
     <VStack
