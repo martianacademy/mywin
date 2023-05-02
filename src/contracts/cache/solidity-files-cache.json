@@ -1120,8 +1120,8 @@
       ]
     },
     "/Users/suru.martian/Documents/Projects/mywin/src/contracts/contracts/ReferralV3Upgradeable.sol": {
-      "lastModificationDate": 1683013768661,
-      "contentHash": "8e59fdb7b735a19c25e61a401e7e9455",
+      "lastModificationDate": 1683028409876,
+      "contentHash": "98223bf044de0cbc36aad9884213ffaf",
       "sourceName": "contracts/ReferralV3Upgradeable.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -1233,6 +1233,48 @@
       "imports": [],
       "versionPragmas": [],
       "artifacts": []
+    },
+    "/Users/suru.martian/Documents/Projects/mywin/src/contracts/contracts/ReferralV3HelperFunctions.sol": {
+      "lastModificationDate": 1683019638271,
+      "contentHash": "ea72fa1f470be39a95f93b6798414dd0",
+      "sourceName": "contracts/ReferralV3HelperFunctions.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.17"
+      ],
+      "artifacts": [
+        "IVariables",
+        "ReferralV3HelperFunctions"
+      ]
     }
   }
 }

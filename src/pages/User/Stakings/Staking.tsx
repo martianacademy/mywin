@@ -19,7 +19,7 @@ export const Staking = () => {
     <VStack py={[3, 5, 7, 10]} spacing={5}>
       <Heading textAlign="center">Winning Rewards Stats</Heading>
       <CardContainer>
-        {/* <VStack>
+        <VStack>
           <Heading textAlign="center" color="orange.500" size="md">
             Value Locked
           </Heading>
@@ -38,7 +38,7 @@ export const Staking = () => {
             </Heading>
             <Image src={MyUSDLogo} boxSize={10}></Image>
           </HStack>
-        </VStack> */}
+        </VStack>
         {/* <VStack>
           <Heading color="orange.500" size="md">
             Max Duration

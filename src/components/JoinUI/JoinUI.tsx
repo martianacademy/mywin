@@ -7,8 +7,11 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
   NumberInput,
   NumberInputField,
+  NumberInputStepper,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -44,7 +47,17 @@ const backgrounds = [
   `url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='185' viewBox='0 0 560 185' fill='none'%3E%3Cellipse cx='457.367' cy='123.926' rx='102.633' ry='61.0737' transform='rotate(-180 457.367 123.926)' fill='%23ECC94B'/%3E%3Cellipse cx='160.427' cy='61.0737' rx='102.633' ry='61.0737' transform='rotate(-180 160.427 61.0737)' fill='%239F7AEA'/%3E%3Cellipse cx='193.808' cy='111.771' rx='193.808' ry='73.2292' transform='rotate(-180 193.808 111.771)' fill='%234299E1'/%3E%3Cellipse cx='337.295' cy='74.415' rx='193.808' ry='73.2292' transform='rotate(-180 337.295 74.415)' fill='%2348BB78'/%3E%3C/svg%3E")`,
 ];
 
-export const JoinUI = ({account, chainId, minContributionETH, coinPrice}: {account: string | undefined, chainId: number | undefined, minContributionETH: number, coinPrice: number}) => {
+export const JoinUI = ({
+  account,
+  chainId,
+  minContributionETH,
+  coinPrice,
+}: {
+  account: string | undefined;
+  chainId: number | undefined;
+  minContributionETH: number;
+  coinPrice: number;
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const toast = useToast();
@@ -66,12 +79,15 @@ export const JoinUI = ({account, chainId, minContributionETH, coinPrice}: {accou
   const userETHBalanceWei = useEtherBalance(account);
 
   const errors = {
-    minValueError: Number(formatEther(userETHBalanceWei ?? 0)) < minContributionETH,
-    valueIncreasingBalance: Number(input?.value ?? 0) > Number(formatEther(userETHBalanceWei ?? 0)),
-    valueLessThenBalance: Number(input?.value ?? 0) < Number(formatEther(userETHBalanceWei ?? 0)),
-    valueLessThanMinContribution: Number(input?.value ?? 0) < minContributionETH
-   
-  }
+    minValueError:
+      Number(formatEther(userETHBalanceWei ?? 0)) < minContributionETH,
+    valueIncreasingBalance:
+      Number(input?.value ?? 0) > Number(formatEther(userETHBalanceWei ?? 0)),
+    valueLessThenBalance:
+      Number(input?.value ?? 0) < Number(formatEther(userETHBalanceWei ?? 0)),
+    valueLessThanMinContribution:
+      Number(input?.value ?? 0) < minContributionETH,
+  };
 
   const {
     send: sendJoin,
@@ -253,16 +269,37 @@ export const JoinUI = ({account, chainId, minContributionETH, coinPrice}: {accou
             max={Number(formatEther(userETHBalanceWei ?? 0))}
             isDisabled={errors?.minValueError}
             isInvalid={
-              errors?.minValueError || Number(input?.value) < minContributionETH || errors?.valueIncreasingBalance
+              errors?.minValueError ||
+              Number(input?.value) < minContributionETH ||
+              errors?.valueIncreasingBalance
             }
             value={input?.value}
+            step={0.1}
           >
+            
             <NumberInputField
               h={20}
               borderRadius="3xl"
               onChange={handleInput}
-              
             />
+            <NumberInputStepper>
+              <NumberIncrementStepper onClick={() =>
+                setInput((prev) => ({
+                  ...prev,
+                  value: `${
+                    Number(input.value) + 0.1
+                  }`,
+                }))
+              }/>
+              <NumberDecrementStepper onClick={() =>
+                setInput((prev) => ({
+                  ...prev,
+                  value: `${
+                    Number(input.value) - 0.1
+                  }`,
+                }))
+              } />
+            </NumberInputStepper>
           </NumberInput>
           {/* <Input
             h={20}
@@ -286,16 +323,15 @@ export const JoinUI = ({account, chainId, minContributionETH, coinPrice}: {accou
               * You don't have sufficient {currentNetwork?.Native?.Symbol}
             </Text>
           )}
-          {
-            errors?.valueLessThanMinContribution && <Text color="red">
-            * Value less than min contribution {minContributionETH.toFixed(3)} {currentNetwork?.Native?.Symbol}.
-          </Text>
-          }
-          {
-            errors?.valueIncreasingBalance && <Text color="red">
-            * Value increasing your balance.
-          </Text>
-          }
+          {errors?.valueLessThanMinContribution && (
+            <Text color="red">
+              * Value less than min contribution {minContributionETH.toFixed(3)}{' '}
+              {currentNetwork?.Native?.Symbol}.
+            </Text>
+          )}
+          {errors?.valueIncreasingBalance && (
+            <Text color="red">* Value increasing your balance.</Text>
+          )}
           <HStack>
             <Text color="green" fontSize="sm">
               Value In {currentNetwork?.MYUSD?.Symbol}:
@@ -310,7 +346,17 @@ export const JoinUI = ({account, chainId, minContributionETH, coinPrice}: {accou
 
           <HStack w="full" spacing={3}>
             <Button borderRadius="xl">Min</Button>
-            <Slider onChange={(e) => setInput((prev) => ({...prev, value: `${Number(formatEther(userETHBalanceWei ?? 0)) * e / 100}`}))} isDisabled={errors?.minValueError}>
+            <Slider
+              onChange={(e) =>
+                setInput((prev) => ({
+                  ...prev,
+                  value: `${
+                    (Number(formatEther(userETHBalanceWei ?? 0)) * e) / 100
+                  }`,
+                }))
+              }
+              isDisabled={errors?.minValueError}
+            >
               <SliderTrack bg="orange.100">
                 <SliderFilledTrack bg="orange.500" />
               </SliderTrack>

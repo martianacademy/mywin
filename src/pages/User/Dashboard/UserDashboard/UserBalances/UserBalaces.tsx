@@ -19,6 +19,8 @@ export const UserBalaces = ({
     currentNetwork?.MYUSD?.ContractAddress,
     account
   );
+
+  console.log(idAccountMap)
   return (
     <CardContainer>
       <Heading size="sm">Balances</Heading>

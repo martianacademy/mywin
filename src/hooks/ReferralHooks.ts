@@ -73,6 +73,7 @@ export type userIDAccountType = {
 
 export const useIDAccount = (id: string): userIDAccountType => {
   const value = useCallHook('getIDAccount', [id])?.[0];
+  console.log(value)
   const valueObject: userIDAccountType = {
     id: value ? value.id : '0',
     oldID: value ? value?.oldID : '0',
