@@ -24,6 +24,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useContractFunction, useEtherBalance, useEthers } from '@usedapp/core';
+import { error } from 'console';
 import { utils } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
@@ -79,14 +80,13 @@ export const JoinUI = ({
   const userETHBalanceWei = useEtherBalance(account);
 
   const errors = {
-    minValueError:
-      Number(formatEther(userETHBalanceWei ?? 0)) < minContributionETH,
     valueIncreasingBalance:
+      input.value.length > 0 &&
       Number(input?.value ?? 0) > Number(formatEther(userETHBalanceWei ?? 0)),
-    valueLessThenBalance:
-      Number(input?.value ?? 0) < Number(formatEther(userETHBalanceWei ?? 0)),
+    balanceLessThanMinContribution:
+      Number(formatEther(userETHBalanceWei ?? 0)) < minContributionETH,
     valueLessThanMinContribution:
-      Number(input?.value ?? 0) < minContributionETH,
+      input.value.length > 0 && Number(input?.value ?? 0) < minContributionETH,
   };
 
   const {
@@ -229,6 +229,7 @@ export const JoinUI = ({
             onChange={handleReferrerInput}
             fontSize="xl"
             isReadOnly={referrerAddress ? true : false}
+            isDisabled={errors.balanceLessThanMinContribution}
           ></Input>
           <HStack w="full">
             <Button
@@ -236,7 +237,7 @@ export const JoinUI = ({
               borderRadius="xl"
               colorScheme="red"
               onClick={() => setInput((prev) => ({ ...prev, referrer: '' }))}
-              isDisabled={referrerAddress ? true : false}
+              isDisabled={referrerAddress ? true : false || errors.balanceLessThanMinContribution}
             >
               Clear
             </Button>
@@ -248,7 +249,7 @@ export const JoinUI = ({
               onClick={() =>
                 setInput((prev) => ({ ...prev, referrer: DefaultReferrerID }))
               }
-              isDisabled={referrerAddress ? true : false}
+              isDisabled={referrerAddress ? true : false || errors.balanceLessThanMinContribution}
             >
               Default Referrer
             </Button>
@@ -267,38 +268,37 @@ export const JoinUI = ({
             defaultValue={minContributionETH}
             min={minContributionETH}
             max={Number(formatEther(userETHBalanceWei ?? 0))}
-            isDisabled={errors?.minValueError}
+            isDisabled={errors.balanceLessThanMinContribution}
             isInvalid={
-              errors?.minValueError ||
-              Number(input?.value) < minContributionETH ||
-              errors?.valueIncreasingBalance
+              errors.valueIncreasingBalance ||
+              errors.valueLessThanMinContribution ||
+              errors.balanceLessThanMinContribution
             }
             value={input?.value}
             step={0.1}
           >
-            
             <NumberInputField
               h={20}
               borderRadius="3xl"
               onChange={handleInput}
             />
             <NumberInputStepper>
-              <NumberIncrementStepper onClick={() =>
-                setInput((prev) => ({
-                  ...prev,
-                  value: `${
-                    Number(input.value) + 0.1
-                  }`,
-                }))
-              }/>
-              <NumberDecrementStepper onClick={() =>
-                setInput((prev) => ({
-                  ...prev,
-                  value: `${
-                    Number(input.value) - 0.1
-                  }`,
-                }))
-              } />
+              <NumberIncrementStepper
+                onClick={() =>
+                  setInput((prev) => ({
+                    ...prev,
+                    value: `${Number(input.value) + 0.1}`,
+                  }))
+                }
+              />
+              <NumberDecrementStepper
+                onClick={() =>
+                  setInput((prev) => ({
+                    ...prev,
+                    value: `${Number(input.value) - 0.1}`,
+                  }))
+                }
+              />
             </NumberInputStepper>
           </NumberInput>
           {/* <Input
@@ -318,11 +318,13 @@ export const JoinUI = ({
               minValueError || Number(input?.value) < minContributionETH
             }
           ></Input> */}
-          {errors?.minValueError && (
-            <Text color="red">
-              * You don't have sufficient {currentNetwork?.Native?.Symbol}
-            </Text>
-          )}
+          {
+            errors.balanceLessThanMinContribution && <Text color="red" fontWeight={500}>
+            * You don't have sufficient balance. You atleast need {minContributionETH.toFixed(3)}{' '}
+            {currentNetwork?.Native?.Symbol} to join the network.
+          </Text>
+          }
+
           {errors?.valueLessThanMinContribution && (
             <Text color="red">
               * Value less than min contribution {minContributionETH.toFixed(3)}{' '}
@@ -355,7 +357,7 @@ export const JoinUI = ({
                   }`,
                 }))
               }
-              isDisabled={errors?.minValueError}
+              isDisabled={errors.balanceLessThanMinContribution}
             >
               <SliderTrack bg="orange.100">
                 <SliderFilledTrack bg="orange.500" />
