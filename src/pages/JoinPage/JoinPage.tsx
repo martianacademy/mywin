@@ -8,7 +8,6 @@ export const JoinPage = () => {
   const { account, chainId } = useEthers();
   const minContributionETH = useMinContributionETH();
   const coinPrice = useCoinPrice();
-  console.log(minContributionETH)
   return (
     <VStack w="full" flex={1} py={50}>
       <JoinUI account={account} chainId={chainId} minContributionETH={minContributionETH} coinPrice={coinPrice}></JoinUI>

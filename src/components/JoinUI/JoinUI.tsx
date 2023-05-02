@@ -1,18 +1,15 @@
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import {
   Button,
   Divider,
   Heading,
   HStack,
+  IconButton,
   Input,
   Modal,
   ModalContent,
-  ModalOverlay,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Slider,
+  ModalOverlay, NumberInput,
+  NumberInputField, Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
@@ -21,10 +18,9 @@ import {
   useColorModeValue,
   useDisclosure,
   useToast,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
-import { useContractFunction, useEtherBalance, useEthers } from '@usedapp/core';
-import { error } from 'console';
+import { useContractFunction, useEtherBalance } from '@usedapp/core';
 import { utils } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
@@ -32,10 +28,8 @@ import { useParams } from 'react-router-dom';
 import {
   DefaultReferrerID,
   StakingInfo,
-  useSupportedNetworkInfo,
+  useSupportedNetworkInfo
 } from '../../constants';
-import { useCoinPrice } from '../../hooks/PriceOracleHooks';
-import { useMinContributionETH } from '../../hooks/ReferralHooks';
 import { Logo } from '../Logo/Logo';
 import { ModalConfirmTransactionStake } from '../Modals';
 import { ModalTransactionInProgress } from '../Modals/ModalTransactionInProgress/ModalTransactionInProgress';
@@ -70,6 +64,8 @@ export const JoinUI = ({
     value: '',
     referrer: referrerAddress ?? '',
   });
+
+  const steps = 0.1;
 
   const [transactionStatus, setTransactionStatus] = useState<
     'No' | 'Loading' | 'Mining' | 'Success'
@@ -237,7 +233,11 @@ export const JoinUI = ({
               borderRadius="xl"
               colorScheme="red"
               onClick={() => setInput((prev) => ({ ...prev, referrer: '' }))}
-              isDisabled={referrerAddress ? true : false || errors.balanceLessThanMinContribution}
+              isDisabled={
+                referrerAddress
+                  ? true
+                  : false || errors.balanceLessThanMinContribution
+              }
             >
               Clear
             </Button>
@@ -249,7 +249,11 @@ export const JoinUI = ({
               onClick={() =>
                 setInput((prev) => ({ ...prev, referrer: DefaultReferrerID }))
               }
-              isDisabled={referrerAddress ? true : false || errors.balanceLessThanMinContribution}
+              isDisabled={
+                referrerAddress
+                  ? true
+                  : false || errors.balanceLessThanMinContribution
+              }
             >
               Default Referrer
             </Button>
@@ -276,54 +280,21 @@ export const JoinUI = ({
             }
             value={input?.value}
             step={0.1}
+            precision={5}
           >
             <NumberInputField
               h={20}
               borderRadius="3xl"
               onChange={handleInput}
             />
-            <NumberInputStepper>
-              <NumberIncrementStepper
-                onClick={() =>
-                  setInput((prev) => ({
-                    ...prev,
-                    value: `${Number(input.value) + 0.1}`,
-                  }))
-                }
-              />
-              <NumberDecrementStepper
-                onClick={() =>
-                  setInput((prev) => ({
-                    ...prev,
-                    value: `${Number(input.value) - 0.1}`,
-                  }))
-                }
-              />
-            </NumberInputStepper>
           </NumberInput>
-          {/* <Input
-            h={20}
-            placeholder={
-              minValueError
-                ? `* You don't have sufficient ${currentNetwork?.Native?.Symbol}`
-                : 'Please enter the value to stake.'
-            }
-            borderRadius="3xl"
-            value={input?.value}
-            onChange={handleInput}
-            fontSize="sm"
-            fontStyle="oblique"
-            isDisabled={minValueError}
-            isInvalid={
-              minValueError || Number(input?.value) < minContributionETH
-            }
-          ></Input> */}
-          {
-            errors.balanceLessThanMinContribution && <Text color="red" fontWeight={500}>
-            * You don't have sufficient balance. You atleast need {minContributionETH.toFixed(3)}{' '}
-            {currentNetwork?.Native?.Symbol} to join the network.
-          </Text>
-          }
+          {errors.balanceLessThanMinContribution && (
+            <Text color="red" fontWeight={500}>
+              * You don't have sufficient balance. You atleast need{' '}
+              {minContributionETH.toFixed(3)} {currentNetwork?.Native?.Symbol}{' '}
+              to join the network.
+            </Text>
+          )}
 
           {errors?.valueLessThanMinContribution && (
             <Text color="red">
@@ -347,7 +318,17 @@ export const JoinUI = ({
           </HStack>
 
           <HStack w="full" spacing={3}>
-            <Button borderRadius="xl">Min</Button>
+            <IconButton
+              aria-label="Minus Value Button"
+              icon={<ChevronLeftIcon/>}
+              borderRadius="xl"
+              onClick={() =>
+                setInput((prev) => ({
+                  ...prev,
+                  value: `${Number(input.value) - (Number(input.value) >= minContributionETH ? steps : 0)}`,
+                }))
+              }
+            ></IconButton>
             <Slider
               onChange={(e) =>
                 setInput((prev) => ({
@@ -358,13 +339,26 @@ export const JoinUI = ({
                 }))
               }
               isDisabled={errors.balanceLessThanMinContribution}
+              min={minContributionETH / Number(formatEther(userETHBalanceWei ?? 0)) * 100}
+              max={99}
+              step={steps}
             >
               <SliderTrack bg="orange.100">
                 <SliderFilledTrack bg="orange.500" />
               </SliderTrack>
-              <SliderThumb boxSize={6} bg="orange.500" />
+              <SliderThumb boxSize={5} bg="orange.500" />
             </Slider>
-            <Button borderRadius="xl">Max</Button>
+            <IconButton
+              aria-label="Add Value Button"
+              icon={<ChevronRightIcon/>}
+              borderRadius="xl"
+              onClick={() =>
+                setInput((prev) => ({
+                  ...prev,
+                  value: `${Number(input.value) + (Number(input.value) < Number(formatEther(userETHBalanceWei ?? 0)) ? steps : 0)}`,
+                }))
+              }
+            ></IconButton>
           </HStack>
         </VStack>
         <Button
