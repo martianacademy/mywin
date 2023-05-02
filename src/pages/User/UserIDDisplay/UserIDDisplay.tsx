@@ -7,8 +7,9 @@ import { useReferralAccountMap } from "../../../hooks/ReferralHooks";
 export const UserIDDisplay = () => {
   const { account } = useEthers();
   const {userAddress} = useParams();
-  const referralAccount = useReferralAccountMap(account!);
+  const referralAccount = useReferralAccountMap(userAddress ?? account!);
   const navigate = useNavigate();
+
   return (
     <VStack w="full" p={5} spacing={10}>
       {!referralAccount?.accountIDs.length ? (
