@@ -1,14 +1,11 @@
 import { Button, Heading, HStack, Image, VStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { CardContainer } from "../../../components";
-import { Counter } from "../../../components/Counter";
 import { MyUSDLogo, MyUSDSymbol } from "../../../constants";
 import {
-  useGetUserAllActiveROIValue,
-  useGetUserIDTotalROI,
-  useIDAccount,
-  useROIAccount,
+  useIDAccount
 } from "../../../hooks/ReferralHooks";
+import { useGetUserAllActiveROIValue, useGetUserIDTotalROI } from "../../../hooks/ROIHooks";
 
 export const Staking = () => {
   const { userID } = useParams();
@@ -51,7 +48,7 @@ export const Staking = () => {
           </Heading>
           <HStack>
             <Heading size="md" fontWeight={300} fontStyle="italic">
-              {IDAccount?.roiClaimed}
+              {IDAccount?.roiPaid}
             </Heading>
 
             <Heading

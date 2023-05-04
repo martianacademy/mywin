@@ -23,7 +23,6 @@ interface IReferral {
         uint32 id;
         string oldId;
         uint256 joiningTime;
-        bool isActive;
         bool isAddedToUserList;
         address owner;
         uint32 refererId;
@@ -47,24 +46,26 @@ interface IReferral {
         uint256 topUp;
         uint256 maxLimit;
         uint256 activationTime;
+        uint256 deactivationTime;
         uint256 referralPaid;
         uint32[] roiIds;
         uint256 roiPaid;
         uint256 roiClaimedTime;
         uint256 walletBalance;
+        bool isActive;
+        bool isROIDisabled;
+        bool isIdVisibilityDisabled;
         bool canWindraw;
     }
 
     function getIdAccount(uint32 _id) external view returns (StructId memory);
 
     function payReferralAdmin(uint256 _value, uint32 _id) external;
-    function increaseIdTopIncome(
-        uint32 _id,
-        uint256 _value
-    ) external;
+
+    function increaseIdTopIncome(uint32 _id, uint256 _value) external;
 }
 
-contract ReferralV3Upgradeable is
+contract ROIV1Upgradeable is
     Initializable,
     OwnableUpgradeable,
     UUPSUpgradeable
@@ -77,9 +78,9 @@ contract ReferralV3Upgradeable is
 
     uint16 public decimals;
 
-    uint16 private _roiRate;
-    uint256 private _roiDuration;
-    uint256 private _roiClaimTimelimit;
+    uint16 public _roiRate;
+    uint256 public _roiDuration;
+    uint256 public _roiClaimTimelimit;
 
     bool public isPayROI;
 
@@ -110,8 +111,7 @@ contract ReferralV3Upgradeable is
 
         decimals = 1000;
 
-        _roiRate = 1000;
-        _roiDuration = 400 days;
+        _roiRate = 5;
         _roiClaimTimelimit = 1 days;
 
         __Ownable_init();
@@ -148,6 +148,8 @@ contract ReferralV3Upgradeable is
 
         roiAccount.roiRate = _roiRate;
         roiAccount.startTime = _currentTime;
+
+        totalROIValue++;
     }
 
     function activateROIAdmin(
@@ -166,7 +168,11 @@ contract ReferralV3Upgradeable is
         uint32[] memory roiIDs = idAccount.roiIds;
         uint256 roiIDsCount = roiIDs.length;
 
-        if (idAccount.topUpIncome < (idAccount.topUp * 2) && roiIDsCount > 0) {
+        if (
+            idAccount.topUpIncome < (idAccount.topUp * 2) &&
+            roiIDsCount > 0 &&
+            !idAccount.isROIDisabled
+        ) {
             for (uint16 i; i < roiIDsCount; i++) {
                 StructROI storage roiAccount = rois[roiIDs[i]];
                 if (roiAccount.isActive) {
@@ -184,6 +190,30 @@ contract ReferralV3Upgradeable is
 
     function getUserIDTotalROI(uint32 _id) external view returns (uint256) {
         return _getROIALL(_id);
+    }
+
+    function getUserTotalActiveROIValue(uint32 _id) external view returns (uint256 roiTotalValue) {
+        IReferral.StructId memory idAccount = IReferral(
+            IVariables(_variablesContract).getReferralContract()
+        ).getIdAccount(_id);
+        uint32[] memory roiIDs = idAccount.roiIds;
+        uint256 roiIDsCount = roiIDs.length;
+
+        if (
+            idAccount.topUpIncome < (idAccount.topUp * 2) &&
+            roiIDsCount > 0 &&
+            !idAccount.isROIDisabled
+        ) {
+            for (uint16 i; i < roiIDsCount; i++) {
+                StructROI storage roiAccount = rois[roiIDs[i]];
+                if (roiAccount.isActive) {
+                    roiTotalValue += roiAccount.value;
+                      
+                }
+            }
+        } else {
+            roiTotalValue = 0;
+        }
     }
 
     function _claimROI(uint32 _id) private returns (uint256 roiClaimed) {
@@ -210,24 +240,22 @@ contract ReferralV3Upgradeable is
 
             idAccount.roiClaimedTime = _currentTime;
             roiClaimed = roiAll;
-            IReferral(
-            IVariables(_variablesContract).getReferralContract()).increaseIdTopIncome(
-       _id,
-        roiClaimed
-    );
+            IReferral(IVariables(_variablesContract).getReferralContract())
+                .increaseIdTopIncome(_id, roiClaimed);
             emit ROIClaimed(_id, roiClaimed);
+
+            totalROIPaid += roiClaimed;
         } else if (idAccount.topUpIncome <= idAccount.topUp * 2) {
             uint256 _limitDifference = (idAccount.topUp * 2) -
                 idAccount.topUpIncome;
 
             idAccount.topUpIncome = idAccount.topUp * 2;
             roiClaimed = _limitDifference;
-            IReferral(
-            IVariables(_variablesContract).getReferralContract()).increaseIdTopIncome(
-       _id,
-        roiClaimed
-    );
-    emit ROIClaimed(_id, roiClaimed);
+            IReferral(IVariables(_variablesContract).getReferralContract())
+                .increaseIdTopIncome(_id, roiClaimed);
+            emit ROIClaimed(_id, roiClaimed);
+
+            totalROIPaid += _limitDifference;
         }
     }
 
@@ -245,11 +273,9 @@ contract ReferralV3Upgradeable is
 
     function setROI(
         uint16 _roiRateInDecimals,
-        uint256 _roiDurationInDays,
         uint256 _roiClaimTimelimitInSeconds
     ) external onlyAdmin {
         _roiRate = _roiRateInDecimals;
-        _roiDuration = _roiDurationInDays * 1 days;
         _roiClaimTimelimit = _roiClaimTimelimitInSeconds;
     }
 

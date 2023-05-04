@@ -33,7 +33,7 @@ export const UserIDCardDashboard = ({ id }: { id: string }) => {
   const idAccountMap = useIDAccount(id);
 
   const limitPercentage =
-    (idAccountMap?.totalIncome / idAccountMap?.totalMaxLimitAmount) * 100;
+    (idAccountMap?.topUpIncome / idAccountMap?.maxLimit) * 100;
   const circularColor =
     limitPercentage <= 25
       ? 'orange.300'
@@ -106,7 +106,7 @@ export const UserIDCardDashboard = ({ id }: { id: string }) => {
             {!idAccountMap?.isActive ? (
               <CircularProgressLabel
                 color={circularColor}
-                fontSize="4xl"
+                fontSize="2xl"
                 fontWeight={900}
               >
                 {limitPercentage > 0 ? limitPercentage?.toFixed(0) : 0}%
@@ -119,9 +119,9 @@ export const UserIDCardDashboard = ({ id }: { id: string }) => {
           </CircularProgress>
         </HStack>
         <Divider />
-        {idAccountMap.oldID && (
+        {idAccountMap.oldId && (
           <HStack>
-            <Heading size="sm">{idAccountMap?.oldID}</Heading>
+            <Heading size="sm">{idAccountMap?.oldId}</Heading>
             <Badge colorScheme="pink" borderRadius="xl">
               Old ID
             </Badge>

@@ -3,10 +3,12 @@ import { Contract } from 'ethers';
 import { MyUSDSVG, tokenLogoSVG } from '../assets';
 import { MyVeeChain } from './ChainInfo';
 
-import PriceOracle from '../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json';
-import ReferralInterface from '../contracts/artifacts/contracts/ReferralV3Upgradeable.sol/ReferralV3Upgradeable.json';
-import StakingInterface from '../contracts/artifacts/contracts/StakingUpgradeable.sol/StakingUpgradeable.json';
-import VariablesInterface from '../contracts/artifacts/contracts/VariablesUpgradeable.sol/VariablesUpgradeable.json';
+import VariablesV2V1Interface from '../contracts/artifacts/contracts/VariablesUpgradeable.sol/VariablesUpgradeable.json';
+import PriceOracleInterface from '../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json';
+import ReferralV4Interface from '../contracts/artifacts/contracts/ReferralV4Upgradeable.sol/ReferralV4Upgradeable.json';
+import ROIV1Interface from "../contracts/artifacts/contracts/ROIV1Upgradeable.sol/ROIV1Upgradeable.json"
+import FutureSecureWalletV1Interface from '../contracts/artifacts/contracts/FutureSecureWalletUpgradeable.sol/FutureSecureWalletUpgradeable.json';
+import { futureSecureWalletV1ContractAddress, myUSDContractAddress, priceOracleContractAddress, referralV4ContractAddress, roiV1ContractAddress, variablesV2ContractAddress } from './ContractAddress';
 
 export const TokenName = 'MyWin';
 export const TokenSymbol = 'MYWIN';
@@ -44,26 +46,31 @@ export interface tokenType {
 
 export const useSupportedNetworkInfo = {
   [MyVeeChain.chainId]: {
-    variablesContractAddress: '0xaB6F06762e382eBe0Bb47715F028B2b032Ad3291',
+    variablesContractAddress: variablesV2ContractAddress,
     variablesContractInterface: new Contract(
-      '0xaB6F06762e382eBe0Bb47715F028B2b032Ad3291',
-      VariablesInterface.abi
+      variablesV2ContractAddress,
+      VariablesV2V1Interface.abi
     ),
     priceOracleContractAddress:
-    "0x286d6392042b4d7180fd6d20f8d35c8776815774",
+    priceOracleContractAddress,
     priceOracleContractInterface: new Contract(
-      '0x9A8B6dc929f8d1225E17cbef60534F8fB9f03832',
-      PriceOracle?.abi
+      priceOracleContractAddress,
+      PriceOracleInterface?.abi
     ),
-    referralContractAddress: '0xf72BBf777076BBfE2f779EEC69Eee9578399e353',
+    referralContractAddress: referralV4ContractAddress,
     referralContractInterface: new Contract(
-      '0xf72BBf777076BBfE2f779EEC69Eee9578399e353',
-      ReferralInterface.abi
+      referralV4ContractAddress,
+      ReferralV4Interface.abi
     ),
-    stakingContractAddress: '0x404bbE8eD6Cc5D771f428cBd4471549B6783545C',
-    stakingContractInterface: new Contract(
-      '0x404bbE8eD6Cc5D771f428cBd4471549B6783545C',
-      StakingInterface.abi
+    roiContractAddress: roiV1ContractAddress,
+    roiContractInterface: new Contract(
+      roiV1ContractAddress,
+      ROIV1Interface.abi
+    ),
+    futureSecureWalletContractAddress: futureSecureWalletV1ContractAddress,
+    futureSecureWalletContractInterface: new Contract(
+      futureSecureWalletV1ContractAddress,
+      FutureSecureWalletV1Interface.abi
     ),
     Native: {
       ContractAddress: '',
@@ -74,9 +81,9 @@ export const useSupportedNetworkInfo = {
       Logo: tokenLogoSVG,
     },
     MYUSD: {
-      ContractAddress: '0xD2F6a7C009A9B112e451DA05BBd16357a3D323ea',
+      ContractAddress: myUSDContractAddress,
       ContractInterface: new Contract(
-        '0xD2F6a7C009A9B112e451DA05BBd16357a3D323ea',
+        myUSDContractAddress,
         ERC20Interface
       ),
       Name: 'MyUSD',

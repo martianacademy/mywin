@@ -1,16 +1,21 @@
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon
+} from '@chakra-ui/icons';
 import {
   Button,
   Divider,
   Heading,
   HStack,
+  Icon,
   IconButton,
-  Input,
-  InputGroup,
-  InputRightAddon,
-  InputRightElement,
-  Modal,
+  Image,
+  Input, Modal,
+  ModalBody,
+  ModalCloseButton,
   ModalContent,
+  ModalHeader,
   ModalOverlay,
   NumberInput,
   NumberInputField,
@@ -18,26 +23,28 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Spacer,
+  StackDivider,
   Tag,
   Text,
   useColorModeValue,
   useDisclosure,
   useToast,
-  VStack,
-  Icon,
-  Image,
-  Center
+  VStack
 } from '@chakra-ui/react';
-import { useContractFunction, useEtherBalance } from '@usedapp/core';
+import {
+  useContractFunction,
+  useEtherBalance,
+  useTokenBalance
+} from '@usedapp/core';
 import { utils } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
-import { FaUser } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import {
   DefaultReferrerID,
   StakingInfo,
-  useSupportedNetworkInfo,
+  useSupportedNetworkInfo
 } from '../../constants';
 import { Logo } from '../Logo/Logo';
 import { ModalConfirmTransactionStake } from '../Modals';
@@ -63,6 +70,11 @@ export const JoinUI = ({
   coinPrice: number;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenSelectCoin,
+    onOpen: onOpenSelectCoin,
+    onClose: onCloseSelectCoin,
+  } = useDisclosure();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const toast = useToast();
   const { referrerAddress } = useParams();
@@ -83,6 +95,10 @@ export const JoinUI = ({
   const [transactionHash, setTransactionHash] = useState('');
 
   const userETHBalanceWei = useEtherBalance(account);
+  const userMyUSDBalanceWei = useTokenBalance(
+    currentNetwork?.MYUSD?.ContractAddress,
+    account
+  );
 
   const errors = {
     valueIncreasingBalance:
@@ -100,7 +116,7 @@ export const JoinUI = ({
     resetState: resetStateJoin,
   } = useContractFunction(
     currentNetwork?.referralContractInterface,
-    'activateID'
+    'activateId'
   );
 
   const handleInput = (e: any) => {
@@ -276,7 +292,7 @@ export const JoinUI = ({
               {currentNetwork?.Native?.Symbol}
             </Text>
           </HStack>
-          <InputGroup >
+          <HStack w="full">
             <NumberInput
               w="full"
               defaultValue={minContributionETH}
@@ -292,18 +308,23 @@ export const JoinUI = ({
               step={0.1}
               precision={5}
             >
-              <NumberInputField
-                h={20}
-                borderRadius="3xl"
-                onChange={handleInput}
-              />
+              <HStack>
+                <NumberInputField
+                  h={20}
+                  borderRadius="3xl"
+                  onChange={handleInput}
+                />
+                <HStack spacing={0} cursor="pointer" onClick={onOpenSelectCoin}>
+                  <Image
+                    src={currentNetwork?.Native?.Logo}
+                    boxSize={10}
+                  ></Image>
+                  <Icon as={ChevronDownIcon}></Icon>
+                </HStack>
+              </HStack>
             </NumberInput>
-            <HStack bgColor="red" w={20}>
-            <InputRightElement children={<HStack p={1}><Image src={currentNetwork?.Native?.Logo}></Image>
-            <Icon as={ChevronDownIcon}></Icon></HStack> } h={20}></InputRightElement>
-            </HStack>
+          </HStack>
 
-          </InputGroup>
           {errors.balanceLessThanMinContribution && (
             <Text color="red" fontWeight={500}>
               * You don't have sufficient balance. You atleast need{' '}
@@ -434,6 +455,40 @@ export const JoinUI = ({
           </ModalContent>
         </Modal>
       </VStack>
+      <Modal isOpen={isOpenSelectCoin} onClose={onCloseSelectCoin} isCentered>
+        <ModalOverlay />
+        <ModalContent borderRadius="3xl">
+          <ModalCloseButton />
+          <ModalHeader w="full" textAlign="center">
+            Select Coin
+          </ModalHeader>
+          <ModalBody>
+            <VStack divider={<StackDivider />}>
+              <HStack w="full" cursor="pointer">
+                <Image src={currentNetwork?.Native?.Logo} boxSize={10}></Image>
+                <Heading size="sm">{currentNetwork?.Native?.Symbol}</Heading>
+                <Spacer />
+                <Text>
+                  {Number(formatEther(userETHBalanceWei ?? 0)).toFixed(3)}
+                </Text>
+              </HStack>
+              <VStack>
+                <HStack w="full" cursor="pointer">
+                  <Image src={currentNetwork?.MYUSD?.Logo} boxSize={10}></Image>
+                  <Heading size="sm">{currentNetwork?.MYUSD?.Symbol}</Heading>
+                  <Spacer />
+                  <Text>
+                    {Number(formatEther(userMyUSDBalanceWei ?? 0)).toFixed(2)}
+                  </Text>
+                </HStack>
+                <Heading size="sm" color="pink.500">
+                  * Get 10% extra reward when your friend joins with MYUSD.
+                </Heading>
+              </VStack>
+            </VStack>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </VStack>
   );
 };

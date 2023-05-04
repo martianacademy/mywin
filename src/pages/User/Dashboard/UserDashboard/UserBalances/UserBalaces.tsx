@@ -1,8 +1,6 @@
-import { Button, Heading } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 import { useEtherBalance, useEthers, useTokenBalance } from "@usedapp/core";
 import { formatEther } from "ethers/lib/utils";
-import React from "react";
-import { FaWallet } from "react-icons/fa";
 import { BalancesCard, CardContainer } from "../../../../../components";
 import { useSupportedNetworkInfo } from "../../../../../constants";
 import { userIDAccountType } from "../../../../../hooks/ReferralHooks";
@@ -39,7 +37,7 @@ export const UserBalaces = ({
       <BalancesCard
         heading={"Wallet Balance"}
         currencyValue={Number(
-          idAccountMap.totalIncome - idAccountMap.balanceClaimed
+          idAccountMap.walletBalance
         ).toFixed(2)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         logo={currentNetwork?.MYUSD?.Logo}

@@ -35,7 +35,7 @@ interface IFutureSecureWallet {
     function stakeByAdmin(address _userAddress, uint256 _value) external;
 }
 
-contract ReferralV3Upgradeable is
+contract ReferralV4Upgradeable is
     Initializable,
     OwnableUpgradeable,
     UUPSUpgradeable
@@ -73,13 +73,13 @@ contract ReferralV3Upgradeable is
     struct StructAccount {
         bool isActive;
         uint32[] accountIds;
+        string userName;
     }
 
     struct StructId {
         uint32 id;
         string oldId;
         uint256 joiningTime;
-        bool isActive;
         bool isAddedToUserList;
         address owner;
         uint32 refererId;
@@ -103,11 +103,15 @@ contract ReferralV3Upgradeable is
         uint256 topUp;
         uint256 maxLimit;
         uint256 activationTime;
+        uint256 deactivationTime;
         uint256 referralPaid;
         uint32[] roiIds;
         uint256 roiPaid;
         uint256 roiClaimedTime;
         uint256 walletBalance;
+        bool isActive;
+        bool isROIDisabled;
+        bool isIdVisibilityDisabled;
         bool canWindraw;
     }
 
@@ -315,43 +319,43 @@ contract ReferralV3Upgradeable is
         packagesCount = _valueDecimals;
     }
 
-    function payRoyaltyClubReccursiveBonusAdmin() external onlyOwner {
-        uint8 _royaltyPackagesCount = packagesCount;
+    // function payRoyaltyClubReccursiveBonusAdmin() external onlyOwner {
+    //     uint8 _royaltyPackagesCount = packagesCount;
 
-        for (uint8 i; i < _royaltyPackagesCount; i++) {
-            StructPackages memory package = packages[i];
-            if (!package.isPayReccursive) {
-                continue;
-            }
+    //     for (uint8 i; i < _royaltyPackagesCount; i++) {
+    //         StructPackages memory package = packages[i];
+    //         if (!package.isPayReccursive) {
+    //             continue;
+    //         }
 
-            uint32[] memory acheiversList = package.achieversList;
-            uint32 achieversCount = uint32(acheiversList.length);
-            uint256 valueToDistribute = (companyTurnoverWithTimeLimit *
-                package.reward) /
-                decimals /
-                achieversCount;
+    //         uint32[] memory acheiversList = package.achieversList;
+    //         uint32 achieversCount = uint32(acheiversList.length);
+    //         uint256 valueToDistribute = (companyTurnoverWithTimeLimit *
+    //             package.reward) /
+    //             decimals /
+    //             achieversCount;
 
-            for (uint32 j; j < achieversCount; j++) {
-                StructId storage idAccount = ids[acheiversList[j]];
+    //         for (uint32 j; j < achieversCount; j++) {
+    //             StructId storage idAccount = ids[acheiversList[j]];
 
-                if (
-                    idAccount.royaltyClubBusiness > package.businessLimit &&
-                    idAccount.topUpIncome <= idAccount.maxLimit
-                ) {
-                    idAccount.topUpIncome += valueToDistribute;
+    //             if (
+    //                 idAccount.royaltyClubBusiness > package.businessLimit &&
+    //                 idAccount.topUpIncome <= idAccount.maxLimit
+    //             ) {
+    //                 idAccount.topUpIncome += valueToDistribute;
 
-                    emit RoyaltyClubBonusPaid(
-                        acheiversList[j],
-                        package.packageId,
-                        valueToDistribute
-                    );
-                }
-            }
-        }
+    //                 emit RoyaltyClubBonusPaid(
+    //                     acheiversList[j],
+    //                     package.packageId,
+    //                     valueToDistribute
+    //                 );
+    //             }
+    //         }
+    //     }
 
-        companyTurnoverWithTimeLimit = 0;
-        companyTurnoverTimeStamp = block.timestamp;
-    }
+    //     companyTurnoverWithTimeLimit = 0;
+    //     companyTurnoverTimeStamp = block.timestamp;
+    // }
 
     function _checkIfIdDisabled(
         StructId storage _idAccount
@@ -379,6 +383,8 @@ contract ReferralV3Upgradeable is
         _idAccount.topUpIncome = 0;
         _idAccount.topUp = 0;
         _idAccount.maxLimit = 0;
+        _idAccount.deactivationTime = block.timestamp;
+
         emit DeactivatedId(_idAccount.id, "Max Limit Reached");
     }
 
@@ -561,7 +567,7 @@ contract ReferralV3Upgradeable is
         uint32 _referrerId,
         uint256 _value,
         uint256 _currentMaxLimit,
-        uint256 _currenTime,
+        uint256 _currentTime,
         uint256 _maxLevels
     ) private {
         if (_idAccount.id == 0) {
@@ -581,7 +587,7 @@ contract ReferralV3Upgradeable is
         }
 
         if (_idAccount.joiningTime == 0) {
-            _idAccount.joiningTime = _currenTime;
+            _idAccount.joiningTime = _currentTime;
         }
 
         if (!_idAccount.hasUpline) {
@@ -594,7 +600,7 @@ contract ReferralV3Upgradeable is
         _idAccount.maxLimit = _currentMaxLimit;
         _idAccount.selfBusinessArray.push(_value);
         _idAccount.selfBusiness += _value;
-        _idAccount.activationTime = _currenTime;
+        _idAccount.activationTime = _currentTime;
         _idAccount.roiIds = new uint32[](0);
 
         for (uint8 i; i < _maxLevels; i++) {
@@ -622,10 +628,10 @@ contract ReferralV3Upgradeable is
             }
 
             if (isPayRoyaltyClubBonus) {
-                _updateIdInRoyaltyClub(refererIdAccount, _value, _currenTime);
+                _updateIdInRoyaltyClub(refererIdAccount, _value, _currentTime);
             }
 
-            _updateCompanyTurnOver(_value, _currenTime);
+            _updateCompanyTurnOver(_value, _currentTime);
             _idAccount = refererIdAccount;
         }
     }
@@ -641,7 +647,7 @@ contract ReferralV3Upgradeable is
 
         address _msgSender = msg.sender;
         uint256 _currentTime = block.timestamp;
-        uint32 _id = totalIds++;
+        uint32 _id = totalIds + 1;
 
         StructAccount storage userAccount = accounts[_msgSender];
         StructId storage _idAccount = ids[_id];
@@ -668,6 +674,7 @@ contract ReferralV3Upgradeable is
         }
 
         userAccount.accountIds.push(_id);
+        totalIds++;
     }
 
     // function activateIdUSD(uint32 _refererId, uint256 _value) external {
@@ -854,7 +861,8 @@ contract ReferralV3Upgradeable is
             _valueInUSD >= idAccount.walletBalance,
             "value greater than balance."
         );
-        require(idAccount.canWindraw == true, "Withdraw is not enabled");
+        require(idAccount.canWindraw, "Withdraw is not enabled");
+
         idAccount.walletBalance -= _valueInUSD;
         uint256 _futureSecureWalletValue = _valueInUSD * futureScureWalletContribution / 100;
         IFutureSecureWallet(IVariables(_variablesContract).getFutureSecureWalletContract()).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);

@@ -27,10 +27,10 @@ export const UserTeam = ({
   const [loadMaxTeam, setLoadMaxTeam] = useState(10);
 
   useEffect(() => {
-    if (idAccountMap?.teamIDs.length < loadMaxTeam) {
-      setLoadMaxTeam(idAccountMap?.teamIDs.length);
+    if (idAccountMap?.teamIds.length < loadMaxTeam) {
+      setLoadMaxTeam(idAccountMap?.teamIds.length);
     }
-  }, [loadMaxTeam, idAccountMap?.teamIDs.length]);
+  }, [loadMaxTeam, idAccountMap?.teamIds.length]);
 
   return (
     <CardContainer>
@@ -40,14 +40,14 @@ export const UserTeam = ({
       <HStack justify="center" align="center">
       <Tag p={3} borderRadius="3xl">
         <VStack>
-          <Heading size="md" color="pink.500">{idAccountMap.refereeIDs.length}</Heading>
+          <Heading size="md" color="pink.500">{idAccountMap.refereeIds.length}</Heading>
           <Text >Referee</Text>
           <Icon as={HiUsers} boxSize={10}></Icon>
         </VStack>
       </Tag>
       <Tag p={3} borderRadius="3xl">
         <VStack>
-          <Heading size="md" color="pink.500">{idAccountMap.teamIDs.length}</Heading>
+          <Heading size="md" color="pink.500">{idAccountMap.teamIds.length}</Heading>
           <Text >Team</Text>
           <Icon as={FaUsers} boxSize={10}></Icon>
         </VStack>

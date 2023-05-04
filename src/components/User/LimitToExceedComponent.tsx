@@ -22,7 +22,7 @@ export const LimitToExceedComponent = ({
   const { chainId } = useEthers();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const limitPercentage =
-    (idAccountMap?.totalIncome / idAccountMap?.totalMaxLimitAmount) * 100;
+    (idAccountMap?.topUpIncome / idAccountMap?.maxLimit) * 100;
   const circularColor = (limitPercentage <= 25) ? "orange.300" : limitPercentage > 25 && limitPercentage <= 50 ? "green.300" : limitPercentage > 50 && limitPercentage <= 75 ? "yellow.300" : "red.300";
   return (
     <CardContainer>
@@ -53,7 +53,7 @@ export const LimitToExceedComponent = ({
       <VStack w="full">
         <Tag colorScheme="green">Max Limit</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
-          {idAccountMap?.totalMaxLimitAmount} {currentNetwork?.MYUSD?.Symbol}
+          {idAccountMap?.maxLimit} {currentNetwork?.MYUSD?.Symbol}
         </Heading>
       </VStack>
       {/* <VStack w="full">
@@ -65,7 +65,7 @@ export const LimitToExceedComponent = ({
       <VStack w="full">
         <Tag colorScheme="red">Limit Reached</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
-          {idAccountMap?.totalIncome} {currentNetwork?.MYUSD?.Symbol}
+          {idAccountMap?.topUpIncome} {currentNetwork?.MYUSD?.Symbol}
         </Heading>
       </VStack>
     </CardContainer>

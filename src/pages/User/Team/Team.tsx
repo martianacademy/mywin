@@ -31,14 +31,14 @@ export const Team = () => {
   return (
     <VStack py={10} px={5} spacing={10} w="full">
       <Heading>Your Team Object</Heading>
-      {Number(userIDAccount.refererID) > 0 && (
+      {Number(userIDAccount.refererId) > 0 && (
         <VStack>
           <UserReferralCard
             heading="Referrer"
             icon={FaUserAstronaut}
-            id={userIDAccount?.refererID}
+            id={userIDAccount?.refererId}
             onOpen={() => {
-              setModalID(userIDAccount?.refererID);
+              setModalID(userIDAccount?.refererId);
               onOpen();
             }}
           ></UserReferralCard>
@@ -58,9 +58,9 @@ export const Team = () => {
         <Icon as={FaArrowDown} boxSize={10}></Icon>
       </VStack>
       <VStack w="full">
-        {userIDAccount?.refereeIDs.length > 0 ? (
+        {userIDAccount?.refereeIds.length > 0 ? (
           <Wrap justify="center"  w="full" spacing={5} overflow="visible">
-            {userIDAccount?.refereeIDs.map((id: string, key: number) => {
+            {userIDAccount?.refereeIds.map((id: string, key: number) => {
               return (
                 <UserReferralCard
                   heading="Referee"

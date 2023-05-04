@@ -31,6 +31,7 @@ import {
   useSupportedNetworkInfo,
 } from '../../constants';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { MdFlashOn } from 'react-icons/md';
 
 const SocialButton = ({
   children,
@@ -171,7 +172,22 @@ export function Footer() {
                 as="a"
                 target="_blank"
                 href={`${currentNetwork?.Network?.getExplorerAddressLink(
-                  currentNetwork?.stakingContractAddress
+                  currentNetwork?.roiContractAddress
+                )}`}
+                w={300}
+                borderRadius="xl"
+                h={12}
+                color="pink.500"
+                leftIcon={<Icon as={MdFlashOn}></Icon>}
+                rightIcon={<ExternalLinkIcon />}
+              >
+                ROI
+              </Button>
+              <Button
+                as="a"
+                target="_blank"
+                href={`${currentNetwork?.Network?.getExplorerAddressLink(
+                  currentNetwork?.futureSecureWalletContractAddress
                 )}`}
                 w={300}
                 borderRadius="xl"

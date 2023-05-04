@@ -52,8 +52,8 @@ export const NavUser = () => {
         </VStack>
         <VStack color="orange.500">
           <Text>ID: {userIDAccount?.id}</Text>
-          {userIDAccount?.oldID.length > 0 && (
-            <Text>oldID: {userIDAccount?.oldID}</Text>
+          {userIDAccount?.oldId.length > 0 && (
+            <Text>oldID: {userIDAccount?.oldId}</Text>
           )}
         </VStack>
       </VStack>

@@ -12,13 +12,13 @@ export const UserIDDisplay = () => {
 
   return (
     <VStack w="full" p={5} spacing={10}>
-      {!referralAccount?.accountIDs.length ? (
+      {!referralAccount?.accountIds.length ? (
         <Heading color="red">Your account is not active yet.</Heading>
       ) : (
         <>
           <Heading>Your IDs</Heading>
           <Wrap w="full" justify="center" p={5} spacing={10} overflow="visible">
-            {referralAccount?.accountIDs.map((id: number, key: number) => {
+            {referralAccount?.accountIds.map((id: string, key: number) => {
               return (
                 <VStack onClick={() => navigate(`/user/dashboard/${id}`)} key={key}>
                   <UserIDCardDashboard id={`${id}`}></UserIDCardDashboard>

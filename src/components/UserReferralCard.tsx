@@ -53,7 +53,7 @@ export const UserReferralCard = ({
           {userIDAccount.id && (
             <VStack spacing={0} color="orange.500">
               <Heading size="sm">Old ID</Heading>
-              <Heading size="md">{userIDAccount.oldID}</Heading>
+              <Heading size="md">{userIDAccount.oldId}</Heading>
             </VStack>
           )}
 
@@ -100,14 +100,14 @@ export const UserReferralCard = ({
                 <HStack color="orange.500">
                   <Icon as={HiUsers} boxSize={5}></Icon>
                   <Heading size="md">
-                    {userIDAccount?.refereeIDs?.length}
+                    {userIDAccount?.refereeIds?.length}
                   </Heading>
                 </HStack>
               </Tag>
               <Tag p={2} borderRadius="xl">
                 <HStack color="orange.500">
                   <Icon as={FaUsers} boxSize={5}></Icon>
-                  <Heading size="md">{userIDAccount?.teamIDs?.length}</Heading>
+                  <Heading size="md">{userIDAccount?.teamIds?.length}</Heading>
                 </HStack>
               </Tag>
             </HStack>
@@ -173,7 +173,7 @@ export const UserReferralCard = ({
             >
               <HStack>
                 <Icon as={GiStairsGoal}></Icon>
-                <Text>{userIDAccount?.royaltyClubPackageID}</Text>
+                <Text>{userIDAccount?.royaltyClubPackageId}</Text>
               </HStack>
             </Tag>
           </Wrap>

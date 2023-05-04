@@ -80,6 +80,31 @@
       "address": "0xB57f2d3b0fb574CFf19fd55456094F4BDdB5b97c",
       "txHash": "0x204ffd892a518247201b28d34de128ab933587d00f0c52bb210c558576cc076e",
       "kind": "uups"
+    },
+    {
+      "address": "0xcB9C8118cCeD341e4EAB56303e75B33677643198",
+      "txHash": "0x4709e58a378e708dd2b408a47728166e7dec182a70c224f6a45fcbd9eb4e5b05",
+      "kind": "uups"
+    },
+    {
+      "address": "0x3fF959F534d45029add1C18648065d5e86358374",
+      "txHash": "0xe897ca5f2500325e52e553a20c3b9b07d7e66c8147a8363aaef2acce471d3c1e",
+      "kind": "uups"
+    },
+    {
+      "address": "0x5c103684707fa326769B415192081762E1756EC2",
+      "txHash": "0xf1ca4a47e707202975b5aed398ba14fadf4d8acc6fde1d6e0525921f27841cfa",
+      "kind": "uups"
+    },
+    {
+      "address": "0xEAb2274175778aaEbcda1032db0b70EAEC56c3ba",
+      "txHash": "0x7c6db71a2b62f3493b2cec79c020de8311348e9515c059ea860dc13461f597ba",
+      "kind": "uups"
+    },
+    {
+      "address": "0x0E1A0e0ba59cBe9Ed29EBb7693Cf90b9F6374C7e",
+      "txHash": "0x7c906875c8658f90b11be6e222938feae0e6c513566155e0ad74c2589aa6635a",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -46381,6 +46406,2800 @@
               }
             ],
             "numberOfBytes": "160"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "0c61c6106709d1025f2d45a0f45699a5ef2ee744f203353af00eb9f49af443f6": {
+      "address": "0xAC16d1Aa9bA7A8a439837c9e5F91007976958322",
+      "txHash": "0x587e6c4d8e992934e6d031ca0bb3592fb55929246aaafab8f1da77fd0e21e950",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_variablesContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:43"
+          },
+          {
+            "label": "levelRates",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint16)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:45"
+          },
+          {
+            "label": "decimals",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_uint16",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:46"
+          },
+          {
+            "label": "maxLevels",
+            "offset": 2,
+            "slot": "203",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:48"
+          },
+          {
+            "label": "minContributionUSD",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:49"
+          },
+          {
+            "label": "totalRoyaltyClubBonusPaid",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:51"
+          },
+          {
+            "label": "totalReferralPaid",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:52"
+          },
+          {
+            "label": "totalIds",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_uint32",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:54"
+          },
+          {
+            "label": "isPayRoyaltyClubBonus",
+            "offset": 4,
+            "slot": "207",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:56"
+          },
+          {
+            "label": "royaltyClubPackageCount",
+            "offset": 5,
+            "slot": "207",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:57"
+          },
+          {
+            "label": "_userLevelUnlockMultiplier",
+            "offset": 6,
+            "slot": "207",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:59"
+          },
+          {
+            "label": "companyTurnoverWithTimeLimit",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:61"
+          },
+          {
+            "label": "companyTurnoverTimeStamp",
+            "offset": 0,
+            "slot": "209",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:62"
+          },
+          {
+            "label": "companyTurnoverTimeLimit",
+            "offset": 0,
+            "slot": "210",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:63"
+          },
+          {
+            "label": "disabledUsersList",
+            "offset": 0,
+            "slot": "211",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:65"
+          },
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "212",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:66"
+          },
+          {
+            "label": "isActivateROI",
+            "offset": 0,
+            "slot": "213",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:68"
+          },
+          {
+            "label": "isPayReferral",
+            "offset": 1,
+            "slot": "213",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:69"
+          },
+          {
+            "label": "futureScureWalletContribution",
+            "offset": 2,
+            "slot": "213",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:71"
+          },
+          {
+            "label": "packagesCount",
+            "offset": 3,
+            "slot": "213",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:129"
+          },
+          {
+            "label": "accounts",
+            "offset": 0,
+            "slot": "214",
+            "type": "t_mapping(t_address,t_struct(StructAccount)1404_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:131"
+          },
+          {
+            "label": "ids",
+            "offset": 0,
+            "slot": "215",
+            "type": "t_mapping(t_uint32,t_struct(StructId)1480_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:132"
+          },
+          {
+            "label": "packages",
+            "offset": 0,
+            "slot": "216",
+            "type": "t_mapping(t_uint8,t_struct(StructPackages)1502_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:133"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint16)dyn_storage": {
+            "label": "uint16[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint32)dyn_storage": {
+            "label": "uint32[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_struct(StructAccount)1404_storage)": {
+            "label": "mapping(address => struct ReferralV4Upgradeable.StructAccount)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_struct(StructId)1480_storage)": {
+            "label": "mapping(uint32 => struct ReferralV4Upgradeable.StructId)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(StructPackages)1502_storage)": {
+            "label": "mapping(uint8 => struct ReferralV4Upgradeable.StructPackages)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StructAccount)1404_storage": {
+            "label": "struct ReferralV4Upgradeable.StructAccount",
+            "members": [
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "accountIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(StructId)1480_storage": {
+            "label": "struct ReferralV4Upgradeable.StructId",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "oldId",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "joiningTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "isAddedToUserList",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "owner",
+                "type": "t_address",
+                "offset": 1,
+                "slot": "3"
+              },
+              {
+                "label": "refererId",
+                "type": "t_uint32",
+                "offset": 21,
+                "slot": "3"
+              },
+              {
+                "label": "hasUpline",
+                "type": "t_bool",
+                "offset": 25,
+                "slot": "3"
+              },
+              {
+                "label": "refereeIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "teamIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "teamLevel",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "selfBusinessArray",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "selfBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "selfBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "directBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "directBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "11"
+              },
+              {
+                "label": "teamBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "teamBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              },
+              {
+                "label": "royaltyClubBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "14"
+              },
+              {
+                "label": "timeStampRoyaltyClub",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "15"
+              },
+              {
+                "label": "royaltyClubPackageId",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "16"
+              },
+              {
+                "label": "royaltyClubListIndex",
+                "type": "t_uint32",
+                "offset": 1,
+                "slot": "16"
+              },
+              {
+                "label": "royaltyClubRewardPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "17"
+              },
+              {
+                "label": "topUpIncome",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "18"
+              },
+              {
+                "label": "topUp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "19"
+              },
+              {
+                "label": "maxLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "20"
+              },
+              {
+                "label": "activationTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "21"
+              },
+              {
+                "label": "referralPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "22"
+              },
+              {
+                "label": "roiIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "23"
+              },
+              {
+                "label": "roiPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "24"
+              },
+              {
+                "label": "roiClaimedTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "25"
+              },
+              {
+                "label": "walletBalance",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "26"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "27"
+              },
+              {
+                "label": "isROIDisabled",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "27"
+              },
+              {
+                "label": "isIdVisibilityDisabled",
+                "type": "t_bool",
+                "offset": 2,
+                "slot": "27"
+              },
+              {
+                "label": "canWindraw",
+                "type": "t_bool",
+                "offset": 3,
+                "slot": "27"
+              }
+            ],
+            "numberOfBytes": "896"
+          },
+          "t_struct(StructPackages)1502_storage": {
+            "label": "struct ReferralV4Upgradeable.StructPackages",
+            "members": [
+              {
+                "label": "packageId",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "selfBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "directBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "teamBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "rankName",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "businessLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "timeLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "isPayReccursive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "achieversList",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "320"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "d721be805b0dd95b26e3bf6b6d59d630b76c230c8223df593ef3a59e9ebf2672": {
+      "address": "0xF728d52BAc1b6716DE80dB8083B416D01DB766FF",
+      "txHash": "0x808e572b299bcce050eba1b1cfbf79a5dd2aa941b041ed451e9fc9e8ef024aa2",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_variablesContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:74"
+          },
+          {
+            "label": "totalROIIDs",
+            "offset": 20,
+            "slot": "201",
+            "type": "t_uint32",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:76"
+          },
+          {
+            "label": "totalROIPaid",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:77"
+          },
+          {
+            "label": "totalROIValue",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:78"
+          },
+          {
+            "label": "decimals",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_uint16",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:80"
+          },
+          {
+            "label": "_roiRate",
+            "offset": 2,
+            "slot": "204",
+            "type": "t_uint16",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:82"
+          },
+          {
+            "label": "_roiDuration",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:83"
+          },
+          {
+            "label": "_roiClaimTimelimit",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:84"
+          },
+          {
+            "label": "isPayROI",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_bool",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:86"
+          },
+          {
+            "label": "rois",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_mapping(t_uint32,t_struct(StructROI)1457_storage)",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:98"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint32,t_struct(StructROI)1457_storage)": {
+            "label": "mapping(uint32 => struct ROIV1Upgradeable.StructROI)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StructROI)1457_storage": {
+            "label": "struct ROIV1Upgradeable.StructROI",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "ownerId",
+                "type": "t_uint32",
+                "offset": 5,
+                "slot": "0"
+              },
+              {
+                "label": "value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "roiRate",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "duration",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "d30f695a2c69dca77d5c3c7f1e05e70bc17d89f5cc3e765cbdb3f59d30df4d14": {
+      "address": "0x7043e2E99F3e4B95E686fb118f72a06c195ed1f2",
+      "txHash": "0x9a55ca507de45434966c2b9b98d768d0bec7fbc80cb96ac5baba3fb654e4472c",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_variablesContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:74"
+          },
+          {
+            "label": "totalROIIDs",
+            "offset": 20,
+            "slot": "201",
+            "type": "t_uint32",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:76"
+          },
+          {
+            "label": "totalROIPaid",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:77"
+          },
+          {
+            "label": "totalROIValue",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:78"
+          },
+          {
+            "label": "decimals",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_uint16",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:80"
+          },
+          {
+            "label": "_roiRate",
+            "offset": 2,
+            "slot": "204",
+            "type": "t_uint16",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:82"
+          },
+          {
+            "label": "_roiDuration",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:83"
+          },
+          {
+            "label": "_roiClaimTimelimit",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:84"
+          },
+          {
+            "label": "isPayROI",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_bool",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:86"
+          },
+          {
+            "label": "rois",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_mapping(t_uint32,t_struct(StructROI)1457_storage)",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:98"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint32,t_struct(StructROI)1457_storage)": {
+            "label": "mapping(uint32 => struct ROIV1Upgradeable.StructROI)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StructROI)1457_storage": {
+            "label": "struct ROIV1Upgradeable.StructROI",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "ownerId",
+                "type": "t_uint32",
+                "offset": 5,
+                "slot": "0"
+              },
+              {
+                "label": "value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "roiRate",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "duration",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "6445e814227ebc2f2ce49db712744f70e01938a4149ec12bc3a1d6c47c89b938": {
+      "address": "0x9A2b732c656f820c737c14A1b5e072C3A2A61EC1",
+      "txHash": "0x406af2c776b71b8c44a8341523cd949732b0e974791a4e68252029abbc16c43f",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_variablesContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:73"
+          },
+          {
+            "label": "totalROIIDs",
+            "offset": 20,
+            "slot": "201",
+            "type": "t_uint32",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:75"
+          },
+          {
+            "label": "totalROIPaid",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:76"
+          },
+          {
+            "label": "totalROIValue",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:77"
+          },
+          {
+            "label": "decimals",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_uint16",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:79"
+          },
+          {
+            "label": "_roiRate",
+            "offset": 2,
+            "slot": "204",
+            "type": "t_uint16",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:81"
+          },
+          {
+            "label": "_roiDuration",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:82"
+          },
+          {
+            "label": "_roiClaimTimelimit",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:83"
+          },
+          {
+            "label": "isPayROI",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_bool",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:85"
+          },
+          {
+            "label": "rois",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_mapping(t_uint32,t_struct(StructROI)1459_storage)",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:97"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint32,t_struct(StructROI)1459_storage)": {
+            "label": "mapping(uint32 => struct ROIV1Upgradeable.StructROI)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StructROI)1459_storage": {
+            "label": "struct ROIV1Upgradeable.StructROI",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "ownerId",
+                "type": "t_uint32",
+                "offset": 5,
+                "slot": "0"
+              },
+              {
+                "label": "value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "roiRate",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "duration",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "5c20a5a4c0580c1029d10d407913297a874e6dd2f6c216f3fb9dd92764d38ba6": {
+      "address": "0x5176b1cD24ab147a6c00680f86231da136848413",
+      "txHash": "0x8a34daef2eb209626ca7ef30a0746fdf6000adabf129479b014471e046802c8f",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_variablesContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:73"
+          },
+          {
+            "label": "totalROIIDs",
+            "offset": 20,
+            "slot": "201",
+            "type": "t_uint32",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:75"
+          },
+          {
+            "label": "totalROIPaid",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:76"
+          },
+          {
+            "label": "totalROIValue",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:77"
+          },
+          {
+            "label": "decimals",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_uint16",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:79"
+          },
+          {
+            "label": "_roiRate",
+            "offset": 2,
+            "slot": "204",
+            "type": "t_uint16",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:81"
+          },
+          {
+            "label": "_roiDuration",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:82"
+          },
+          {
+            "label": "_roiClaimTimelimit",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:83"
+          },
+          {
+            "label": "isPayROI",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_bool",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:85"
+          },
+          {
+            "label": "rois",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_mapping(t_uint32,t_struct(StructROI)1459_storage)",
+            "contract": "ROIV1Upgradeable",
+            "src": "contracts/ROIV1Upgradeable.sol:97"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint32,t_struct(StructROI)1459_storage)": {
+            "label": "mapping(uint32 => struct ROIV1Upgradeable.StructROI)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StructROI)1459_storage": {
+            "label": "struct ROIV1Upgradeable.StructROI",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "ownerId",
+                "type": "t_uint32",
+                "offset": 5,
+                "slot": "0"
+              },
+              {
+                "label": "value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "roiRate",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "startTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "duration",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "2b64278ed7619e69136be4e48c481de38fdbbc9eeb47b15f87a008faf858a113": {
+      "address": "0xa10Af77B6eE4E40052F14A4d40EF5BE3f030A0F3",
+      "txHash": "0x488802493f2330dee80b88fe200ddf9c36ca9ba1604264de8a6ed17d58aea652",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_variablesContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:43"
+          },
+          {
+            "label": "levelRates",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint16)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:45"
+          },
+          {
+            "label": "decimals",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_uint16",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:46"
+          },
+          {
+            "label": "maxLevels",
+            "offset": 2,
+            "slot": "203",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:48"
+          },
+          {
+            "label": "minContributionUSD",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:49"
+          },
+          {
+            "label": "totalRoyaltyClubBonusPaid",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:51"
+          },
+          {
+            "label": "totalReferralPaid",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:52"
+          },
+          {
+            "label": "totalIds",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_uint32",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:54"
+          },
+          {
+            "label": "isPayRoyaltyClubBonus",
+            "offset": 4,
+            "slot": "207",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:56"
+          },
+          {
+            "label": "royaltyClubPackageCount",
+            "offset": 5,
+            "slot": "207",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:57"
+          },
+          {
+            "label": "_userLevelUnlockMultiplier",
+            "offset": 6,
+            "slot": "207",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:59"
+          },
+          {
+            "label": "companyTurnoverWithTimeLimit",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:61"
+          },
+          {
+            "label": "companyTurnoverTimeStamp",
+            "offset": 0,
+            "slot": "209",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:62"
+          },
+          {
+            "label": "companyTurnoverTimeLimit",
+            "offset": 0,
+            "slot": "210",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:63"
+          },
+          {
+            "label": "disabledUsersList",
+            "offset": 0,
+            "slot": "211",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:65"
+          },
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "212",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:66"
+          },
+          {
+            "label": "isActivateROI",
+            "offset": 0,
+            "slot": "213",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:68"
+          },
+          {
+            "label": "isPayReferral",
+            "offset": 1,
+            "slot": "213",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:69"
+          },
+          {
+            "label": "futureScureWalletContribution",
+            "offset": 2,
+            "slot": "213",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:71"
+          },
+          {
+            "label": "packagesCount",
+            "offset": 3,
+            "slot": "213",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:130"
+          },
+          {
+            "label": "accounts",
+            "offset": 0,
+            "slot": "214",
+            "type": "t_mapping(t_address,t_struct(StructAccount)2240_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:132"
+          },
+          {
+            "label": "ids",
+            "offset": 0,
+            "slot": "215",
+            "type": "t_mapping(t_uint32,t_struct(StructId)2318_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:133"
+          },
+          {
+            "label": "packages",
+            "offset": 0,
+            "slot": "216",
+            "type": "t_mapping(t_uint8,t_struct(StructPackages)2340_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:134"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint16)dyn_storage": {
+            "label": "uint16[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint32)dyn_storage": {
+            "label": "uint32[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_struct(StructAccount)2240_storage)": {
+            "label": "mapping(address => struct ReferralV4Upgradeable.StructAccount)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_struct(StructId)2318_storage)": {
+            "label": "mapping(uint32 => struct ReferralV4Upgradeable.StructId)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(StructPackages)2340_storage)": {
+            "label": "mapping(uint8 => struct ReferralV4Upgradeable.StructPackages)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StructAccount)2240_storage": {
+            "label": "struct ReferralV4Upgradeable.StructAccount",
+            "members": [
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "accountIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(StructId)2318_storage": {
+            "label": "struct ReferralV4Upgradeable.StructId",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "oldId",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "joiningTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "isAddedToUserList",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "owner",
+                "type": "t_address",
+                "offset": 1,
+                "slot": "3"
+              },
+              {
+                "label": "refererId",
+                "type": "t_uint32",
+                "offset": 21,
+                "slot": "3"
+              },
+              {
+                "label": "hasUpline",
+                "type": "t_bool",
+                "offset": 25,
+                "slot": "3"
+              },
+              {
+                "label": "refereeIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "teamIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "teamLevel",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "selfBusinessArray",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "selfBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "selfBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "directBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "directBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "11"
+              },
+              {
+                "label": "teamBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "teamBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              },
+              {
+                "label": "royaltyClubBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "14"
+              },
+              {
+                "label": "timeStampRoyaltyClub",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "15"
+              },
+              {
+                "label": "royaltyClubPackageId",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "16"
+              },
+              {
+                "label": "royaltyClubListIndex",
+                "type": "t_uint32",
+                "offset": 1,
+                "slot": "16"
+              },
+              {
+                "label": "royaltyClubRewardPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "17"
+              },
+              {
+                "label": "topUpIncome",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "18"
+              },
+              {
+                "label": "topUp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "19"
+              },
+              {
+                "label": "maxLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "20"
+              },
+              {
+                "label": "activationTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "21"
+              },
+              {
+                "label": "deactivationTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "22"
+              },
+              {
+                "label": "referralPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "23"
+              },
+              {
+                "label": "roiIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "24"
+              },
+              {
+                "label": "roiPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "25"
+              },
+              {
+                "label": "roiClaimedTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "26"
+              },
+              {
+                "label": "walletBalance",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "27"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "28"
+              },
+              {
+                "label": "isROIDisabled",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "28"
+              },
+              {
+                "label": "isIdVisibilityDisabled",
+                "type": "t_bool",
+                "offset": 2,
+                "slot": "28"
+              },
+              {
+                "label": "canWindraw",
+                "type": "t_bool",
+                "offset": 3,
+                "slot": "28"
+              }
+            ],
+            "numberOfBytes": "928"
+          },
+          "t_struct(StructPackages)2340_storage": {
+            "label": "struct ReferralV4Upgradeable.StructPackages",
+            "members": [
+              {
+                "label": "packageId",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "selfBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "directBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "teamBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "rankName",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "businessLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "timeLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "isPayReccursive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "achieversList",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "320"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "3c63a18d3676b9e253a0f0a108b181eda4014d074b8de79b79312c17946aa3bb": {
+      "address": "0x5C6B6E8e005E77d7eb33d03eb1183c91b420183D",
+      "txHash": "0x07ae28a7b76361845803ffd4ee26af3907e3ddc52d555e7e03739a964bd0b086",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_variablesContract",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:43"
+          },
+          {
+            "label": "levelRates",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint16)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:45"
+          },
+          {
+            "label": "decimals",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_uint16",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:46"
+          },
+          {
+            "label": "maxLevels",
+            "offset": 2,
+            "slot": "203",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:48"
+          },
+          {
+            "label": "minContributionUSD",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:49"
+          },
+          {
+            "label": "totalRoyaltyClubBonusPaid",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:51"
+          },
+          {
+            "label": "totalReferralPaid",
+            "offset": 0,
+            "slot": "206",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:52"
+          },
+          {
+            "label": "totalIds",
+            "offset": 0,
+            "slot": "207",
+            "type": "t_uint32",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:54"
+          },
+          {
+            "label": "isPayRoyaltyClubBonus",
+            "offset": 4,
+            "slot": "207",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:56"
+          },
+          {
+            "label": "royaltyClubPackageCount",
+            "offset": 5,
+            "slot": "207",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:57"
+          },
+          {
+            "label": "_userLevelUnlockMultiplier",
+            "offset": 6,
+            "slot": "207",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:59"
+          },
+          {
+            "label": "companyTurnoverWithTimeLimit",
+            "offset": 0,
+            "slot": "208",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:61"
+          },
+          {
+            "label": "companyTurnoverTimeStamp",
+            "offset": 0,
+            "slot": "209",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:62"
+          },
+          {
+            "label": "companyTurnoverTimeLimit",
+            "offset": 0,
+            "slot": "210",
+            "type": "t_uint256",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:63"
+          },
+          {
+            "label": "disabledUsersList",
+            "offset": 0,
+            "slot": "211",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:65"
+          },
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "212",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:66"
+          },
+          {
+            "label": "isActivateROI",
+            "offset": 0,
+            "slot": "213",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:68"
+          },
+          {
+            "label": "isPayReferral",
+            "offset": 1,
+            "slot": "213",
+            "type": "t_bool",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:69"
+          },
+          {
+            "label": "futureScureWalletContribution",
+            "offset": 2,
+            "slot": "213",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:71"
+          },
+          {
+            "label": "packagesCount",
+            "offset": 3,
+            "slot": "213",
+            "type": "t_uint8",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:131"
+          },
+          {
+            "label": "accounts",
+            "offset": 0,
+            "slot": "214",
+            "type": "t_mapping(t_address,t_struct(StructAccount)1406_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:133"
+          },
+          {
+            "label": "ids",
+            "offset": 0,
+            "slot": "215",
+            "type": "t_mapping(t_uint32,t_struct(StructId)1484_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:134"
+          },
+          {
+            "label": "packages",
+            "offset": 0,
+            "slot": "216",
+            "type": "t_mapping(t_uint8,t_struct(StructPackages)1506_storage)",
+            "contract": "ReferralV4Upgradeable",
+            "src": "contracts/ReferralV4Upgradeable.sol:135"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint16)dyn_storage": {
+            "label": "uint16[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint32)dyn_storage": {
+            "label": "uint32[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_struct(StructAccount)1406_storage)": {
+            "label": "mapping(address => struct ReferralV4Upgradeable.StructAccount)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_struct(StructId)1484_storage)": {
+            "label": "mapping(uint32 => struct ReferralV4Upgradeable.StructId)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(StructPackages)1506_storage)": {
+            "label": "mapping(uint8 => struct ReferralV4Upgradeable.StructPackages)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StructAccount)1406_storage": {
+            "label": "struct ReferralV4Upgradeable.StructAccount",
+            "members": [
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "accountIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "userName",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(StructId)1484_storage": {
+            "label": "struct ReferralV4Upgradeable.StructId",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "oldId",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "joiningTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "isAddedToUserList",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "owner",
+                "type": "t_address",
+                "offset": 1,
+                "slot": "3"
+              },
+              {
+                "label": "refererId",
+                "type": "t_uint32",
+                "offset": 21,
+                "slot": "3"
+              },
+              {
+                "label": "hasUpline",
+                "type": "t_bool",
+                "offset": 25,
+                "slot": "3"
+              },
+              {
+                "label": "refereeIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "teamIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "teamLevel",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "selfBusinessArray",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "selfBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "selfBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "directBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "directBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "11"
+              },
+              {
+                "label": "teamBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "12"
+              },
+              {
+                "label": "teamBusinessOld",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "13"
+              },
+              {
+                "label": "royaltyClubBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "14"
+              },
+              {
+                "label": "timeStampRoyaltyClub",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "15"
+              },
+              {
+                "label": "royaltyClubPackageId",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "16"
+              },
+              {
+                "label": "royaltyClubListIndex",
+                "type": "t_uint32",
+                "offset": 1,
+                "slot": "16"
+              },
+              {
+                "label": "royaltyClubRewardPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "17"
+              },
+              {
+                "label": "topUpIncome",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "18"
+              },
+              {
+                "label": "topUp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "19"
+              },
+              {
+                "label": "maxLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "20"
+              },
+              {
+                "label": "activationTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "21"
+              },
+              {
+                "label": "deactivationTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "22"
+              },
+              {
+                "label": "referralPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "23"
+              },
+              {
+                "label": "roiIds",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "24"
+              },
+              {
+                "label": "roiPaid",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "25"
+              },
+              {
+                "label": "roiClaimedTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "26"
+              },
+              {
+                "label": "walletBalance",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "27"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "28"
+              },
+              {
+                "label": "isROIDisabled",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "28"
+              },
+              {
+                "label": "isIdVisibilityDisabled",
+                "type": "t_bool",
+                "offset": 2,
+                "slot": "28"
+              },
+              {
+                "label": "canWindraw",
+                "type": "t_bool",
+                "offset": 3,
+                "slot": "28"
+              }
+            ],
+            "numberOfBytes": "928"
+          },
+          "t_struct(StructPackages)1506_storage": {
+            "label": "struct ReferralV4Upgradeable.StructPackages",
+            "members": [
+              {
+                "label": "packageId",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "selfBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "directBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "teamBusiness",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "rankName",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "businessLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "timeLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "isPayReccursive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "achieversList",
+                "type": "t_array(t_uint32)dyn_storage",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "320"
           },
           "t_uint16": {
             "label": "uint16",
