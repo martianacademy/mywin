@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEthers } from "@usedapp/core";
 import { IconType } from "react-icons";
 import {
+  FaChartArea,
   FaFacebook,
   FaGithub,
   FaIdCard,
@@ -52,7 +53,7 @@ const MenuItemComponent = ({
       onClick={onClick}
     >
       <HStack w="full">
-        <Text fontSize="sm">{name}</Text>
+        <Text fontSize="sm" fontWeight={500}>{name}</Text>
         <Spacer />
         {icon && <Icon as={icon} color="orange.500"></Icon>}
       </HStack>
@@ -98,8 +99,8 @@ export const NavMenu = () => {
           <Divider />
           <VStack flex={1} justify="center" py={[5, 10]}>
             <MenuItemComponent
-              name={"UserIDs"}
-              icon={FaIdCard}
+              name={"Dashboard"}
+              icon={FaChartArea}
               onClick={() => navigate("/user")}
             ></MenuItemComponent>
           </VStack>

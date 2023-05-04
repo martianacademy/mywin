@@ -12,6 +12,8 @@ import {
   IconButton,
   Image,
   Input,
+  InputGroup,
+  InputRightElement,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -291,37 +293,48 @@ export const JoinUI = ({
             </Text>
           </HStack>
           <HStack w="full">
-            <NumberInput
-              w="full"
-              defaultValue={minContributionETH}
-              min={minContributionETH}
-              max={Number(formatEther(userETHBalanceWei ?? 0))}
-              isDisabled={errors.balanceLessThanMinContribution}
-              isInvalid={
-                errors.valueIncreasingBalance ||
-                errors.valueLessThanMinContribution ||
-                errors.balanceLessThanMinContribution
-              }
-              value={input?.value}
-              step={0.1}
-              precision={5}
-            >
-              <HStack>
+            <InputGroup>
+              <NumberInput
+                w="full"
+                defaultValue={minContributionETH}
+                min={minContributionETH}
+                max={Number(formatEther(userETHBalanceWei ?? 0))}
+                isDisabled={errors.balanceLessThanMinContribution}
+                isInvalid={
+                  errors.valueIncreasingBalance ||
+                  errors.valueLessThanMinContribution ||
+                  errors.balanceLessThanMinContribution
+                }
+                value={input?.value}
+                step={0.1}
+                precision={5}
+              >
                 <NumberInputField
                   placeholder="Please enter the amount."
                   h={20}
                   borderRadius="3xl"
                   onChange={handleInput}
                 />
-                <HStack spacing={0} cursor="pointer" onClick={onOpenSelectCoin}>
-                  <Image
-                    src={currentNetwork?.Native?.Logo}
-                    boxSize={10}
-                  ></Image>
-                  <Icon as={ChevronDownIcon}></Icon>
-                </HStack>
-              </HStack>
-            </NumberInput>
+
+                <InputRightElement
+                  h={20}
+                  w={20}
+                  children={
+                    <HStack
+                      spacing={0}
+                      cursor="pointer"
+                      onClick={onOpenSelectCoin}
+                    >
+                      <Image
+                        src={currentNetwork?.Native?.Logo}
+                        boxSize={10}
+                      ></Image>
+                      <Icon as={ChevronDownIcon}></Icon>
+                    </HStack>
+                  }
+                ></InputRightElement>
+              </NumberInput>
+            </InputGroup>
           </HStack>
 
           {errors.balanceLessThanMinContribution && (
