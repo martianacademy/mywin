@@ -8,10 +8,13 @@ const useCallHook = (methodName: string, arg: any[]) => {
   const currentNetwork = useSupportedNetworkInfo[chainId!];
   const { value, error } =
     useCall(
-      currentNetwork?.referralContractAddress && {
+      {
         contract: currentNetwork?.referralContractInterface,
         method: methodName,
         args: arg,
+      },
+      {
+        refresh: 20,
       }
     ) ?? {};
 
@@ -33,7 +36,7 @@ export const useReferralAccountMap = (
   const valueObject = {
     isDisabled: value ? value?.isDisabled : false,
     accountIds: value ? value?.accountIds : [],
-    userName: value ? value?.userName : "Anonymous"
+    userName: value ? value?.userName : 'Anonymous',
   };
   return valueObject;
 };
@@ -78,7 +81,6 @@ export type userIDAccountType = {
 
 export const useIDAccount = (id: string): userIDAccountType => {
   const value = useCallHook('getIdAccount', [id])?.[0];
-  console.log(value);
   const valueObject: userIDAccountType = {
     id: value ? value?.id : '',
     oldId: value ? value?.oldId : '',
@@ -126,10 +128,6 @@ export const useIDAccount = (id: string): userIDAccountType => {
   return valueObject;
 };
 
-
-
-
-
 // export const useGetIDTotalBusiness = (id: string) => {
 //   const value = useCallHook('getIDTotalBusiness', [id]);
 
@@ -148,16 +146,17 @@ export const useIDAccount = (id: string): userIDAccountType => {
 export const useGetIDTeam = (
   id: string
 ): {
-  teamIDs: number[];
-  teamLevels: number[];
+  teamIDs: string[];
+  teamLevels: string[];
   teamCount: number;
 } => {
-  const value = useCallHook('getIDTeam', [id]);
+  const idAccount = useIDAccount(id);
   const valueObject = {
-    teamIDs: value ? value?.teamIDs : [],
-    teamLevels: value ? value?.teamLevels : [],
-    teamCount: value ? Number(value?.teamCount) : 0,
+    teamIDs: idAccount ? idAccount?.teamIds : [],
+    teamLevels: idAccount ? idAccount?.teamLevel : [],
+    teamCount: idAccount ? Number(idAccount?.teamIds?.length) : 0,
   };
+
   return valueObject;
 };
 
@@ -169,15 +168,19 @@ export const useGetIDRewardPaid = (
   rewardPaidRoyaltyClub: number;
   totalRewardPaid: number;
 } => {
-  const value = useCallHook('getIDRewardPaid', [id]);
+  const idAccount = useIDAccount(id);
   const valueObject = {
-    referralPaid: value ? Number(formatEther(value?.referralPaid)) : 0,
-    totalROIClaimed: value ? Number(formatEther(value?.totalROIClaimed)) : 0,
-    rewardPaidRoyaltyClub: value
-      ? Number(formatEther(value?.rewardPaidRoyaltyClub))
-      : 0,
-    totalRewardPaid: value ? Number(formatEther(value?.totalRewardPaid)) : 0,
+    referralPaid: idAccount?.referralPaid,
+    totalROIClaimed: idAccount?.roiPaid,
+    rewardPaidRoyaltyClub: idAccount?.royaltyClubRewardPaid,
+
+    totalRewardPaid:
+      idAccount?.referralPaid +
+      idAccount?.roiPaid +
+      idAccount?.royaltyClubRewardPaid,
   };
+
+  console.log(valueObject);
   return valueObject;
 };
 

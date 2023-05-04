@@ -14,7 +14,7 @@ async function main() {
 
   const TokenV2 = await ethers.getContractFactory("ROIV1Upgradeable");
   const mc = await upgrades.upgradeProxy(
-    "0x3fF959F534d45029add1C18648065d5e86358374",
+    "0x58e733b3e7DF14F6286a35e61cd52d921D777c3B",
     TokenV2,
     { gasPrice: gas }
   );

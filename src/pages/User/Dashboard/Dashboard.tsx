@@ -2,29 +2,18 @@ import {
   Divider,
   Heading,
   Hide,
-  HStack, Show,
-  Spacer, useColorModeValue,
-  useDisclosure,
+  HStack,
+  Show,
+  Spacer,
+  useColorModeValue,
   VStack
-} from "@chakra-ui/react";
-import { useEtherBalance, useEthers } from "@usedapp/core";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-
-import { useState } from "react";
-import { NavUser } from "../../../components";
-import { NavUserSmall } from "../../../components/Nav/NavUser/NavUserSmall";
-import { useSupportedNetworkInfo } from "../../../constants";
+} from '@chakra-ui/react';
+import { Outlet, useParams } from 'react-router-dom';
+import { NavUser } from '../../../components';
+import { NavUserSmall } from '../../../components/Nav/NavUser/NavUserSmall';
 
 export const Dashboard = () => {
-  const { chainId } = useEthers();
-  const currentNetwork = useSupportedNetworkInfo[chainId!];
-  const { account } = useEthers();
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const { isOpen, onToggle } = useDisclosure();
-  const [userNavHeading, setUserNavHeading] = useState("Dashboard");
-  const userNativeBalance = useEtherBalance(account);
-
+  const { userID } = useParams();
   return (
     <VStack w="full">
       <Show below="md">
@@ -38,7 +27,7 @@ export const Dashboard = () => {
           <VStack
             minH="80vh"
             flex={1}
-            bgColor={useColorModeValue("white", "gray.900")}
+            bgColor={useColorModeValue('white', 'gray.900')}
             borderRadius="50px"
             w="full"
             py={10}
@@ -47,15 +36,7 @@ export const Dashboard = () => {
             <HStack w="full">
               <Heading size="md">Hey! Welcome</Heading>
               <Spacer />
-              {/* <Tag p={2} colorScheme="pink" borderRadius="xl">
-                <HStack>
-                  <Icon as={IoIosWallet} boxSize={5}></Icon>
-                  <Text color="pink.500">
-                    {Number(formatEther(userNativeBalance ?? 0)).toFixed(2)}{" "}
-                    {currentNetwork?.Native?.Symbol}
-                  </Text>
-                </HStack>
-              </Tag> */}
+              <Heading size="sm" color="orange.500">User ID: {userID}</Heading>
             </HStack>
             <Divider />
             <Outlet />

@@ -18,7 +18,6 @@ export const UserBalaces = ({
     account
   );
 
-  console.log(idAccountMap)
   return (
     <CardContainer>
       <Heading size="sm">Balances</Heading>

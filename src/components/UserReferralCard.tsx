@@ -124,8 +124,8 @@ export const UserReferralCard = ({
                 <Icon as={HiUser}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
                 <Text>
-                  {userIDAccount?.selfBusinessOld +
-                    userIDAccount?.selfBusiness}
+                  {(userIDAccount?.selfBusinessOld +
+                    userIDAccount?.selfBusiness).toFixed(2)}
                 </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>
@@ -141,8 +141,8 @@ export const UserReferralCard = ({
                 <Icon as={HiUsers}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
                 <Text>
-                  {userIDAccount?.directBusinessOld +
-                    userIDAccount?.directBusiness}
+                  {(userIDAccount?.directBusinessOld +
+                    userIDAccount?.directBusiness).toFixed(2)}
                 </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>
@@ -158,8 +158,8 @@ export const UserReferralCard = ({
                 <Icon as={FaUsers}></Icon>
                 <Icon as={FaShoppingCart}></Icon>
                 <Text>
-                  {userIDAccount?.teamBusinessOld +
-                    userIDAccount?.teamBusiness}
+                  {(userIDAccount?.teamBusinessOld +
+                    userIDAccount?.teamBusiness).toFixed(2)}
                 </Text>
                 <Image src={MyUSDLogo} boxSize={3}></Image>
               </HStack>

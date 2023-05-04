@@ -22,7 +22,7 @@ export const Staking = () => {
           </Heading>
           <HStack>
             <Heading size="md" fontWeight={300} fontStyle="italic">
-              {userTotalValueLocked}
+              {userTotalValueLocked?.toFixed(2)}
             </Heading>
 
             <Heading
@@ -48,7 +48,7 @@ export const Staking = () => {
           </Heading>
           <HStack>
             <Heading size="md" fontWeight={300} fontStyle="italic">
-              {IDAccount?.roiPaid}
+              {IDAccount?.roiPaid?.toFixed(2)}
             </Heading>
 
             <Heading

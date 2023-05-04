@@ -129,12 +129,12 @@ export const UserIDCardDashboard = ({ id }: { id: string }) => {
         )}
 
         <Wrap justify="center" align="center" maxW={300}>
-          <Tag colorScheme="blue">Value: ${idAccountMap.selfBusiness}</Tag>
+          <Tag colorScheme="blue">Value: ${idAccountMap.selfBusiness?.toFixed(2)}</Tag>
           <Tag colorScheme="blue">
             Reward: ${getIDReward.totalRewardPaid.toFixed(2)}
           </Tag>
           <Tag colorScheme="blue">Team: {getIDTeam.teamCount}</Tag>
-          <Tag colorScheme="blue">Business: ${idAccountMap.teamBusiness}</Tag>
+          <Tag colorScheme="blue">Business: ${idAccountMap.teamBusiness?.toFixed(2)}</Tag>
         </Wrap>
       </MotionVStack>
     </VStack>

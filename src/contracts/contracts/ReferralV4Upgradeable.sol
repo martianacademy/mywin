@@ -367,7 +367,7 @@ contract ReferralV4Upgradeable is
             return true;
         } else if (
             _idAccount.roiIds.length > 0 &&
-            IROI(IVariables(_variablesContract).getROIContract()).isROIActive(
+            !IROI(IVariables(_variablesContract).getROIContract()).isROIActive(
                 _idAccount.roiIds[_idAccount.roiIds.length - 1]
             )
         ) {
@@ -388,17 +388,29 @@ contract ReferralV4Upgradeable is
         emit DeactivatedId(_idAccount.id, "Max Limit Reached");
     }
 
+    function updateIdWhenClaimROI(
+        uint32 _id,
+        uint256 _value
+    ) external onlyAdmin {
+        StructId storage idAccount = ids[_id];
+        idAccount.roiClaimedTime = block.timestamp;
+        idAccount.roiPaid += _value;
+        idAccount.topUpIncome += _value;
+        idAccount.walletBalance += _value;
+    }
+
     function _increaseIdTopUpIncome(
         StructId storage _idAccount,
         uint256 _value
     ) private {
-        if (_idAccount.topUpIncome + _value >= _idAccount.maxLimit) {
-            _idAccount.topUpIncome = _idAccount.maxLimit;
-            _idAccount.walletBalance += _idAccount.maxLimit - _idAccount.topUpIncome;
-            _disableId(_idAccount);
+        if (_idAccount.topUpIncome + _value <= _idAccount.maxLimit) {
+            _idAccount.topUpIncome += _value;
+            _idAccount.walletBalance += _value;
         } else {
-            _idAccount.topUpIncome + _value;
-            _idAccount.walletBalance + _value;
+            _idAccount.walletBalance +=
+                _idAccount.maxLimit -
+                _idAccount.topUpIncome;
+            _disableId(_idAccount);
         }
     }
 
@@ -555,7 +567,7 @@ contract ReferralV4Upgradeable is
     }
 
     function payReferralAdmin(uint256 _value, uint32 _id) external onlyAdmin {
-        if(isPayReferral) {
+        if (isPayReferral) {
             _payReferal(_value, _id);
         }
     }
@@ -864,9 +876,14 @@ contract ReferralV4Upgradeable is
         require(idAccount.canWindraw, "Withdraw is not enabled");
 
         idAccount.walletBalance -= _valueInUSD;
-        uint256 _futureSecureWalletValue = _valueInUSD * futureScureWalletContribution / 100;
-        IFutureSecureWallet(IVariables(_variablesContract).getFutureSecureWalletContract()).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);
-        payable(msg.sender).transfer(_usdToETH(_valueInUSD - _futureSecureWalletValue));
+        uint256 _futureSecureWalletValue = (_valueInUSD *
+            futureScureWalletContribution) / 100;
+        IFutureSecureWallet(
+            IVariables(_variablesContract).getFutureSecureWalletContract()
+        ).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);
+        payable(msg.sender).transfer(
+            _usdToETH(_valueInUSD - _futureSecureWalletValue)
+        );
     }
 
     function _min(uint256 x, uint256 y) private pure returns (uint256) {

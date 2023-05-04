@@ -63,6 +63,8 @@ interface IReferral {
     function payReferralAdmin(uint256 _value, uint32 _id) external;
 
     function increaseIdTopIncome(uint32 _id, uint256 _value) external;
+
+    function updateIdWhenClaimROI(uint32 _id, uint256 _value) external;
 }
 
 contract ROIV1Upgradeable is
@@ -86,12 +88,12 @@ contract ROIV1Upgradeable is
 
     struct StructROI {
         uint32 id;
-        bool isActive;
         uint32 ownerId;
         uint256 value;
         uint16 roiRate;
         uint256 startTime;
-        uint256 duration;
+        uint256 resetTime;
+        uint256 endTime;
     }
 
     mapping(uint32 => StructROI) private rois;
@@ -134,34 +136,53 @@ contract ROIV1Upgradeable is
         return rois[_roiID];
     }
 
+    function _isROIActive(uint32 _roiId) private view returns (bool) {
+        StructROI memory roiAccount = rois[_roiId];
+
+        if (roiAccount.endTime > block.timestamp) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function isROIActive(uint32 _roiId) external view returns (bool) {
+        return _isROIActive(_roiId);
+    }
+
     function _activateROI(
-        uint32 _id,
-        uint32 _roiID,
+        uint32 _ownerId,
         uint256 _value,
-        uint256 _currentTime
-    ) private {
-        StructROI storage roiAccount = rois[_roiID];
-
-        roiAccount.isActive = true;
-        roiAccount.ownerId = _id;
+        uint256 _currentTime,
+        uint256 _duration
+    ) private returns (uint32) {
+        uint32 _roiId = totalROIIDs++;
+        StructROI storage roiAccount = rois[_roiId + 1];
+        roiAccount.id = _roiId + 1;
+        roiAccount.ownerId = _ownerId;
         roiAccount.value = _value;
-
         roiAccount.roiRate = _roiRate;
         roiAccount.startTime = _currentTime;
+        roiAccount.resetTime = _currentTime;
+        roiAccount.endTime = _currentTime + _duration;
 
-        totalROIValue++;
+        totalROIValue += _value;
+
+        return _roiId + 1;
     }
 
     function activateROIAdmin(
-        uint32 _id,
+        uint32 _ownerId,
         uint256 _value,
         uint256 _currentTime
-    ) external returns (uint32 _roiId) {
-        _roiId = totalROIIDs++;
-        _activateROI(_id, _roiId, _value, _currentTime);
+    ) external returns (uint32) {
+        return _activateROI(_ownerId, _value, _currentTime, _roiDuration);
     }
 
-    function _getROIALL(uint32 _id) private view returns (uint256 totalROI) {
+    function _getROIALL(
+        uint32 _id,
+        uint256 _currentTime
+    ) private view returns (uint256 totalROI) {
         IReferral.StructId memory idAccount = IReferral(
             IVariables(_variablesContract).getReferralContract()
         ).getIdAccount(_id);
@@ -175,11 +196,10 @@ contract ROIV1Upgradeable is
         ) {
             for (uint16 i; i < roiIDsCount; i++) {
                 StructROI storage roiAccount = rois[roiIDs[i]];
-                if (roiAccount.isActive) {
+                if (_isROIActive(roiIDs[i])) {
                     uint256 baseReward = (roiAccount.value * _roiRate) /
                         decimals;
-                    uint256 _timePassed = block.timestamp -
-                        roiAccount.startTime;
+                    uint256 _timePassed = _currentTime - roiAccount.resetTime;
                     totalROI += (baseReward * _timePassed) / 1 days;
                 }
             }
@@ -189,10 +209,12 @@ contract ROIV1Upgradeable is
     }
 
     function getUserIDTotalROI(uint32 _id) external view returns (uint256) {
-        return _getROIALL(_id);
+        return _getROIALL(_id, block.timestamp);
     }
 
-    function getUserTotalActiveROIValue(uint32 _id) external view returns (uint256 roiTotalValue) {
+    function getUserTotalActiveROIValue(
+        uint32 _id
+    ) external view returns (uint256 roiTotalValue) {
         IReferral.StructId memory idAccount = IReferral(
             IVariables(_variablesContract).getReferralContract()
         ).getIdAccount(_id);
@@ -206,9 +228,8 @@ contract ROIV1Upgradeable is
         ) {
             for (uint16 i; i < roiIDsCount; i++) {
                 StructROI storage roiAccount = rois[roiIDs[i]];
-                if (roiAccount.isActive) {
+                if (_isROIActive(roiIDs[i])) {
                     roiTotalValue += roiAccount.value;
-                      
                 }
             }
         } else {
@@ -216,51 +237,76 @@ contract ROIV1Upgradeable is
         }
     }
 
-    function _claimROI(uint32 _id) private returns (uint256 roiClaimed) {
-        IReferral.StructId memory idAccount = IReferral(
-            IVariables(_variablesContract).getReferralContract()
-        ).getIdAccount(_id);
+    function _resetAllROI(
+        IReferral.StructId memory idAccount,
+        uint256 _currentTime
+    ) private {
+        uint32[] memory roiIDs = idAccount.roiIds;
+        uint256 roiIDsCount = roiIDs.length;
+
+        for (uint16 i; i < roiIDsCount; i++) {
+            StructROI storage roiAccount = rois[roiIDs[i]];
+            if (_isROIActive(roiIDs[i])) {
+                roiAccount.resetTime = _currentTime;
+            }
+        }
+    }
+
+    function _claimROI(
+        IReferral.StructId memory idAccount
+    ) private returns (uint256 roiClaimed) {
         uint256 _currentTime = block.timestamp;
-
-        require(msg.sender == idAccount.owner, "You are not owner of this id.");
-
-        require(
-            block.timestamp >= idAccount.roiClaimedTime + _roiClaimTimelimit,
-            "You roi claim timelimit is not over yeh"
-        );
-
-        uint256 roiAll = _getROIALL(_id);
+        uint256 roiAll = _getROIALL(idAccount.id, _currentTime);
 
         if (
             idAccount.topUpIncome <= idAccount.topUp * 2 &&
             idAccount.topUpIncome + roiAll < idAccount.topUp * 2
         ) {
-            idAccount.topUpIncome += roiAll;
-            idAccount.roiPaid += roiAll;
-
-            idAccount.roiClaimedTime = _currentTime;
             roiClaimed = roiAll;
-            IReferral(IVariables(_variablesContract).getReferralContract())
-                .increaseIdTopIncome(_id, roiClaimed);
-            emit ROIClaimed(_id, roiClaimed);
-
             totalROIPaid += roiClaimed;
         } else if (idAccount.topUpIncome <= idAccount.topUp * 2) {
             uint256 _limitDifference = (idAccount.topUp * 2) -
                 idAccount.topUpIncome;
-
-            idAccount.topUpIncome = idAccount.topUp * 2;
             roiClaimed = _limitDifference;
-            IReferral(IVariables(_variablesContract).getReferralContract())
-                .increaseIdTopIncome(_id, roiClaimed);
-            emit ROIClaimed(_id, roiClaimed);
-
             totalROIPaid += _limitDifference;
+        }
+
+        if (roiClaimed > 0) {
+            IReferral(IVariables(_variablesContract).getReferralContract())
+                .updateIdWhenClaimROI(idAccount.id, roiClaimed);
+            IReferral(IVariables(_variablesContract).getReferralContract())
+                .payReferralAdmin(roiClaimed, idAccount.id);
+
+            _resetAllROI(idAccount, _currentTime);
+            emit ROIClaimed(idAccount.id, roiClaimed);
         }
     }
 
-    function claimROI(uint32 _id) external returns (uint256) {
-        return _claimROI(_id);
+    // function claimROI(uint32 _id) external returns (uint256) {
+    //     IReferral.StructId memory idAccount = IReferral(
+    //         IVariables(_variablesContract).getReferralContract()
+    //     ).getIdAccount(_id);
+    //     uint256 _currentTime = block.timestamp;
+
+    //     require(msg.sender == idAccount.owner, "You are not owner of this id.");
+
+    //     require(
+    //         block.timestamp >= idAccount.roiClaimedTime + _roiClaimTimelimit,
+    //         "You roi claim timelimit is not over yeh"
+    //     );
+    //     return _claimROI(idAccount, _currentTime);
+    // }
+
+    function claimROIAdmin(uint32 _id) external returns (uint256) {
+        IReferral.StructId memory idAccount = IReferral(
+            IVariables(_variablesContract).getReferralContract()
+        ).getIdAccount(_id);
+
+        // require(
+        //     block.timestamp >= idAccount.roiClaimedTime + _roiClaimTimelimit,
+        //     "You roi claim timelimit is not over yeh"
+        // );
+        return _claimROI(idAccount);
     }
 
     function _min(uint256 x, uint256 y) private pure returns (uint256) {
@@ -273,9 +319,11 @@ contract ROIV1Upgradeable is
 
     function setROI(
         uint16 _roiRateInDecimals,
+        uint256 _durationInDays,
         uint256 _roiClaimTimelimitInSeconds
     ) external onlyAdmin {
         _roiRate = _roiRateInDecimals;
+        _roiDuration = _durationInDays * 1 days;
         _roiClaimTimelimit = _roiClaimTimelimitInSeconds;
     }
 
