@@ -1,7 +1,7 @@
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
 } from '@chakra-ui/icons';
 import {
   Button,
@@ -11,7 +11,8 @@ import {
   Icon,
   IconButton,
   Image,
-  Input, Modal,
+  Input,
+  Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -30,12 +31,12 @@ import {
   useColorModeValue,
   useDisclosure,
   useToast,
-  VStack
+  VStack,
 } from '@chakra-ui/react';
 import {
   useContractFunction,
   useEtherBalance,
-  useTokenBalance
+  useTokenBalance,
 } from '@usedapp/core';
 import { utils } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
@@ -44,7 +45,7 @@ import { useParams } from 'react-router-dom';
 import {
   DefaultReferrerID,
   StakingInfo,
-  useSupportedNetworkInfo
+  useSupportedNetworkInfo,
 } from '../../constants';
 import { Logo } from '../Logo/Logo';
 import { ModalConfirmTransactionStake } from '../Modals';
@@ -248,13 +249,11 @@ export const JoinUI = ({
             borderRadius="3xl"
             value={input?.referrer}
             onChange={handleReferrerInput}
-            fontSize="xl"
             isReadOnly={referrerAddress ? true : false}
             isDisabled={errors.balanceLessThanMinContribution}
           ></Input>
           <HStack w="full">
             <Button
-              size="lg"
               borderRadius="xl"
               colorScheme="red"
               onClick={() => setInput((prev) => ({ ...prev, referrer: '' }))}
@@ -268,7 +267,6 @@ export const JoinUI = ({
             </Button>
             <Button
               w="full"
-              size="lg"
               borderRadius="xl"
               colorScheme="green"
               onClick={() =>
@@ -310,6 +308,7 @@ export const JoinUI = ({
             >
               <HStack>
                 <NumberInputField
+                  placeholder="Please enter the amount."
                   h={20}
                   borderRadius="3xl"
                   onChange={handleInput}
