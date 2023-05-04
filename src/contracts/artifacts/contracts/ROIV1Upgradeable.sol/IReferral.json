@@ -1,0 +1,233 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IReferral",
+  "sourceName": "contracts/ROIV1Upgradeable.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_id",
+          "type": "uint32"
+        }
+      ],
+      "name": "getIdAccount",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint32",
+              "name": "id",
+              "type": "uint32"
+            },
+            {
+              "internalType": "string",
+              "name": "oldId",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "joiningTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            },
+            {
+              "internalType": "bool",
+              "name": "isAddedToUserList",
+              "type": "bool"
+            },
+            {
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "internalType": "uint32",
+              "name": "refererId",
+              "type": "uint32"
+            },
+            {
+              "internalType": "bool",
+              "name": "hasUpline",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint32[]",
+              "name": "refereeIds",
+              "type": "uint32[]"
+            },
+            {
+              "internalType": "uint32[]",
+              "name": "teamIds",
+              "type": "uint32[]"
+            },
+            {
+              "internalType": "uint32[]",
+              "name": "teamLevel",
+              "type": "uint32[]"
+            },
+            {
+              "internalType": "uint256[]",
+              "name": "selfBusinessArray",
+              "type": "uint256[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "selfBusiness",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "selfBusinessOld",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "directBusiness",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "directBusinessOld",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "teamBusiness",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "teamBusinessOld",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "royaltyClubBusiness",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timeStampRoyaltyClub",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint8",
+              "name": "royaltyClubPackageId",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint32",
+              "name": "royaltyClubListIndex",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "royaltyClubRewardPaid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "topUpIncome",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "topUp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxLimit",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "activationTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "referralPaid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint32[]",
+              "name": "roiIds",
+              "type": "uint32[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roiPaid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "roiClaimedTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "walletBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "canWindraw",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct IReferral.StructId",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_id",
+          "type": "uint32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "increaseIdTopIncome",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_value",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint32",
+          "name": "_id",
+          "type": "uint32"
+        }
+      ],
+      "name": "payReferralAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

@@ -1,0 +1,2 @@
+export const variablesContractAddress = "0x7ecF19C95F2639Cf0183639Dba852fADE713eEfc";
+export const futureSecureWalletContractAddress = "0xB57f2d3b0fb574CFf19fd55456094F4BDdB5b97c";

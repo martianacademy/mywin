@@ -7,131 +7,202 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-interface IERC20_EXTENDED {
-    function name() external view returns (string memory);
-
-    function symbol() external view returns (string memory);
-
-    function decimals() external view returns (uint256);
-}
-
 contract VariablesUpgradeable is
     Initializable,
     OwnableUpgradeable,
     UUPSUpgradeable
 {
+    uint256 private _adminFees;
     address private _presaleContract;
+    address private _priceOracleContract;
+    address private _swapContract;
     address private _referralContract;
     address private _stakingContract;
+    address private _roiContract;
+    address private _futureSecureWalletContract;
     address private _tokenContract;
     address private _usdtContract;
+    address private _myUSDContract;
     address private _rewardContract;
     address private _uniswapV2Router;
     address private _tokenContractOwner;
     address private _rewardContractOwner;
 
-    uint256 private _adminFees;
+    address[] private _admins;
 
     function initialize() public initializer {
-        _referralContract = 0xE82D70137Fc7f16dbbB9eF2D6902748e47ccAef2;
         __Ownable_init();
         __UUPSUpgradeable_init();
     }
 
-    function variableContract() external view returns (address) {
-        return address(this);
+    function getAdminsList() external view returns (address[] memory) {
+        return _admins;
     }
 
-    function presaleContract() external view returns (address) {
-        return _presaleContract;
+    function isAdmin(address _address) external view returns (bool) {
+        address[] memory adminsList = _admins;
+        for (uint8 i; i < adminsList.length; ++i) {
+            if (_address == adminsList[i]) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    function referralContract() external view returns (address) {
-        return _referralContract;
+    function setAdmin(address[] calldata _adminAddress) external onlyOwner {
+        for (uint8 i; i < _adminAddress.length; i++) {
+            _admins.push(_adminAddress[i]);
+        }
     }
 
-    function stakingContract() external view returns (address) {
-        return _stakingContract;
-    }
-
-    function tokenContract() external view returns (address) {
-        return _tokenContract;
-    }
-
-    function tokenContractInfo()
-        external
-        view
-        returns (
-            address tokenAddress,
-            string memory name,
-            string memory symbol,
-            uint256 decimals
-        )
-    {
-        tokenAddress = _tokenContract;
-        name = IERC20_EXTENDED(_tokenContract).name();
-        symbol = IERC20_EXTENDED(_tokenContract).symbol();
-        decimals = IERC20_EXTENDED(_tokenContract).decimals();
-    }
-
-    function usdtContract() external view returns (address) {
-        return _usdtContract;
-    }
-
-    function rewardContract() external view returns (address) {
-        return _rewardContract;
-    }
-
-    function uniswapV2RouterContract() external view returns (address) {
-        return _uniswapV2Router;
-    }
-
-    function tokenContractOwner() external view returns (address) {
-        return _tokenContractOwner;
-    }
-
-    function rewardContractOwner() external view returns (address) {
-        return _rewardContractOwner;
+    function removeAdmin(
+        address[] calldata _addressToRemove
+    ) external onlyOwner {
+        for (uint16 i; i < _addressToRemove.length; i++) {
+            for (uint16 j; j < _admins.length; j++) {
+                if (_addressToRemove[i] == _admins[j]) {
+                    _admins[j] = _admins[_admins.length - 1];
+                    _admins.pop();
+                }
+            }
+        }
     }
 
     function adminFees() external view returns (uint256) {
         return _adminFees;
     }
 
+    function getPresaleContract() external view returns (address) {
+        return _presaleContract;
+    }
+
+    function getPriceOracleContract() external view returns (address) {
+        return _priceOracleContract;
+    }
+
+    function getSwapContract() external view returns (address) {
+        return _swapContract;
+    }
+
+    function getReferralContract() external view returns (address) {
+        return _referralContract;
+    }
+
+    function getStakingContract() external view returns (address) {
+        return _stakingContract;
+    }
+
+    function getROIContract() external view returns (address) {
+        return _roiContract;
+    }
+
+    function getFutureSecureWalletContract() external view returns (address) {
+        return _futureSecureWalletContract;
+    }
+
+    function getTokenContract() external view returns (address) {
+        return _tokenContract;
+    }
+
+    function getUSDTContract() external view returns (address) {
+        return _usdtContract;
+    }
+
+    function getMyUSDContract() external view returns (address) {
+        return _myUSDContract;
+    }
+
+    function getRewardContract() external view returns (address) {
+        return _rewardContract;
+    }
+
+    function getUniswapV2RouterContract() external view returns (address) {
+        return _uniswapV2Router;
+    }
+
+    function getTokenContractOwner() external view returns (address) {
+        return _tokenContractOwner;
+    }
+
+    function getRewardContractOwner() external view returns (address) {
+        return _rewardContractOwner;
+    }
+
     function setAdminFees(uint256 _valueInWei) external onlyOwner {
         _adminFees = _valueInWei;
     }
 
-    function setContractAddress(
-        address _presale,
-        address _referral,
-        address _staking,
-        address _token,
-        address _usdt,
-        address _uniswapRouter,
-        address _reward
+    function setContract2(
+        address priceOracleContract,
+        address swapContract,
+        address referralContract,
+        address futureSecureWalletContract,
+        address roiContract,
+        address myUSDContract
     ) external onlyOwner {
-        if (_presale != address(0)) {
-            _presaleContract = _presale;
-        }
-        if (_referral != address(0)) {
-            _referralContract = _referral;
-        }
-        if (_staking != address(0)) {
-            _stakingContract = _staking;
-        }
-        if (_token != address(0)) {
-            _tokenContract = _token;
+        if (priceOracleContract != address(0)) {
+            _priceOracleContract = priceOracleContract;
         }
 
-        if (_usdt != address(0)) {
-            _usdtContract = _usdt;
+        if (swapContract != address(0)) {
+            _swapContract = swapContract;
         }
-        if (_uniswapRouter != address(0)) {
-            _uniswapV2Router = _uniswapRouter;
+
+        if (referralContract != address(0)) {
+            _referralContract = referralContract;
         }
-        if (_reward != address(0)) {
-            _rewardContract = _reward;
+
+        if (futureSecureWalletContract != address(0)) {
+            _futureSecureWalletContract = futureSecureWalletContract;
+        }
+
+        if (roiContract != address(0)) {
+            _roiContract = roiContract;
+        }
+
+        if (myUSDContract != address(0)) {
+            _myUSDContract = myUSDContract;
+        }
+    }
+
+    function setContracts(
+        address presaleContract,
+        address stakingContract,
+        address tokenContract,
+        address usdtContract,
+        address rewardContract,
+        address uniswapV2Router,
+        address tokenContractOwner,
+        address rewardContractOwner
+    ) external onlyOwner {
+        if (presaleContract != address(0)) {
+            _presaleContract = presaleContract;
+        }
+        if (stakingContract != address(0)) {
+            _stakingContract = stakingContract;
+        }
+        if (tokenContract != address(0)) {
+            _tokenContract = tokenContract;
+        }
+        if (usdtContract != address(0)) {
+            _usdtContract = usdtContract;
+        }
+
+        if (rewardContract != address(0)) {
+            _rewardContract = rewardContract;
+        }
+
+        if (uniswapV2Router != address(0)) {
+            _uniswapV2Router = uniswapV2Router;
+        }
+
+        if (tokenContractOwner != address(0)) {
+            _tokenContractOwner = tokenContractOwner;
+        }
+
+        if (rewardContractOwner != address(0)) {
+            _rewardContractOwner = rewardContractOwner;
         }
     }
 

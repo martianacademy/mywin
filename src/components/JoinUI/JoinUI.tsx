@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import {
   Button,
   Divider,
@@ -6,10 +6,15 @@ import {
   HStack,
   IconButton,
   Input,
+  InputGroup,
+  InputRightAddon,
+  InputRightElement,
   Modal,
   ModalContent,
-  ModalOverlay, NumberInput,
-  NumberInputField, Slider,
+  ModalOverlay,
+  NumberInput,
+  NumberInputField,
+  Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
@@ -18,17 +23,21 @@ import {
   useColorModeValue,
   useDisclosure,
   useToast,
-  VStack
+  VStack,
+  Icon,
+  Image,
+  Center
 } from '@chakra-ui/react';
 import { useContractFunction, useEtherBalance } from '@usedapp/core';
 import { utils } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
+import { FaUser } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import {
   DefaultReferrerID,
   StakingInfo,
-  useSupportedNetworkInfo
+  useSupportedNetworkInfo,
 } from '../../constants';
 import { Logo } from '../Logo/Logo';
 import { ModalConfirmTransactionStake } from '../Modals';
@@ -267,27 +276,34 @@ export const JoinUI = ({
               {currentNetwork?.Native?.Symbol}
             </Text>
           </HStack>
-          <NumberInput
-            w="full"
-            defaultValue={minContributionETH}
-            min={minContributionETH}
-            max={Number(formatEther(userETHBalanceWei ?? 0))}
-            isDisabled={errors.balanceLessThanMinContribution}
-            isInvalid={
-              errors.valueIncreasingBalance ||
-              errors.valueLessThanMinContribution ||
-              errors.balanceLessThanMinContribution
-            }
-            value={input?.value}
-            step={0.1}
-            precision={5}
-          >
-            <NumberInputField
-              h={20}
-              borderRadius="3xl"
-              onChange={handleInput}
-            />
-          </NumberInput>
+          <InputGroup >
+            <NumberInput
+              w="full"
+              defaultValue={minContributionETH}
+              min={minContributionETH}
+              max={Number(formatEther(userETHBalanceWei ?? 0))}
+              isDisabled={errors.balanceLessThanMinContribution}
+              isInvalid={
+                errors.valueIncreasingBalance ||
+                errors.valueLessThanMinContribution ||
+                errors.balanceLessThanMinContribution
+              }
+              value={input?.value}
+              step={0.1}
+              precision={5}
+            >
+              <NumberInputField
+                h={20}
+                borderRadius="3xl"
+                onChange={handleInput}
+              />
+            </NumberInput>
+            <HStack bgColor="red" w={20}>
+            <InputRightElement children={<HStack p={1}><Image src={currentNetwork?.Native?.Logo}></Image>
+            <Icon as={ChevronDownIcon}></Icon></HStack> } h={20}></InputRightElement>
+            </HStack>
+
+          </InputGroup>
           {errors.balanceLessThanMinContribution && (
             <Text color="red" fontWeight={500}>
               * You don't have sufficient balance. You atleast need{' '}
@@ -320,12 +336,15 @@ export const JoinUI = ({
           <HStack w="full" spacing={3}>
             <IconButton
               aria-label="Minus Value Button"
-              icon={<ChevronLeftIcon/>}
+              icon={<ChevronLeftIcon />}
               borderRadius="xl"
               onClick={() =>
                 setInput((prev) => ({
                   ...prev,
-                  value: `${Number(input.value) - (Number(input.value) >= minContributionETH ? steps : 0)}`,
+                  value: `${
+                    Number(input.value) -
+                    (Number(input.value) >= minContributionETH ? steps : 0)
+                  }`,
                 }))
               }
             ></IconButton>
@@ -339,7 +358,11 @@ export const JoinUI = ({
                 }))
               }
               isDisabled={errors.balanceLessThanMinContribution}
-              min={minContributionETH / Number(formatEther(userETHBalanceWei ?? 0)) * 100}
+              min={
+                (minContributionETH /
+                  Number(formatEther(userETHBalanceWei ?? 0))) *
+                100
+              }
               max={99}
               step={steps}
             >
@@ -350,12 +373,18 @@ export const JoinUI = ({
             </Slider>
             <IconButton
               aria-label="Add Value Button"
-              icon={<ChevronRightIcon/>}
+              icon={<ChevronRightIcon />}
               borderRadius="xl"
               onClick={() =>
                 setInput((prev) => ({
                   ...prev,
-                  value: `${Number(input.value) + (Number(input.value) < Number(formatEther(userETHBalanceWei ?? 0)) ? steps : 0)}`,
+                  value: `${
+                    Number(input.value) +
+                    (Number(input.value) <
+                    Number(formatEther(userETHBalanceWei ?? 0))
+                      ? steps
+                      : 0)
+                  }`,
                 }))
               }
             ></IconButton>
