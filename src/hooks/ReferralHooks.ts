@@ -13,9 +13,6 @@ const useCallHook = (methodName: string, arg: any[]) => {
         method: methodName,
         args: arg,
       },
-      {
-        refresh: 20,
-      }
     ) ?? {};
 
   if (error) {

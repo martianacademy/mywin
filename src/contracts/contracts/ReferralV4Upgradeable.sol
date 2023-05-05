@@ -666,16 +666,13 @@ contract ReferralV4Upgradeable is
         StructAccount storage userAccount = accounts[_msgSender];
         StructId storage _idAccount = ids[_id];
 
-        uint256 _currentMaxLimit = (_idAccount.maxLimit -
-            _idAccount.topUpIncome) + (_value * 3);
-
         _activateId(
             _idAccount,
             _msgSender,
             _id,
             _refererId,
             _value,
-            _currentMaxLimit,
+            _value * 3,
             _currentTime,
             maxLevels
         );
@@ -685,7 +682,7 @@ contract ReferralV4Upgradeable is
                 IVariables(_variablesContract).getROIContract()
             ).activateROIAdmin(
                     _id,
-                    _currentMaxLimit / 3,
+                    _value,
                     _currentTime,
                     _currentTime,
                     400 days
@@ -750,6 +747,8 @@ contract ReferralV4Upgradeable is
         uint256 _currentMaxLimit = (_idAccount.maxLimit -
             _idAccount.topUpIncome) + (_value * 3);
 
+        uint256 _currentROILimit = _idAccount.topUpIncome < (_idAccount.maxLimit * 2 / 3) ? ((_idAccount.maxLimit * 2 / 3) - _idAccount.topUpIncome) / 3 : 0;
+
         _activateId(
             _idAccount,
             _msgSender,
@@ -766,12 +765,39 @@ contract ReferralV4Upgradeable is
                 IVariables(_variablesContract).getROIContract()
             ).activateROIAdmin(
                     _id,
-                    _currentMaxLimit / 3,
+                    _value + _currentROILimit,
                     _currentTime,
                     _currentTime,
                     400 days
                 );
             _idAccount.roiIds.push(_roiId);
+        }
+    }
+
+    function updateTeamBusinessAdmin(uint16 _from, uint16 _to) external onlyAdmin {
+        uint8 _maxLevels = maxLevels;
+        for(_from; _from <= _to; _from++) {
+            StructId storage mainIdAccount = ids[_from];
+            for(uint8 i; i < _maxLevels; i++) {
+                StructId storage idAccount = mainIdAccount;
+                StructId storage referrerIdAccount = ids[idAccount.refererId];
+
+                if(referrerIdAccount.id == 0 || idAccount.id == 0 || mainIdAccount.id == _from) {
+                    break;
+                }
+
+                referrerIdAccount.teamBusinessOld += mainIdAccount.selfBusinessOld;
+
+                idAccount = referrerIdAccount;
+            }
+
+        }
+    }
+
+    function resetTeamBusiness(uint16 _from, uint16 _to) external onlyAdmin {
+        for(_from; _from <= _to; _from++) {
+            StructId storage idAccount = ids[_from];
+            idAccount.teamBusinessOld = 0;
         }
     }
 
