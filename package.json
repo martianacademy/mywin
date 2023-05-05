@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@types/debug": "^4.1.7",
     "@types/react-lottie": "^1.2.6",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",

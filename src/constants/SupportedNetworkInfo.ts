@@ -3,11 +3,11 @@ import { Contract } from 'ethers';
 import { MyUSDSVG, tokenLogoSVG } from '../assets';
 import { MyVeeChain } from './ChainInfo';
 
-import VariablesV2Interface from '../../contracts/artifacts/contracts/VariablesV2Upgradeable.sol/VariablesV2Upgradeable.json';
-import PriceOracleInterface from '../../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json';
-import ReferralV4Interface from '../../contracts/artifacts/contracts/ReferralV4Upgradeable.sol/ReferralV4Upgradeable.json';
-import ROIV1Interface from "../../contracts/artifacts/contracts/ROIV1Upgradeable.sol/ROIV1Upgradeable.json"
-import FutureSecureWalletV1Interface from "../../contracts/artifacts/contracts/FutureSecureWalletUpgradeable.sol/FutureSecureWalletV1Upgradeable.json"
+import VariablesV2Interface from '../contracts/artifacts/contracts/VariablesV2Upgradeable.sol/VariablesV2Upgradeable.json';
+import PriceOracleInterface from '../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json';
+import ReferralV4Interface from '../contracts/artifacts/contracts/ReferralV4Upgradeable.sol/ReferralV4Upgradeable.json';
+import ROIV1Interface from "../contracts/artifacts/contracts/ROIV1Upgradeable.sol/ROIV1Upgradeable.json"
+import FutureSecureWalletV1Interface from "../contracts/artifacts/contracts/FutureSecureWalletUpgradeable.sol/FutureSecureWalletV1Upgradeable.json"
 import { futureSecureWalletV1ContractAddress, myUSDContractAddress, priceOracleContractAddress, referralV4ContractAddress, roiV1ContractAddress, variablesV2ContractAddress } from './ContractAddress';
 
 export const TokenName = 'MyWin';
@@ -101,45 +101,4 @@ export const useSupportedNetworkInfo = {
     NetworkExplorerName: 'MyVeeScan',
     NetworkExplorerLogo: tokenLogoSVG,
   },
-  // [BSCTestnet.chainId]: {
-  //   variablesContractAddress: "0xaB6F06762e382eBe0Bb47715F028B2b032Ad3291",
-  //   variablesContractInterface: new Contract("0xaB6F06762e382eBe0Bb47715F028B2b032Ad3291", VariablesInterface.abi),
-  //   priceOracleContractAddress: "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",
-  //   priceOracleContractInterface: new Contract(
-  //     "0xF594034b9Ab80fDB03560Ba3E5C8eEa0B0eAd168",
-  //     PriceOracle?.abi
-  //   ),
-  //   referralContractAddress: "0x02EA7f23dDE72a26E96AaA141c87a4E1c6AB357B",
-  //   referralContractInterface: new Contract(
-  //     "0x02EA7f23dDE72a26E96AaA141c87a4E1c6AB357B",
-  //     ReferralInterface.abi
-  //   ),
-  //   stakingContractAddress: "0x404bbE8eD6Cc5D771f428cBd4471549B6783545C",
-  //   stakingContractInterface: new Contract("0x404bbE8eD6Cc5D771f428cBd4471549B6783545C", StakingInterface.abi),
-  //   Native: {
-  //     ContractAddress: "",
-  //     ContractInterface: "",
-  //     Name: "BSCTestnet",
-  //     Symbol: "tBNB",
-  //     Decimals: 18,
-  //     Logo: BNBLogoSVG,
-  //   },
-  //   MYUSD: {
-  //     ContractAddress: "0xF42F09f9BCD61D46B743C1A204c6eE5eaF8023e8",
-  //     ContractInterface: new Contract(
-  //       "0xF42F09f9BCD61D46B743C1A204c6eE5eaF8023e8",
-  //       ERC20Interface
-  //     ),
-  //     Name: "MyUSD",
-  //     Symbol: "MYUSD",
-  //     Decimals: 18,
-  //     Logo: BNBLogoSVG,
-  //   },
-  //   Network: BSCTestnet,
-  //   NetworkRPCUrl: "https://data-seed-prebsc-1-s1.binance.org:8545/",
-  //   NetworkColor: "yellow.500",
-  //   NetworkExplorerLink: BSCTestnet.blockExplorerUrl,
-  //   NetworkExplorerName: "BscScanTestnet",
-  //   NetworkExplorerLogo: BSCScanLogoCircleLight,
-  // },
 };
