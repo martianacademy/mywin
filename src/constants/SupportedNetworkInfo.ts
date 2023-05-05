@@ -74,7 +74,10 @@ export const useSupportedNetworkInfo = {
     ),
     Native: {
       ContractAddress: '',
-      ContractInterface: '',
+      ContractInterface: new Contract(
+        myUSDContractAddress,
+        ERC20Interface
+      ),
       Name: 'MYVEE',
       Symbol: 'MYVEE',
       Decimals: 18,

@@ -123,7 +123,7 @@ contract ROIV1Upgradeable is
     modifier onlyAdmin() {
         require(
             IVariables(_variablesContract).isAdmin(msg.sender),
-            "You are not admin."
+            "Only Admin can access this function.."
         );
         _;
     }
@@ -277,35 +277,35 @@ contract ROIV1Upgradeable is
             IReferral(IVariables(_variablesContract).getReferralContract())
                 .payReferralAdmin(roiClaimed, idAccount.id);
 
-            _resetAllROI(idAccount, _currentTime);
             emit ROIClaimed(idAccount.id, roiClaimed);
         }
+
+        _resetAllROI(idAccount, _currentTime);
     }
 
-    // function claimROI(uint32 _id) external returns (uint256) {
-    //     IReferral.StructId memory idAccount = IReferral(
-    //         IVariables(_variablesContract).getReferralContract()
-    //     ).getIdAccount(_id);
-    //     uint256 _currentTime = block.timestamp;
+    function claimROI(uint32 _id) external returns (uint256) {
+        IReferral.StructId memory idAccount = IReferral(
+            IVariables(_variablesContract).getReferralContract()
+        ).getIdAccount(_id);
 
-    //     require(msg.sender == idAccount.owner, "You are not owner of this id.");
+        require(msg.sender == idAccount.owner, "You are not owner of this id.");
 
-    //     require(
-    //         block.timestamp >= idAccount.roiClaimedTime + _roiClaimTimelimit,
-    //         "You roi claim timelimit is not over yeh"
-    //     );
-    //     return _claimROI(idAccount, _currentTime);
-    // }
+        require(
+            block.timestamp >= idAccount.roiClaimedTime + _roiClaimTimelimit,
+            "Your roi claim timelimit is not over yet."
+        );
+
+        require(idAccount.isActive, "Account is not active");
+        require(!idAccount.isROIDisabled, "Account disabled by admin");
+
+        return _claimROI(idAccount);
+    }
 
     function claimROIAdmin(uint32 _id) external returns (uint256) {
         IReferral.StructId memory idAccount = IReferral(
             IVariables(_variablesContract).getReferralContract()
         ).getIdAccount(_id);
 
-        // require(
-        //     block.timestamp >= idAccount.roiClaimedTime + _roiClaimTimelimit,
-        //     "You roi claim timelimit is not over yeh"
-        // );
         return _claimROI(idAccount);
     }
 

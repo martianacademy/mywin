@@ -65,7 +65,7 @@ export const LimitToExceedComponent = ({
       <VStack w="full">
         <Tag colorScheme="red">Limit Reached</Tag>
         <Heading size="sm" fontStyle="oblique" fontWeight="semibold">
-          {idAccountMap?.topUpIncome} {currentNetwork?.MYUSD?.Symbol}
+          {idAccountMap?.topUpIncome?.toFixed(5)} {currentNetwork?.MYUSD?.Symbol}
         </Heading>
       </VStack>
     </CardContainer>

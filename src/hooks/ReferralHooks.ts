@@ -179,8 +179,6 @@ export const useGetIDRewardPaid = (
       idAccount?.roiPaid +
       idAccount?.royaltyClubRewardPaid,
   };
-
-  console.log(valueObject);
   return valueObject;
 };
 

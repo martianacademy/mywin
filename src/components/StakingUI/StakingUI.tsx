@@ -21,7 +21,7 @@ import {
   StakingInfo,
   useSupportedNetworkInfo
 } from "../../constants";
-import { ModalConfirmTransactionStake } from "../Modals";
+import { ModalConfirmTransaction } from "../Modals/ModalConfirmTransaction";
 import { ModalTransactionInProgress } from "../Modals/ModalTransactionInProgress/ModalTransactionInProgress";
 import { ModalTransactionSuccess } from "../Modals/ModalTransactionSuccess/ModalTransactionSuccess";
 import { ValueSelectButtons } from "../ValueSelectButtons";
@@ -257,12 +257,13 @@ export const StakingUI = () => {
           )}
           {transactionStatus === "Mining" && <ModalTransactionInProgress />}
           {(transactionStatus === "No" || transactionStatus === "Loading") && (
-            <ModalConfirmTransactionStake
-              currencySymbol={currentNetwork?.Native?.Symbol}
+            <ModalConfirmTransaction
+              currencyObject={currentNetwork?.Native}
               onClose={onClose}
               isLoading={transactionStatus === "Loading"}
               value={Number(input?.value).toFixed(3)}
               onConfirm={proceedSwap}
+              heading="Stake"
             />
           )}
         </ModalContent>

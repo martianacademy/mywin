@@ -5,7 +5,7 @@ import { AdminDashboard } from '../pages/admin';
 import {
   Dashboard,
   FutureSecureWallet,
-  Staking,
+  WinningReward,
   Team,
   Transactions,
   UserIDDisplay,
@@ -65,7 +65,7 @@ export const Routes = createHashRouter([
               },
               {
                 path: 'winning-rewards',
-                element: <Staking />,
+                element: <WinningReward />,
               },
               {
                 path: 'future-secure-wallet',

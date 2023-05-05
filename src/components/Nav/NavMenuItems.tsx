@@ -5,6 +5,8 @@ import {
   faTrophy,
   faUsers,
   faWallet,
+  faGasPump
+
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -39,6 +41,6 @@ export const NavMenuItems = [
   {
     name: "TopUp ID",
     link: "top-up-id",
-    icon: <FontAwesomeIcon icon={faUsers} shake color={IconColor} />,
+    icon: <FontAwesomeIcon icon={faGasPump} shake color={IconColor}/>,
   },
 ];

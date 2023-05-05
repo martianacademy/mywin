@@ -4,6 +4,7 @@ import {
   Divider,
   HStack,
   Icon,
+  Image,
   keyframes,
   ModalFooter,
   ModalHeader,
@@ -11,8 +12,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { Contract } from "ethers";
 import { motion } from "framer-motion";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowDownLeft, FiArrowUpRight } from "react-icons/fi";
 
 const MotionIcon = motion(Icon);
 
@@ -28,35 +30,48 @@ transform: scale(0.7)
 }
 `;
 
-export const ModalConfirmTransactionStake = ({
-  currencySymbol,
+export const ModalConfirmTransaction = ({
+  heading,
+  currencyObject,
   value,
   isLoading,
   onConfirm,
   onClose,
   children,
+  transactionType,
 }: {
-  currencySymbol: string;
+  heading?: "Transact" | string;
+  currencyObject: {
+    ContractAddress: string;
+    ContractInterface: Contract;
+    Name: string;
+    Symbol: string;
+    Decimals: number;
+    Logo: string;
+};
+
   value: string;
   isLoading: boolean;
   onConfirm: () => void;
   onClose: () => void;
   children?: React.ReactNode;
+  transactionType?: "Outgoing" | "Incoming"
 }) => {
   return (
     <VStack w="full">
       <VStack w={300}>
         <ModalHeader textAlign="center" fontSize="md">
-          You are about to join with {currencySymbol}
+          You are about to {heading}.
           <Center w={200}>
             <Divider></Divider>
           </Center>
         </ModalHeader>
         <HStack w="full">
-          <Text>{currencySymbol}</Text>
+          <Image src={currencyObject?.Logo} boxSize={8}></Image>
+          <Text>{currencyObject?.Symbol}</Text>
           <Spacer />
           <Text>{value}</Text>
-          <Icon color="red" as={FiArrowUpRight}></Icon>
+          <Icon color={transactionType === "Outgoing" ? "red" : "green"} as={transactionType === "Outgoing" ? FiArrowUpRight : FiArrowDownLeft}></Icon>
         </HStack>
         {children}
       </VStack>

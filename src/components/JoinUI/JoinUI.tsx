@@ -1,7 +1,7 @@
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
-  ChevronRightIcon,
+  ChevronRightIcon
 } from '@chakra-ui/icons';
 import {
   Button,
@@ -33,24 +33,22 @@ import {
   useColorModeValue,
   useDisclosure,
   useToast,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
 import {
   useContractFunction,
   useEtherBalance,
-  useTokenBalance,
+  useTokenBalance
 } from '@usedapp/core';
 import { utils } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  DefaultReferrerID,
-  StakingInfo,
-  useSupportedNetworkInfo,
+  DefaultReferrerID, useSupportedNetworkInfo
 } from '../../constants';
 import { Logo } from '../Logo/Logo';
-import { ModalConfirmTransactionStake } from '../Modals';
+import { ModalConfirmTransaction } from '../Modals/ModalConfirmTransaction';
 import { ModalTransactionInProgress } from '../Modals/ModalTransactionInProgress/ModalTransactionInProgress';
 import { ModalTransactionSuccess } from '../Modals/ModalTransactionSuccess/ModalTransactionSuccess';
 
@@ -134,43 +132,7 @@ export const JoinUI = ({
   };
 
   const handleStake = () => {
-    if (input?.referrer.length === 0) {
-      toast({
-        title: 'No referrer address selected.',
-        description: 'Please enter the referrer address or select default one.',
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    } else if (
-      Number(formatEther(userETHBalanceWei ?? 0)) < StakingInfo?.minValue
-    ) {
-      toast({
-        title: 'Your balance is low.',
-        description: 'Your balance is less than min staking balance.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    } else if (input?.value > formatEther(userETHBalanceWei ?? 0)) {
-      toast({
-        title: 'Your balance is low.',
-        description: 'Please enter the value less or equal to your balance.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    } else if (Number(input?.value) < StakingInfo?.minValue) {
-      toast({
-        title: 'Value less then min staking value.',
-        description: 'Please enter the value above min staking value.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    } else {
-      onOpen();
-    }
+   onOpen()
   };
 
   const proceedSwap = () => {
@@ -453,8 +415,9 @@ export const JoinUI = ({
             {transactionStatus === 'Mining' && <ModalTransactionInProgress />}
             {(transactionStatus === 'No' ||
               transactionStatus === 'Loading') && (
-              <ModalConfirmTransactionStake
-                currencySymbol={currentNetwork?.Native?.Symbol}
+              <ModalConfirmTransaction
+              heading={`Join MyWin Network`}
+                currencyObject={currentNetwork?.Native}
                 onClose={() => {
                   onClose();
                   resetStateJoin();
@@ -462,6 +425,7 @@ export const JoinUI = ({
                 isLoading={transactionStatus === 'Loading'}
                 value={Number(input?.value).toFixed(3)}
                 onConfirm={proceedSwap}
+                transactionType="Outgoing"
               />
             )}
           </ModalContent>
