@@ -894,12 +894,38 @@ contract ReferralV4Upgradeable is
         return x;
     }
 
-    function updateIdDirectTeam(uint16 _from, uint16 _to) external onlyAdmin {
+    function updateIdBusiness(
+        uint16 _from,
+        uint16 _to,
+        uint256[] calldata _selfBusiness
+    ) external onlyAdmin {
+        uint16 i;
         for (_from; _from <= _to; _from++) {
-            StructId storage idAccount = ids[_from];
-            StructId storage referrerIdAccount = ids[idAccount.refererId];
+            if (_selfBusiness[i] > 0) {
+                StructId storage idAccount = ids[_from];
+                StructId storage referrerIdAccount = ids[idAccount.refererId];
+                idAccount.selfBusinessOld += _selfBusiness[i];
+                idAccount.selfBusinessArray.push(_selfBusiness[i]);
+                referrerIdAccount.directBusinessOld += _selfBusiness[i];
+            }
 
-            referrerIdAccount.refereeIds.push(idAccount.id);
+            i++;
+        }
+    }
+
+    function updateTotalIncome(
+        uint16 _from,
+        uint16 _to,
+        uint256[] calldata _totalIncome
+    ) external {
+        uint16 i;
+        for (_from; _from <= _to; _from++) {
+            if (_totalIncome[i] > 0) {
+                StructId storage idAccount = ids[_from];
+                idAccount.referralPaid += _totalIncome[i];
+            }
+
+            i++;
         }
     }
 

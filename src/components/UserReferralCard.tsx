@@ -91,9 +91,8 @@ export const UserReferralCard = ({
                 }}
               ></UserAddressActionButton>
             )}
-
             <Tag colorScheme={userIDAccount?.isActive ? "green" : "red"}>
-              Status: {userIDAccount?.isActive ? "green" : "red"}
+              Status: {userIDAccount?.isActive ? "Active" : "Inactive"}
             </Tag>
             <HStack>
               <Tag p={2} borderRadius="xl">
