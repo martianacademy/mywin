@@ -125,6 +125,8 @@ export const useIDAccount = (id: string): userIDAccountType => {
     canWindraw: value ? value?.canWindraw : false,
   };
 
+  console.log(valueObject)
+
   return valueObject;
 };
 

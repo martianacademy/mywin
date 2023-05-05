@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.18;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
@@ -109,12 +109,13 @@ contract ROIV1Upgradeable is
     event ROIClaimed(uint256 indexed _owner, uint256 indexed _rewardRate);
 
     function initialize() public initializer {
-        _variablesContract = 0x7ecF19C95F2639Cf0183639Dba852fADE713eEfc;
+        _variablesContract = 0x0B8bf5FeB9Fca57D9c5d27185dDF3017e99a2d36;
 
         decimals = 1000;
 
         _roiRate = 5;
         _roiClaimTimelimit = 1 days;
+        _roiDuration = 400 days;
 
         __Ownable_init();
         __UUPSUpgradeable_init();

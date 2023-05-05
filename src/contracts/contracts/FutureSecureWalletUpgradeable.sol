@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
@@ -11,7 +11,7 @@ interface IVariables {
     function isAdmin(address _address) external view returns (bool);
 }
 
-contract FutureSecureWalletUpgradeable is
+contract FutureSecureWalletV1Upgradeable is
     Initializable,
     PausableUpgradeable,
     OwnableUpgradeable,
@@ -71,7 +71,7 @@ contract FutureSecureWalletUpgradeable is
     event UnStaked(address indexed userAddress, uint256 indexed value);
 
     function initialize() public initializer {
-        _variablesContract = 0x7ecF19C95F2639Cf0183639Dba852fADE713eEfc;
+        _variablesContract = 0x0B8bf5FeB9Fca57D9c5d27185dDF3017e99a2d36;
         _stakingRewardRate = 60;
         _stakingDuration = 365 days;
         _stakingRewardClaimTimeLimit = 30 days;

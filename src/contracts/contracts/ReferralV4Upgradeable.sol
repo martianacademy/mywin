@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
@@ -180,7 +180,7 @@ contract ReferralV4Upgradeable is
     event PackageRemoved(uint8 packageId);
 
     function initialize() public initializer {
-        _variablesContract = 0x7ecF19C95F2639Cf0183639Dba852fADE713eEfc;
+        _variablesContract = 0x0B8bf5FeB9Fca57D9c5d27185dDF3017e99a2d36;
 
         decimals = 1000;
         levelRates = [
@@ -856,35 +856,35 @@ contract ReferralV4Upgradeable is
         return value;
     }
 
-    function isUserDisabledByAdmin(
-        address _userAddress
-    ) external view returns (bool) {
-        return accounts[_userAddress].isActive;
-    }
+    // function isUserDisabledByAdmin(
+    //     address _userAddress
+    // ) external view returns (bool) {
+    //     return accounts[_userAddress].isActive;
+    // }
 
-    function disableUserAdmin(address _userAddress) external onlyAdmin {
-        accounts[_userAddress].isActive = false;
-    }
+    // function disableUserAdmin(address _userAddress) external onlyAdmin {
+    //     accounts[_userAddress].isActive = false;
+    // }
 
-    function claimBalance(uint32 _id, uint256 _valueInUSD) external {
-        StructId storage idAccount = ids[_id];
-        require(idAccount.owner == msg.sender, "You are not owner of this id.");
-        require(
-            _valueInUSD >= idAccount.walletBalance,
-            "value greater than balance."
-        );
-        require(idAccount.canWindraw, "Withdraw is not enabled");
+    // function claimBalance(uint32 _id, uint256 _valueInUSD) external {
+    //     StructId storage idAccount = ids[_id];
+    //     require(idAccount.owner == msg.sender, "You are not owner of this id.");
+    //     require(
+    //         _valueInUSD >= idAccount.walletBalance,
+    //         "value greater than balance."
+    //     );
+    //     require(idAccount.canWindraw, "Withdraw is not enabled");
 
-        idAccount.walletBalance -= _valueInUSD;
-        uint256 _futureSecureWalletValue = (_valueInUSD *
-            futureScureWalletContribution) / 100;
-        IFutureSecureWallet(
-            IVariables(_variablesContract).getFutureSecureWalletContract()
-        ).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);
-        payable(msg.sender).transfer(
-            _usdToETH(_valueInUSD - _futureSecureWalletValue)
-        );
-    }
+    //     idAccount.walletBalance -= _valueInUSD;
+    //     uint256 _futureSecureWalletValue = (_valueInUSD *
+    //         futureScureWalletContribution) / 100;
+    //     IFutureSecureWallet(
+    //         IVariables(_variablesContract).getFutureSecureWalletContract()
+    //     ).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);
+    //     payable(msg.sender).transfer(
+    //         _usdToETH(_valueInUSD - _futureSecureWalletValue)
+    //     );
+    // }
 
     function _min(uint256 x, uint256 y) private pure returns (uint256) {
         if (x > y) {
@@ -892,6 +892,15 @@ contract ReferralV4Upgradeable is
         }
 
         return x;
+    }
+
+    function updateIdDirectTeam(uint16 _from, uint16 _to) external onlyAdmin {
+        for (_from; _from <= _to; _from++) {
+            StructId storage idAccount = ids[_from];
+            StructId storage referrerIdAccount = ids[idAccount.refererId];
+
+            referrerIdAccount.refereeIds.push(idAccount.id);
+        }
     }
 
     function updateTotalIds(uint32 _value) external onlyAdmin {
