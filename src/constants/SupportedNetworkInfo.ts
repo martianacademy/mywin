@@ -3,11 +3,11 @@ import { Contract } from 'ethers';
 import { MyUSDSVG, tokenLogoSVG } from '../assets';
 import { MyVeeChain } from './ChainInfo';
 
-import VariablesV2Interface from '../contracts/artifacts/contracts/VariablesV2Upgradeable.sol/VariablesV2Upgradeable.json';
-import PriceOracleInterface from '../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json';
-import ReferralV4Interface from '../contracts/artifacts/contracts/ReferralV4Upgradeable.sol/ReferralV4Upgradeable.json';
-import ROIV1Interface from "../contracts/artifacts/contracts/ROIV1Upgradeable.sol/ROIV1Upgradeable.json"
-import FutureSecureWalletV1Interface from '../contracts/artifacts/contracts/FutureSecureWalletUpgradeable.sol/FutureSecureWalletV1Upgradeable.json';
+import VariablesV2Interface from '../../contracts/artifacts/contracts/VariablesV2Upgradeable.sol/VariablesV2Upgradeable.json';
+import PriceOracleInterface from '../../contracts/artifacts/contracts/PriceOracleUpgradeable.sol/PriceOracleUpgradeable.json';
+import ReferralV4Interface from '../../contracts/artifacts/contracts/ReferralV4Upgradeable.sol/ReferralV4Upgradeable.json';
+import ROIV1Interface from "../../contracts/artifacts/contracts/ROIV1Upgradeable.sol/ROIV1Upgradeable.json"
+import FutureSecureWalletV1Interface from "../../contracts/artifacts/contracts/FutureSecureWalletUpgradeable.sol/FutureSecureWalletV1Upgradeable.json"
 import { futureSecureWalletV1ContractAddress, myUSDContractAddress, priceOracleContractAddress, referralV4ContractAddress, roiV1ContractAddress, variablesV2ContractAddress } from './ContractAddress';
 
 export const TokenName = 'MyWin';

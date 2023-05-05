@@ -894,40 +894,53 @@ contract ReferralV4Upgradeable is
         return x;
     }
 
-    function updateIdBusiness(
-        uint16 _from,
-        uint16 _to,
-        uint256[] calldata _selfBusiness
-    ) external onlyAdmin {
-        uint16 i;
-        for (_from; _from <= _to; _from++) {
-            if (_selfBusiness[i] > 0) {
-                StructId storage idAccount = ids[_from];
-                StructId storage referrerIdAccount = ids[idAccount.refererId];
-                idAccount.selfBusinessOld += _selfBusiness[i];
-                idAccount.selfBusinessArray.push(_selfBusiness[i]);
-                referrerIdAccount.directBusinessOld += _selfBusiness[i];
-            }
+    // function updateIdBusiness(
+    //     uint16 _from,
+    //     uint16 _to,
+    //     uint256[] calldata _selfBusiness
+    // ) external onlyAdmin {
+    //     uint16 i;
+    //     for (_from; _from <= _to; _from++) {
+    //         if (_selfBusiness[i] > 0) {
+    //             StructId storage idAccount = ids[_from];
+    //             StructId storage referrerIdAccount = ids[idAccount.refererId];
+    //             idAccount.selfBusinessOld += _selfBusiness[i];
+    //             idAccount.selfBusinessArray.push(_selfBusiness[i]);
+    //             referrerIdAccount.directBusinessOld += _selfBusiness[i];
+    //         }
 
-            i++;
-        }
+    //         i++;
+    //     }
+    // }
+
+    // function updateTotalIncome(
+    //     uint16 _from,
+    //     uint16 _to,
+    //     uint256[] calldata _totalIncome
+    // ) external {
+    //     uint16 i;
+    //     for (_from; _from <= _to; _from++) {
+    //         if (_totalIncome[i] > 0) {
+    //             StructId storage idAccount = ids[_from];
+    //             idAccount.referralPaid += _totalIncome[i];
+    //         }
+
+    //         i++;
+    //     }
+    // }
+
+    // function updateROIAndLimit(uint16 _from, uint16 _to) external onlyAdmin {
+    //     for(_from; _from <= _to; _from++) {
+    //         StructId storage idAccount = ids[_from];
+    //         if(idAccount.selfBusinessOld idAccount.referralPaid < idAccount.selfBusinessOld * 3) {}
+    //     }
+    // }
+
+    function updateJoiningTime() external onlyAdmin {
+        
     }
 
-    function updateTotalIncome(
-        uint16 _from,
-        uint16 _to,
-        uint256[] calldata _totalIncome
-    ) external {
-        uint16 i;
-        for (_from; _from <= _to; _from++) {
-            if (_totalIncome[i] > 0) {
-                StructId storage idAccount = ids[_from];
-                idAccount.referralPaid += _totalIncome[i];
-            }
 
-            i++;
-        }
-    }
 
     function updateTotalIds(uint32 _value) external onlyAdmin {
         totalIds = _value;
