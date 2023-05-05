@@ -932,14 +932,25 @@ contract ReferralV4Upgradeable is
     // function updateROIAndLimit(uint16 _from, uint16 _to) external onlyAdmin {
     //     for(_from; _from <= _to; _from++) {
     //         StructId storage idAccount = ids[_from];
-    //         if(idAccount.selfBusinessOld idAccount.referralPaid < idAccount.selfBusinessOld * 3) {}
+    //         if(idAccount.) {}
     //     }
     // }
 
-    function updateJoiningTime() external onlyAdmin {
-        
-    }
+    function updateTopUp(
+        uint16 _from,
+        uint16 _to,
+        uint256[] calldata _topUp
+    ) external {
+        uint16 i;
+        for (_from; _from <= _to; _from++) {
+            if (_topUp[i] > 0) {
+                StructId storage idAccount = ids[_from];
+                idAccount.topUp += _topUp[i];
+            }
 
+            i++;
+        }
+    }
 
 
     function updateTotalIds(uint32 _value) external onlyAdmin {

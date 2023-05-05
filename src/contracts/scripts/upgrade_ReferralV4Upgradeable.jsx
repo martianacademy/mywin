@@ -1,5 +1,4 @@
-import { ethers, upgrades } from "hardhat";
-import {referralV4ContractAddress} from "../../constants/ContractAddress"
+const { ethers, upgrades } = require("hardhat");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -15,7 +14,7 @@ async function main() {
 
   const TokenV2 = await ethers.getContractFactory("ReferralV4Upgradeable");
   const mc = await upgrades.upgradeProxy(
-    referralV4ContractAddress,
+    "0x09B4498E688f4E9DF27Fb4238112408C7489F586",
     TokenV2
   );
 
