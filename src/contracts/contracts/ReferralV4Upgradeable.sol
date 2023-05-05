@@ -25,10 +25,12 @@ interface IROI {
     function isROIActive(uint32 _roiId) external view returns (bool);
 
     function activateROIAdmin(
-        uint32 _id,
+        uint32 _ownerId,
         uint256 _value,
-        uint256 _currentTime
-    ) external returns (uint32 _roiId);
+        uint256 _startTime,
+        uint256 _resetTime,
+        uint256 _duration
+    ) external returns (uint32);
 }
 
 interface IFutureSecureWallet {
@@ -681,7 +683,13 @@ contract ReferralV4Upgradeable is
         if (isActivateROI) {
             uint32 _roiId = IROI(
                 IVariables(_variablesContract).getROIContract()
-            ).activateROIAdmin(_id, _currentMaxLimit / 3, _currentTime);
+            ).activateROIAdmin(
+                    _id,
+                    _currentMaxLimit / 3,
+                    _currentTime,
+                    _currentTime,
+                    400 days
+                );
             _idAccount.roiIds.push(_roiId);
         }
 
@@ -756,10 +764,40 @@ contract ReferralV4Upgradeable is
         if (isActivateROI) {
             uint32 _roiId = IROI(
                 IVariables(_variablesContract).getROIContract()
-            ).activateROIAdmin(_id, _currentMaxLimit / 3, _currentTime);
+            ).activateROIAdmin(
+                    _id,
+                    _currentMaxLimit / 3,
+                    _currentTime,
+                    _currentTime,
+                    400 days
+                );
             _idAccount.roiIds.push(_roiId);
         }
     }
+
+    // function updateROI(uint16 _from, uint16 _to) external onlyOwner {
+    //     uint256 _currentTime = block.timestamp;
+    //     for (_from; _from <= _to; _from++) {
+    //         StructId storage idAccount = ids[_from];
+    //         if (
+    //             idAccount.selfBusinessOld > 0 &&
+    //             idAccount.activationTime + 400 days > _currentTime &&
+    //             idAccount.referralPaid < idAccount.selfBusinessOld * 2
+    //         ) {
+    //             uint32 _roiId = IROI(
+    //                 IVariables(_variablesContract).getROIContract()
+    //             ).activateROIAdmin(
+    //                     _from,
+    //                     idAccount.topUp,
+    //                     idAccount.activationTime,
+    //                     _currentTime,
+    //                     400 days
+    //                 );
+
+    //             idAccount.roiIds.push(_roiId);
+    //         }
+    //     }
+    // }
 
     // function getIdTotalBusiness(
     //     uint32 _id
@@ -835,10 +873,10 @@ contract ReferralV4Upgradeable is
         return count;
     }
 
-    function getUserUnlockCount(uint32 _id) external view returns (uint256) {
-        StructId memory idAccount = ids[_id];
-        return _userLevelUnlockCount(idAccount);
-    }
+    // function getUserUnlockCount(uint32 _id) external view returns (uint256) {
+    //     StructId memory idAccount = ids[_id];
+    //     return _userLevelUnlockCount(idAccount);
+    // }
 
     function _usdToETH(uint256 _valueInUSD) private view returns (uint256) {
         uint256 value = (_valueInUSD * 10 ** 18) /
@@ -862,29 +900,29 @@ contract ReferralV4Upgradeable is
     //     return accounts[_userAddress].isActive;
     // }
 
-    // function disableUserAdmin(address _userAddress) external onlyAdmin {
-    //     accounts[_userAddress].isActive = false;
-    // }
+    function disableUserAdmin(address _userAddress) external onlyAdmin {
+        accounts[_userAddress].isActive = false;
+    }
 
-    // function claimBalance(uint32 _id, uint256 _valueInUSD) external {
-    //     StructId storage idAccount = ids[_id];
-    //     require(idAccount.owner == msg.sender, "You are not owner of this id.");
-    //     require(
-    //         _valueInUSD >= idAccount.walletBalance,
-    //         "value greater than balance."
-    //     );
-    //     require(idAccount.canWindraw, "Withdraw is not enabled");
+    function claimBalance(uint32 _id, uint256 _valueInUSD) external {
+        StructId storage idAccount = ids[_id];
+        require(idAccount.owner == msg.sender, "You are not owner of this id.");
+        require(
+            _valueInUSD >= idAccount.walletBalance,
+            "value greater than balance."
+        );
+        require(idAccount.canWindraw, "Withdraw is not enabled");
 
-    //     idAccount.walletBalance -= _valueInUSD;
-    //     uint256 _futureSecureWalletValue = (_valueInUSD *
-    //         futureScureWalletContribution) / 100;
-    //     IFutureSecureWallet(
-    //         IVariables(_variablesContract).getFutureSecureWalletContract()
-    //     ).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);
-    //     payable(msg.sender).transfer(
-    //         _usdToETH(_valueInUSD - _futureSecureWalletValue)
-    //     );
-    // }
+        idAccount.walletBalance -= _valueInUSD;
+        uint256 _futureSecureWalletValue = (_valueInUSD *
+            futureScureWalletContribution) / 100;
+        IFutureSecureWallet(
+            IVariables(_variablesContract).getFutureSecureWalletContract()
+        ).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);
+        payable(msg.sender).transfer(
+            _usdToETH(_valueInUSD - _futureSecureWalletValue)
+        );
+    }
 
     function _min(uint256 x, uint256 y) private pure returns (uint256) {
         if (x > y) {
@@ -893,65 +931,6 @@ contract ReferralV4Upgradeable is
 
         return x;
     }
-
-    // function updateIdBusiness(
-    //     uint16 _from,
-    //     uint16 _to,
-    //     uint256[] calldata _selfBusiness
-    // ) external onlyAdmin {
-    //     uint16 i;
-    //     for (_from; _from <= _to; _from++) {
-    //         if (_selfBusiness[i] > 0) {
-    //             StructId storage idAccount = ids[_from];
-    //             StructId storage referrerIdAccount = ids[idAccount.refererId];
-    //             idAccount.selfBusinessOld += _selfBusiness[i];
-    //             idAccount.selfBusinessArray.push(_selfBusiness[i]);
-    //             referrerIdAccount.directBusinessOld += _selfBusiness[i];
-    //         }
-
-    //         i++;
-    //     }
-    // }
-
-    // function updateTotalIncome(
-    //     uint16 _from,
-    //     uint16 _to,
-    //     uint256[] calldata _totalIncome
-    // ) external {
-    //     uint16 i;
-    //     for (_from; _from <= _to; _from++) {
-    //         if (_totalIncome[i] > 0) {
-    //             StructId storage idAccount = ids[_from];
-    //             idAccount.referralPaid += _totalIncome[i];
-    //         }
-
-    //         i++;
-    //     }
-    // }
-
-    // function updateROIAndLimit(uint16 _from, uint16 _to) external onlyAdmin {
-    //     for(_from; _from <= _to; _from++) {
-    //         StructId storage idAccount = ids[_from];
-    //         if(idAccount.) {}
-    //     }
-    // }
-
-    function updateTopUp(
-        uint16 _from,
-        uint16 _to,
-        uint256[] calldata _topUp
-    ) external {
-        uint16 i;
-        for (_from; _from <= _to; _from++) {
-            if (_topUp[i] > 0) {
-                StructId storage idAccount = ids[_from];
-                idAccount.topUp += _topUp[i];
-            }
-
-            i++;
-        }
-    }
-
 
     function updateTotalIds(uint32 _value) external onlyAdmin {
         totalIds = _value;

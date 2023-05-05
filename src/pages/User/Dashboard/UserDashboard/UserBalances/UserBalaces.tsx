@@ -23,13 +23,13 @@ export const UserBalaces = ({
       <Heading size="sm">Balances</Heading>
       <BalancesCard
         heading="Native Balance"
-        currencyValue={Number(formatEther(userNativeBalance ?? 0)).toFixed(2)}
+        currencyValue={Number(formatEther(userNativeBalance ?? 0)).toFixed(5)}
         currencySymbol={currentNetwork?.Native?.Symbol}
         logo={currentNetwork?.Native?.Logo}
       ></BalancesCard>
       <BalancesCard
         heading={`${currentNetwork?.MYUSD?.Symbol} Balance`}
-        currencyValue={Number(formatEther(userMYUSDBalance ?? 0)).toFixed(3)}
+        currencyValue={Number(formatEther(userMYUSDBalance ?? 0)).toFixed(5)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         logo={currentNetwork?.MYUSD?.Logo}
       ></BalancesCard>
@@ -37,7 +37,7 @@ export const UserBalaces = ({
         heading={"Wallet Balance"}
         currencyValue={Number(
           idAccountMap.walletBalance
-        ).toFixed(2)}
+        ).toFixed(5)}
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         logo={currentNetwork?.MYUSD?.Logo}
       ></BalancesCard>

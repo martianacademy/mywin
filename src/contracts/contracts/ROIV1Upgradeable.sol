@@ -154,7 +154,8 @@ contract ROIV1Upgradeable is
     function _activateROI(
         uint32 _ownerId,
         uint256 _value,
-        uint256 _currentTime,
+        uint256 _startTime,
+        uint256 _resetTime,
         uint256 _duration
     ) private returns (uint32) {
         uint32 _roiId = totalROIIDs++;
@@ -163,9 +164,9 @@ contract ROIV1Upgradeable is
         roiAccount.ownerId = _ownerId;
         roiAccount.value = _value;
         roiAccount.roiRate = _roiRate;
-        roiAccount.startTime = _currentTime;
-        roiAccount.resetTime = _currentTime;
-        roiAccount.endTime = _currentTime + _duration;
+        roiAccount.startTime = _startTime;
+        roiAccount.resetTime = _resetTime;
+        roiAccount.endTime = _startTime + _duration;
 
         totalROIValue += _value;
 
@@ -175,9 +176,11 @@ contract ROIV1Upgradeable is
     function activateROIAdmin(
         uint32 _ownerId,
         uint256 _value,
-        uint256 _currentTime
-    ) external returns (uint32) {
-        return _activateROI(_ownerId, _value, _currentTime, _roiDuration);
+        uint256 _startTime,
+        uint256 _resetTime,
+        uint256 _duration
+    ) external onlyAdmin returns (uint32) {
+        return _activateROI(_ownerId, _value, _startTime, _resetTime, _duration);
     }
 
     function _getROIALL(
@@ -296,13 +299,12 @@ contract ROIV1Upgradeable is
             "Your roi claim timelimit is not over yet."
         );
 
-        require(idAccount.isActive, "Account is not active");
         require(!idAccount.isROIDisabled, "Account disabled by admin");
 
         return _claimROI(idAccount);
     }
 
-    function claimROIAdmin(uint32 _id) external returns (uint256) {
+    function claimROIAdmin(uint32 _id) external onlyAdmin returns (uint256) {
         IReferral.StructId memory idAccount = IReferral(
             IVariables(_variablesContract).getReferralContract()
         ).getIdAccount(_id);
@@ -318,7 +320,7 @@ contract ROIV1Upgradeable is
         return x;
     }
 
-    function setROI(
+    function setROIAdmin(
         uint16 _roiRateInDecimals,
         uint256 _durationInDays,
         uint256 _roiClaimTimelimitInSeconds

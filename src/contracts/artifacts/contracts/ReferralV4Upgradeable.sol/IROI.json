@@ -7,7 +7,7 @@
       "inputs": [
         {
           "internalType": "uint32",
-          "name": "_id",
+          "name": "_ownerId",
           "type": "uint32"
         },
         {
@@ -17,7 +17,17 @@
         },
         {
           "internalType": "uint256",
-          "name": "_currentTime",
+          "name": "_startTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_resetTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_duration",
           "type": "uint256"
         }
       ],
@@ -25,7 +35,7 @@
       "outputs": [
         {
           "internalType": "uint32",
-          "name": "_roiId",
+          "name": "",
           "type": "uint32"
         }
       ],
