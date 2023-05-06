@@ -2844,6 +2844,14 @@
   resolved "https://registry.yarnpkg.com/@metamask/detect-provider/-/detect-provider-2.0.0.tgz#4bc2795e5e6f7d8b84b2e845058d2f222c99917d"
   integrity sha512-sFpN+TX13E9fdBDh9lvQeZdJn4qYoRb/6QF2oZZK/Pn559IhCFacPMU1rMuqyXoFQF3JSJfii2l98B87QDPeCQ==
 
+"@metamask/logo@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@metamask/logo/-/logo-3.1.1.tgz#0a40bcfc462a70aa2110efc737767ca7ba188fa3"
+  integrity sha512-8/ObOWyBtwbe3/r9QbXMs+aKK2EgcYp2NiF4fm1xIO/c3aBMN5wBc2zUnl1lpHU71l70/OH5cxHbyDYoEgdMoA==
+  dependencies:
+    gl-mat4 "1.1.4"
+    gl-vec3 "1.0.3"
+
 "@metamask/safe-event-emitter@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
@@ -7346,6 +7354,16 @@ getpass@^0.1.1:
   integrity sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==
   dependencies:
     assert-plus "^1.0.0"
+
+gl-mat4@1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/gl-mat4/-/gl-mat4-1.1.4.tgz#1e895b55892e56a896867abd837d38f37a178086"
+  integrity sha512-3NrFjvQMNSITLncF5Xz7EqfzB3IZczfNuJ6+ZFf2ko8hKhKzp8UXrdaRWm3AvpoowKMtnFDE7YpV5uD9AIxltw==
+
+gl-vec3@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/gl-vec3/-/gl-vec3-1.0.3.tgz#110fd897d0729f6398307381567d0944941bf22b"
+  integrity sha512-B4cOpz3vpwRwkmjVsv+JKgBlPOFSLQApDAaUFrowXPgx6Y/SOhTmeciOKHvcFqls6DsGuZ+YHXo9Py5oVia7bA==
 
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
