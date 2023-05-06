@@ -694,6 +694,55 @@ contract ReferralV4Upgradeable is
         totalIds++;
     }
 
+    function activateIdAdmin(
+        address _userAddress,
+        uint32 _refererId,
+        uint256 _valueInUSD,
+        uint256 _activationTime,
+        uint256 _roiStartTime,
+        uint256 _roiResetTime,
+        uint256 _roiDurationInDays
+    ) external onlyAdmin {
+        uint32 _id = totalIds + 1;
+        StructAccount storage userAccount = accounts[_userAddress];
+        StructId storage _idAccount = ids[_id];
+
+        _activateId(
+            _idAccount,
+            _userAddress,
+            _id,
+            _refererId,
+            _valueInUSD,
+            _valueInUSD * 3,
+            _activationTime,
+            maxLevels
+        );
+
+        if (isActivateROI) {
+            uint32 _roiId = IROI(
+                IVariables(_variablesContract).getROIContract()
+            ).activateROIAdmin(
+                    _id,
+                    _valueInUSD,
+                    _roiStartTime,
+                    _roiResetTime,
+                    _roiDurationInDays * 1 days
+                );
+            _idAccount.roiIds.push(_roiId);
+        }
+
+        userAccount.accountIds.push(_id);
+        totalIds++;
+    }
+
+    function pushROIIDToId(uint32 _id, uint32 _roiId) external onlyAdmin {
+        StructId storage idAccount = ids[_id];
+
+        idAccount.roiIds = new uint32[](0);
+        idAccount.roiIds.push(_roiId);
+
+    }
+
     // function activateIdUSD(uint32 _refererId, uint256 _value) external {
     //     require(
     //         _value >= minContributionUSD,
@@ -747,7 +796,10 @@ contract ReferralV4Upgradeable is
         uint256 _currentMaxLimit = (_idAccount.maxLimit -
             _idAccount.topUpIncome) + (_value * 3);
 
-        uint256 _currentROILimit = _idAccount.topUpIncome < (_idAccount.maxLimit * 2 / 3) ? ((_idAccount.maxLimit * 2 / 3) - _idAccount.topUpIncome) / 3 : 0;
+        uint256 _currentROILimit = _idAccount.topUpIncome <
+            ((_idAccount.maxLimit * 2) / 3)
+            ? (((_idAccount.maxLimit * 2) / 3) - _idAccount.topUpIncome) / 3
+            : 0;
 
         _activateId(
             _idAccount,
@@ -774,32 +826,34 @@ contract ReferralV4Upgradeable is
         }
     }
 
-    function updateTeamBusinessAdmin(uint16 _from, uint16 _to) external onlyAdmin {
-        uint8 _maxLevels = maxLevels;
-        for(_from; _from <= _to; _from++) {
-            StructId storage mainIdAccount = ids[_from];
-            for(uint8 i; i < _maxLevels; i++) {
-                StructId storage idAccount = mainIdAccount;
-                StructId storage referrerIdAccount = ids[idAccount.refererId];
+    // function updateTeam(uint16 _from, uint16 _to) external onlyAdmin {
+    //     uint8 _maxLevels = maxLevels;
+    //     for(_from; _from <= _to; _from++) {
+    //         StructId storage mainIdAccount = ids[_from];
+    //         StructId storage idAccount = mainIdAccount;
+    //         for(uint8 i; i < _maxLevels; i++) {
+    //             StructId storage referrerIdAccount = ids[idAccount.refererId];
 
-                if(referrerIdAccount.id == 0 || idAccount.id == 0 || mainIdAccount.id == _from) {
-                    break;
-                }
+    //             if(referrerIdAccount.id == 0) {
+    //                 break;
+    //             }
 
-                referrerIdAccount.teamBusinessOld += mainIdAccount.selfBusinessOld;
+    //             referrerIdAccount.teamIds.push(_from);
+    //             referrerIdAccount.teamLevel.push(i+1);
 
-                idAccount = referrerIdAccount;
-            }
+    //             idAccount = referrerIdAccount;
+    //         }
 
-        }
-    }
+    //     }
+    // }
 
-    function resetTeamBusiness(uint16 _from, uint16 _to) external onlyAdmin {
-        for(_from; _from <= _to; _from++) {
-            StructId storage idAccount = ids[_from];
-            idAccount.teamBusinessOld = 0;
-        }
-    }
+    // function resetTeam(uint16 _from, uint16 _to) external onlyAdmin {
+    //     for(_from; _from <= _to; _from++) {
+    //         StructId storage idAccount = ids[_from];
+    //         idAccount.teamIds = new uint32[](0);
+    //         idAccount.teamLevel = new uint32[](0);
+    //     }
+    // }
 
     // function updateROI(uint16 _from, uint16 _to) external onlyOwner {
     //     uint256 _currentTime = block.timestamp;

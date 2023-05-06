@@ -79,16 +79,18 @@ export const NavUser = () => {
           );
         })}
       </VStack>
+        <Divider></Divider>
       <HStack w="full" px={5}>
         {/* <ColorModeSwitcher size="lg" /> */}
         <Spacer />
+        <HStack onClick={deactivate} cursor="pointer">
+        <Text fontSize="sm" color="red">Log Out</Text>
         <Icon
           as={BiLogInCircle}
-          cursor="pointer"
-          boxSize={7}
-          color="pink.500"
-          onClick={deactivate}
+          boxSize={5}
+          color="red"
         ></Icon>
+        </HStack>
       </HStack>
     </VStack>
   );

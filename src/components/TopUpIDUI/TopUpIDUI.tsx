@@ -185,8 +185,7 @@ export const TopUpIDUI = ({
       }}
     >
       <VStack
-        w="90%"
-        maxW={350}
+       w={300}
         bgColor={useColorModeValue('white', 'gray.900')}
         borderRadius="50px"
         p={5}
@@ -194,7 +193,7 @@ export const TopUpIDUI = ({
         borderWidth="thin"
       >
         <HStack>
-          <Heading size="md">Join</Heading>
+          {/* <Heading size="md">Join</Heading> */}
           <Logo />
         </HStack>
         <Divider />
@@ -255,7 +254,7 @@ export const TopUpIDUI = ({
             <Text color="red" fontWeight={500}>
               * You don't have sufficient balance. You atleast need{' '}
               {minContributionETH.toFixed(3)} {currentNetwork?.Native?.Symbol}{' '}
-              to join the network.
+              to top up this id.
             </Text>
           )}
 
@@ -345,12 +344,12 @@ export const TopUpIDUI = ({
           onClick={handleTransaction}
           borderRadius="3xl"
         >
-          {account ? 'Join' : 'Please connect wallet'}
+          {account ? 'Top Up' : 'Please connect wallet'}
         </Button>
-        <Text color="red" fontSize="xs" py={5}>
+        {/* <Text color="red" fontSize="xs" py={5}>
           * For new user joining only. If you want to top up please do from
           dashboard only.
-        </Text>
+        </Text> */}
         <Modal isOpen={isOpen} onClose={() => {
           onClose();
           setTransactionStatus('No');

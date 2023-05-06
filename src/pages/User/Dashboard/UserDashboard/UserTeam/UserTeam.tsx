@@ -40,14 +40,14 @@ export const UserTeam = ({
       <HStack justify="center" align="center">
       <Tag p={3} borderRadius="3xl">
         <VStack>
-          <Heading size="md" color="pink.500">{idAccountMap.refereeIds.length}</Heading>
+          <Heading size="md" color="orange.500">{idAccountMap.refereeIds.length}</Heading>
           <Text >Referee</Text>
           <Icon as={HiUsers} boxSize={10}></Icon>
         </VStack>
       </Tag>
       <Tag p={3} borderRadius="3xl">
         <VStack>
-          <Heading size="md" color="pink.500">{idAccountMap.teamIds.length}</Heading>
+          <Heading size="md" color="orange.500">{idAccountMap.teamIds.length}</Heading>
           <Text >Team</Text>
           <Icon as={FaUsers} boxSize={10}></Icon>
         </VStack>

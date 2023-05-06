@@ -147,7 +147,7 @@ export function Footer() {
                 w={300}
                 borderRadius="xl"
                 h={12}
-                color="pink.500"
+                color="orange.500"
                 leftIcon={<Image src={MyUSDLogo} boxSize={7}></Image>}
                 rightIcon={<ExternalLinkIcon />}
               >
@@ -162,7 +162,7 @@ export function Footer() {
                 w={300}
                 borderRadius="xl"
                 h={12}
-                color="pink.500"
+                color="orange.500"
                 leftIcon={<Icon as={FaUsers}></Icon>}
                 rightIcon={<ExternalLinkIcon />}
               >
@@ -177,7 +177,7 @@ export function Footer() {
                 w={300}
                 borderRadius="xl"
                 h={12}
-                color="pink.500"
+                color="orange.500"
                 leftIcon={<Icon as={MdFlashOn}></Icon>}
                 rightIcon={<ExternalLinkIcon />}
               >
@@ -192,7 +192,7 @@ export function Footer() {
                 w={300}
                 borderRadius="xl"
                 h={12}
-                color="pink.500"
+                color="orange.500"
                 leftIcon={<Icon as={FaShieldAlt}></Icon>}
                 rightIcon={<ExternalLinkIcon />}
               >
