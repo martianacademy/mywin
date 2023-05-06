@@ -35,46 +35,46 @@ export const Team = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalID, setModalID] = useState('');
   return (
-    <VStack py={10} px={5} spacing={10} w="full">
-      <Heading>Your Team</Heading>
-      {Number(userIDAccount.refererId) > 0 && (
+    <Suspense fallback={<Spinner />}>
+      <VStack py={10} px={5} spacing={10} w="full">
+        <Heading>Your Team</Heading>
+        {Number(userIDAccount.refererId) > 0 && (
+          <VStack>
+            <UserReferralCard
+              heading="Referrer"
+              icon={FaUserAstronaut}
+              id={userIDAccount?.refererId}
+              onOpen={() => {
+                setModalID(userIDAccount?.refererId);
+                onOpen();
+              }}
+            ></UserReferralCard>
+            <Icon as={FaArrowDown} boxSize={10}></Icon>
+          </VStack>
+        )}
         <VStack>
           <UserReferralCard
-            heading="Referrer"
-            icon={FaUserAstronaut}
-            id={userIDAccount?.refererId}
+            heading="Your"
+            icon={FaUserCheck}
+            id={userIDAccount?.id}
             onOpen={() => {
-              setModalID(userIDAccount?.refererId);
+              setModalID(userIDAccount?.id);
               onOpen();
             }}
           ></UserReferralCard>
           <Icon as={FaArrowDown} boxSize={10}></Icon>
         </VStack>
-      )}
-      <VStack>
-        <UserReferralCard
-          heading="Your"
-          icon={FaUserCheck}
-          id={userIDAccount?.id}
-          onOpen={() => {
-            setModalID(userIDAccount?.id);
-            onOpen();
-          }}
-        ></UserReferralCard>
-        <Icon as={FaArrowDown} boxSize={10}></Icon>
-      </VStack>
-      <VStack w="full">
-        {userIDAccount?.refereeIds.length > 0 ? (
-          <Wrap
-            justify="center"
-            align="center"
-            w="full"
-            spacing={10}
-            overflow="visible"
-          >
-            {userIDAccount?.refereeIds.map((id: string, key: number) => {
-              return (
-                <Suspense fallback={<Spinner/>}>
+        <VStack w="full">
+          {userIDAccount?.refereeIds.length > 0 ? (
+            <Wrap
+              justify="center"
+              align="center"
+              w="full"
+              spacing={10}
+              overflow="visible"
+            >
+              {userIDAccount?.refereeIds.map((id: string, key: number) => {
+                return (
                   <UserReferralCard
                     heading="Referee"
                     icon={HiUsers}
@@ -84,52 +84,52 @@ export const Team = () => {
                     //   onOpen();
                     // }}
                   ></UserReferralCard>
-                </Suspense>
-              );
-            })}
-          </Wrap>
-        ) : (
-          <Heading>You have no referee</Heading>
-        )}
-      </VStack>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-        size="100vw"
-        motionPreset="scale"
-      >
-        <ModalOverlay bg="none" backdropFilter="auto" backdropBlur="10px" />
-        <ModalContent
-          borderRadius="50px"
-          py={10}
-          overflow="scroll"
-          h="95vh"
-          w="95vw"
-          scrollBehavior="auto"
-          bgColor={useColorModeValue('white', 'gray.900')}
-          borderWidth="thin"
+                );
+              })}
+            </Wrap>
+          ) : (
+            <Heading>You have no referee</Heading>
+          )}
+        </VStack>
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+          isCentered
+          size="100vw"
+          motionPreset="scale"
         >
-          <ModalHeader>
-            <HStack w="full">
-              <Heading size="sm">User Information</Heading>
-              <Spacer />
-              <Heading size="sm" color="orange.500">
-                userID: {modalID}
-              </Heading>
-            </HStack>
-          </ModalHeader>
-          <Divider />
-          <ModalBody py={10}>
-            <UserReferralCard
-              heading="Referee"
-              icon={HiUsers}
-              id={modalID}
-            ></UserReferralCard>
-          </ModalBody>
-          <ModalCloseButton />
-        </ModalContent>
-      </Modal>
-    </VStack>
+          <ModalOverlay bg="none" backdropFilter="auto" backdropBlur="10px" />
+          <ModalContent
+            borderRadius="50px"
+            py={10}
+            overflow="scroll"
+            h="95vh"
+            w="95vw"
+            scrollBehavior="auto"
+            bgColor={useColorModeValue('white', 'gray.900')}
+            borderWidth="thin"
+          >
+            <ModalHeader>
+              <HStack w="full">
+                <Heading size="sm">User Information</Heading>
+                <Spacer />
+                <Heading size="sm" color="orange.500">
+                  userID: {modalID}
+                </Heading>
+              </HStack>
+            </ModalHeader>
+            <Divider />
+            <ModalBody py={10}>
+              <UserReferralCard
+                heading="Referee"
+                icon={HiUsers}
+                id={modalID}
+              ></UserReferralCard>
+            </ModalBody>
+            <ModalCloseButton />
+          </ModalContent>
+        </Modal>
+      </VStack>
+    </Suspense>
   );
 };
