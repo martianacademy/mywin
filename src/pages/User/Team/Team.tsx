@@ -15,22 +15,28 @@ import {
   useDisclosure,
   ModalBody,
   useColorModeValue,
-} from "@chakra-ui/react";
-import { useState } from "react";
-import { FaArrowDown, FaUserAstronaut, FaUserCheck } from "react-icons/fa";
-import { HiUsers } from "react-icons/hi";
-import { useParams } from "react-router-dom";
-import { UserReferralCard } from "../../../components";
-import { useIDAccount } from "../../../hooks/ReferralHooks";
+  Spinner,
+} from '@chakra-ui/react';
+import { lazy, Suspense, useState } from 'react';
+import { FaArrowDown, FaUserAstronaut, FaUserCheck } from 'react-icons/fa';
+import { HiUsers } from 'react-icons/hi';
+import { useParams } from 'react-router-dom';
+import { useIDAccount } from '../../../hooks/ReferralHooks';
+
+const UserReferralCard = lazy(() =>
+  import('../../../components/UserReferralCard').then((module) => ({
+    default: module.UserReferralCard,
+  }))
+);
 
 export const Team = () => {
   const { userID } = useParams();
   const userIDAccount = useIDAccount(userID!);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [modalID, setModalID] = useState("");
+  const [modalID, setModalID] = useState('');
   return (
     <VStack py={10} px={5} spacing={10} w="full">
-      <Heading>Your Team Object</Heading>
+      <Heading>Your Team</Heading>
       {Number(userIDAccount.refererId) > 0 && (
         <VStack>
           <UserReferralCard
@@ -59,18 +65,26 @@ export const Team = () => {
       </VStack>
       <VStack w="full">
         {userIDAccount?.refereeIds.length > 0 ? (
-          <Wrap justify="center"  w="full" spacing={5} overflow="visible">
+          <Wrap
+            justify="center"
+            align="center"
+            w="full"
+            spacing={10}
+            overflow="visible"
+          >
             {userIDAccount?.refereeIds.map((id: string, key: number) => {
               return (
-                <UserReferralCard
-                  heading="Referee"
-                  icon={HiUsers}
-                  id={id}
-                  onOpen={() => {
-                    setModalID(id);
-                    onOpen();
-                  }}
-                ></UserReferralCard>
+                <Suspense fallback={<Spinner/>}>
+                  <UserReferralCard
+                    heading="Referee"
+                    icon={HiUsers}
+                    id={id}
+                    // onOpen={() => {
+                    //   setModalID(id);
+                    //   onOpen();
+                    // }}
+                  ></UserReferralCard>
+                </Suspense>
               );
             })}
           </Wrap>
@@ -93,7 +107,7 @@ export const Team = () => {
           h="95vh"
           w="95vw"
           scrollBehavior="auto"
-          bgColor={useColorModeValue("white", "gray.900")}
+          bgColor={useColorModeValue('white', 'gray.900')}
           borderWidth="thin"
         >
           <ModalHeader>

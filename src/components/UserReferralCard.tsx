@@ -40,12 +40,9 @@ export const UserReferralCard = ({
   return (
     <>
       <CardContainer
-        props={{
-          maxW: 300,
-        }}
         onClick={onOpen}
       >
-        <VStack spacing={5}>
+        <VStack spacing={5} w={250} h={475}>
           <VStack spacing={0} color="orange.500">
             <Heading size="sm">{heading} ID</Heading>
             <Heading size="md">{userIDAccount.id}</Heading>
