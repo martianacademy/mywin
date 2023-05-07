@@ -3,36 +3,27 @@ import {
   Heading,
   HStack,
   Icon,
-  Image,
-  Skeleton,
-  Spacer,
-  useColorModeValue,
-  VStack,
-} from "@chakra-ui/react";
-import { useEtherBalance, useEthers } from "@usedapp/core";
-import { IconType } from "react-icons";
+  Image, Spacer,
+  VStack
+} from '@chakra-ui/react';
+import { memo } from 'react';
+import { IconType } from 'react-icons';
 
-export const BalancesCard = ({
-  heading,
-  currencyValue,
-  currencySymbol,
-  logo,
-  icon,
-}: {
-  heading: string;
-  currencyValue: string;
-  currencySymbol: string;
-  logo?: string;
-  icon?: IconType;
-}) => {
-  const { account } = useEthers();
-  const userNativeBalance = useEtherBalance(account);
-  return (
-    <Skeleton
-      borderRadius="25px"
-      isLoaded={userNativeBalance ? true : false}
-      w="full"
-    >
+export const BalancesCard = memo(
+  ({
+    heading,
+    currencyValue,
+    currencySymbol,
+    logo,
+    icon,
+  }:{
+    heading: string;
+    currencyValue: string;
+    currencySymbol: string;
+    logo?: string;
+    icon?: IconType;
+  }) => {
+    return (
       <Card borderRadius="3xl" w="full" p={3} minW={200}>
         <HStack justify="space-around">
           <VStack w="full">
@@ -57,6 +48,6 @@ export const BalancesCard = ({
           {icon && <Icon as={icon} boxSize={10} color="orange.500"></Icon>}
         </HStack>
       </Card>
-    </Skeleton>
-  );
-};
+    );
+  }
+);

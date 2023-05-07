@@ -31,7 +31,7 @@ const UserReferralCard = lazy(() =>
 
 export const Team = () => {
   const { userID } = useParams();
-  const userIDAccount = useIDAccount(userID!);
+  const userIDAccount = useIDAccount(userID ?? "0");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalID, setModalID] = useState('');
   return (

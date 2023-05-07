@@ -16,7 +16,6 @@ export const UserBusiness = ({
   return (
     <CardContainer>
       <Heading size="sm">Business</Heading>
-
       <BalancesCard
         heading="Self Business"
         currencyValue={Number(

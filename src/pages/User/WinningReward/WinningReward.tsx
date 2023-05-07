@@ -97,6 +97,7 @@ export const WinningReward = () => {
     }
   }, [stateClaimWinningReward, toast, onClose, resetStateClaimWinningReward]);
 
+
   return (
     <>
       <VStack py={[3, 5, 7, 10]} spacing={5}>
