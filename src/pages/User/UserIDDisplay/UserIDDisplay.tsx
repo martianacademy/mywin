@@ -12,7 +12,7 @@ export const UserIDDisplay = () => {
 
   return (
     <VStack w="full" p={5} spacing={10}>
-      {!referralAccount?.accountIds.length ? (
+      {(!referralAccount.isActive || !referralAccount?.accountIds.length) ? (
         <Heading color="red">Your account is not active yet.</Heading>
       ) : (
         <>

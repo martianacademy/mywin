@@ -58,7 +58,7 @@ export const NavUserSmall = () => {
                   fontSize="sm"
                   onClick={() => {
                     onToggle();
-                    navigate(menuObject.link);
+                    navigate(`/user/info/${menuObject.link}/${userID}`);
                   }}
                 >
                   {menuObject?.name}

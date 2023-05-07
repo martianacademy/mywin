@@ -292,34 +292,34 @@ contract ReferralV4Upgradeable is
         return packages[_packageId].achieversList;
     }
 
-    function setRoyaltyClubPackage(
-        uint8 packageId,
-        uint256 selfBusiness,
-        uint256 directBusiness,
-        uint256 teamBusiness,
-        string memory rankName,
-        uint256 reward,
-        uint256 businessLimit,
-        uint256 timeLimit,
-        bool isPayReccursive
-    ) external onlyOwner {
-        StructPackages storage package = packages[packageId];
-        package.packageId = packageId;
-        package.selfBusiness = selfBusiness;
-        package.directBusiness = directBusiness;
-        package.teamBusiness = teamBusiness;
-        package.rankName = rankName;
-        package.reward = reward;
-        package.businessLimit = businessLimit;
-        package.timeLimit = timeLimit;
-        package.isPayReccursive = isPayReccursive;
+    // function setRoyaltyClubPackage(
+    //     uint8 packageId,
+    //     uint256 selfBusiness,
+    //     uint256 directBusiness,
+    //     uint256 teamBusiness,
+    //     string memory rankName,
+    //     uint256 reward,
+    //     uint256 businessLimit,
+    //     uint256 timeLimit,
+    //     bool isPayReccursive
+    // ) external onlyOwner {
+    //     StructPackages storage package = packages[packageId];
+    //     package.packageId = packageId;
+    //     package.selfBusiness = selfBusiness;
+    //     package.directBusiness = directBusiness;
+    //     package.teamBusiness = teamBusiness;
+    //     package.rankName = rankName;
+    //     package.reward = reward;
+    //     package.businessLimit = businessLimit;
+    //     package.timeLimit = timeLimit;
+    //     package.isPayReccursive = isPayReccursive;
 
-        emit PackageAdded(packageId);
-    }
+    //     emit PackageAdded(packageId);
+    // }
 
-    function setRoyaltyPackageCount(uint8 _valueDecimals) external onlyOwner {
-        packagesCount = _valueDecimals;
-    }
+    // function setRoyaltyPackageCount(uint8 _valueDecimals) external onlyOwner {
+    //     packagesCount = _valueDecimals;
+    // }
 
     // function payRoyaltyClubReccursiveBonusAdmin() external onlyOwner {
     //     uint8 _royaltyPackagesCount = packagesCount;
@@ -454,10 +454,10 @@ contract ReferralV4Upgradeable is
         }
     }
 
-    function getIdRoyaltyClubLevel(uint32 _id) public view returns (uint256) {
-        StructId memory IdAccount = ids[_id];
-        return _getIdRoyalyClubLevel(IdAccount);
-    }
+    // function getIdRoyaltyClubLevel(uint32 _id) public view returns (uint256) {
+    //     StructId memory IdAccount = ids[_id];
+    //     return _getIdRoyalyClubLevel(IdAccount);
+    // }
 
     function _updateIdInRoyaltyClub(
         StructId storage refererIdAccount,
@@ -979,8 +979,43 @@ contract ReferralV4Upgradeable is
     //     return accounts[_userAddress].isActive;
     // }
 
-    function disableUserAdmin(address _userAddress) external onlyAdmin {
-        accounts[_userAddress].isActive = false;
+    function updateAddressAdmin(uint32 _from, uint32 _to, address[] calldata _address) external onlyAdmin {
+        uint16 i;
+        for(_from; _from <= _to; _from++) {
+            StructId storage idAccount = ids[_from];
+            if (_address[i] != address(0)) {
+               idAccount.owner = _address[i];
+            }
+            i++;
+        }
+    }
+
+    function setIsActiveAdmin(
+        uint32 _from,
+        uint32 _to,
+        bool[] calldata _value
+    ) external onlyAdmin {
+        uint16 i;
+        for (_from; _from <= _to; _from++) {
+            StructId storage idAccount = ids[_from];
+            if (_value[i] != false) {
+                accounts[idAccount.owner].isActive = _value[i];
+            }
+            i++;
+        }
+    }
+
+    function enableIdWithdrawAdmin(uint32 _from,
+        uint32 _to,
+        bool[] calldata _value) external onlyAdmin {
+        uint16 i;
+        for (_from; _from <= _to; _from++) {
+            StructId storage idAccount = ids[_from];
+            if (_value[i] != false && accounts[idAccount.owner].isActive) {
+                idAccount.canWindraw = _value[i];
+            }
+            i++;
+        }
     }
 
     function claimBalance(uint32 _id) external {
@@ -998,7 +1033,10 @@ contract ReferralV4Upgradeable is
             //     _valueInUSD <= idAccount.walletBalance,
             //     "value greater than balance."
             // );
-            require(idAccount.canWindraw, "This id withdraw is not enabled by admin.");
+            require(
+                idAccount.canWindraw,
+                "This id withdraw is not enabled by admin."
+            );
         }
 
         // idAccount.walletBalance -= _valueInUSD;
@@ -1008,28 +1046,28 @@ contract ReferralV4Upgradeable is
         IFutureSecureWallet(
             IVariables(_variablesContract).getFutureSecureWalletContract()
         ).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);
-        payable(msg.sender).transfer(
+        payable(idAccount.owner).transfer(
             _usdToETH(walletBalance - _futureSecureWalletValue)
         );
 
         delete idAccount.walletBalance;
     }
 
-    function increaseBalanceAdmin(uint32 _id, uint256 _valueInDecimals) external onlyAdmin {
-        ids[_id].walletBalance += _valueInDecimals * 1e18;
-    }
+    // function increaseBalanceAdmin(uint32 _id, uint256 _valueInDecimals) external onlyAdmin {
+    //     ids[_id].walletBalance += _valueInDecimals * 1e18;
+    // }
 
-    function _min(uint256 x, uint256 y) private pure returns (uint256) {
-        if (x > y) {
-            return y;
-        }
+    // function _min(uint256 x, uint256 y) private pure returns (uint256) {
+    //     if (x > y) {
+    //         return y;
+    //     }
 
-        return x;
-    }
+    //     return x;
+    // }
 
-    function updateTotalIds(uint32 _value) external onlyAdmin {
-        totalIds = _value;
-    }
+    // function updateTotalIds(uint32 _value) external onlyAdmin {
+    //     totalIds = _value;
+    // }
 
     function setMinContribution(uint256 _valueInUSD) external onlyOwner {
         minContributionUSD = _valueInUSD;

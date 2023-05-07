@@ -25,13 +25,13 @@ const useCallHook = (methodName: string, arg: any[]) => {
 export const useReferralAccountMap = (
   address: string
 ): {
-  isDisabled: boolean;
+  isActive: boolean;
   accountIds: string[];
   userName: string;
 } => {
   const value = useCallHook('getUserAccount', [address])?.[0];
   const valueObject = {
-    isDisabled: value ? value?.isDisabled : false,
+    isActive: value ? value?.isActive : false,
     accountIds: value ? value?.accountIds : [],
     userName: value ? value?.userName : 'Anonymous',
   };
