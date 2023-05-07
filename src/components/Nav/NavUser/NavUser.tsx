@@ -9,25 +9,25 @@ import {
   Text,
   useColorModeValue,
   VStack,
-} from "@chakra-ui/react";
-import { useEthers } from "@usedapp/core";
-import { BiLogInCircle } from "react-icons/bi";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useIDAccount } from "../../../hooks/ReferralHooks";
-import { ConnectWalletButton } from "../../ConnectWalletButton/ConnectWalletButton";
-import { UserAddressActionButton } from "../../UI";
-import { NavMenuItems } from "../NavMenuItems";
+} from '@chakra-ui/react';
+import { useEthers } from '@usedapp/core';
+import { BiLogInCircle } from 'react-icons/bi';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useIDAccount } from '../../../hooks/ReferralHooks';
+import { ConnectWalletButton } from '../../ConnectWalletButton/ConnectWalletButton';
+import { UserAddressActionButton } from '../../UI';
+import { BasePathMenu, NavMenuItems } from '../NavMenuItems';
 
 export const NavUser = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { deactivate, account } = useEthers();
   const { userID } = useParams();
-  const userIDAccount = useIDAccount(userID ?? "0");
+  const userIDAccount = useIDAccount(userID ?? '0');
   return (
     <VStack
       w={250}
-      bgColor={useColorModeValue("white", "gray.900")}
+      bgColor={useColorModeValue('white', 'gray.900')}
       minH="80vh"
       borderRadius="50px"
       position="sticky"
@@ -40,12 +40,12 @@ export const NavUser = () => {
           <Avatar>
             <AvatarBadge
               boxSize={5}
-              bg={userIDAccount?.isActive ? "green" : "red"}
+              bg={userIDAccount?.isActive ? 'green' : 'red'}
             ></AvatarBadge>
           </Avatar>
           <ConnectWalletButton
             style={{
-              colorScheme: "green",
+              colorScheme: 'green',
             }}
           />
           <UserAddressActionButton address={account}></UserAddressActionButton>
@@ -59,19 +59,29 @@ export const NavUser = () => {
       </VStack>
       <Divider />
       <VStack flex={1}>
+      <Button
+          w="full"
+          variant={pathname === BasePathMenu.link ? 'solid' : 'ghost'}
+          fontSize="sm"
+          borderRadius="xl"
+          onClick={() => navigate(`${BasePathMenu.link}`)}
+          leftIcon={BasePathMenu.icon}
+        >
+          {BasePathMenu.name}
+        </Button>
         {NavMenuItems?.map((itemsOject, key) => {
           return (
             <Button
               w="full"
               key={key}
               variant={
-                pathname === `/user/dashboard/${userID}/${itemsOject?.link}`
-                  ? "solid"
-                  : "ghost"
+                pathname === `/user/info/${itemsOject?.link}/${userID}`
+                  ? 'solid'
+                  : 'ghost'
               }
               fontSize="sm"
               borderRadius="xl"
-              onClick={() => navigate(itemsOject?.link)}
+              onClick={() => navigate(`${itemsOject?.link}/${userID}`)}
               leftIcon={itemsOject.icon}
             >
               {itemsOject?.name}
@@ -79,17 +89,15 @@ export const NavUser = () => {
           );
         })}
       </VStack>
-        <Divider></Divider>
+      <Divider></Divider>
       <HStack w="full" px={5}>
         {/* <ColorModeSwitcher size="lg" /> */}
         <Spacer />
         <HStack onClick={deactivate} cursor="pointer">
-        <Text fontSize="sm" color="red">Log Out</Text>
-        <Icon
-          as={BiLogInCircle}
-          boxSize={5}
-          color="red"
-        ></Icon>
+          <Text fontSize="sm" color="red">
+            Log Out
+          </Text>
+          <Icon as={BiLogInCircle} boxSize={5} color="red"></Icon>
         </HStack>
       </HStack>
     </VStack>

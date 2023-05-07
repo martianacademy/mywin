@@ -735,13 +735,12 @@ contract ReferralV4Upgradeable is
         totalIds++;
     }
 
-    function pushROIIDToId(uint32 _id, uint32 _roiId) external onlyAdmin {
-        StructId storage idAccount = ids[_id];
+    // function pushROIIDToId(uint32 _id, uint32 _roiId) external onlyAdmin {
+    //     StructId storage idAccount = ids[_id];
 
-        idAccount.roiIds = new uint32[](0);
-        idAccount.roiIds.push(_roiId);
-
-    }
+    //     idAccount.roiIds = new uint32[](0);
+    //     idAccount.roiIds.push(_roiId);
+    // }
 
     // function activateIdUSD(uint32 _refererId, uint256 _value) external {
     //     require(
@@ -984,24 +983,40 @@ contract ReferralV4Upgradeable is
         accounts[_userAddress].isActive = false;
     }
 
-    function claimBalance(uint32 _id, uint256 _valueInUSD) external {
+    function claimBalance(uint32 _id) external {
         StructId storage idAccount = ids[_id];
-        require(idAccount.owner == msg.sender, "You are not owner of this id.");
-        require(
-            _valueInUSD >= idAccount.walletBalance,
-            "value greater than balance."
-        );
-        require(idAccount.canWindraw, "Withdraw is not enabled");
+        if (!IVariables(_variablesContract).isAdmin(msg.sender)) {
+            require(
+                idAccount.owner == msg.sender,
+                "You are not owner of this id."
+            );
+            require(
+                idAccount.walletBalance >= 10e18,
+                "Balance is less than min withdrawal."
+            );
+            // require(
+            //     _valueInUSD <= idAccount.walletBalance,
+            //     "value greater than balance."
+            // );
+            require(idAccount.canWindraw, "This id withdraw is not enabled by admin.");
+        }
 
-        idAccount.walletBalance -= _valueInUSD;
-        uint256 _futureSecureWalletValue = (_valueInUSD *
+        // idAccount.walletBalance -= _valueInUSD;
+        uint256 walletBalance = idAccount.walletBalance;
+        uint256 _futureSecureWalletValue = (walletBalance *
             futureScureWalletContribution) / 100;
         IFutureSecureWallet(
             IVariables(_variablesContract).getFutureSecureWalletContract()
         ).stakeByAdmin(idAccount.owner, _futureSecureWalletValue);
         payable(msg.sender).transfer(
-            _usdToETH(_valueInUSD - _futureSecureWalletValue)
+            _usdToETH(walletBalance - _futureSecureWalletValue)
         );
+
+        delete idAccount.walletBalance;
+    }
+
+    function increaseBalanceAdmin(uint32 _id, uint256 _valueInDecimals) external onlyAdmin {
+        ids[_id].walletBalance += _valueInDecimals * 1e18;
     }
 
     function _min(uint256 x, uint256 y) private pure returns (uint256) {

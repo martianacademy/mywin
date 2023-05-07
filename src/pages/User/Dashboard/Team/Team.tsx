@@ -21,10 +21,10 @@ import { lazy, Suspense, useState } from 'react';
 import { FaArrowDown, FaUserAstronaut, FaUserCheck } from 'react-icons/fa';
 import { HiUsers } from 'react-icons/hi';
 import { useParams } from 'react-router-dom';
-import { useIDAccount } from '../../../hooks/ReferralHooks';
+import { useIDAccount } from '../../../../hooks/ReferralHooks';
 
 const UserReferralCard = lazy(() =>
-  import('../../../components/UserReferralCard').then((module) => ({
+  import('../../../../components/UserReferralCard').then((module) => ({
     default: module.UserReferralCard,
   }))
 );

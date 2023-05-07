@@ -1,8 +1,8 @@
 import { Heading, Text, VStack } from '@chakra-ui/react'
 import { useEthers } from '@usedapp/core';
-import { TopUpIDUI } from '../../../components'
-import { useCoinPrice } from '../../../hooks/PriceOracleHooks';
-import { useMinContributionETH } from '../../../hooks/ReferralHooks';
+import { TopUpIDUI } from '../../../../components'
+import { useCoinPrice } from '../../../../hooks/PriceOracleHooks';
+import { useMinContributionETH } from '../../../../hooks/ReferralHooks';
 
 export const TopUpID = () => {
   const { account, chainId } = useEthers();

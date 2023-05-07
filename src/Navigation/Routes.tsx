@@ -1,17 +1,9 @@
 import { createHashRouter } from 'react-router-dom';
 import { App } from '../App';
-import { JoinPage, User } from '../pages';
+import { User } from '../pages';
 import { AdminDashboard } from '../pages/admin';
-import {
-  Dashboard,
-  FutureSecureWallet,
-  WinningReward,
-  Team,
-  Transactions,
-  UserIDDisplay,
-} from '../pages/User';
-import { UserDashboard } from '../pages/User/Dashboard/UserDashboard/UserDashboard';
-import { TopUpID } from '../pages/User/TopUpID/TopUpID';
+import { JoinPage } from '../pages/JoinPage/JoinPage';
+import { Dashboard, FutureSecureWallet, Team, TopUpID, Transactions, UserDashboard, UserIDDisplay, WalletPage, WinningReward } from '../pages/User';
 import { ProtectedNavigation } from './ProtectedNavigation';
 
 export const Routes = createHashRouter([
@@ -56,32 +48,36 @@ export const Routes = createHashRouter([
             element: <UserIDDisplay />,
           },
           {
-            path: 'dashboard/:userID',
+            path: 'info',
             element: <Dashboard />,
             children: [
               {
-                index: true,
+                path: 'dashboard/:userID',
                 element: <UserDashboard />,
               },
               {
-                path: 'winning-rewards',
+                path: 'winning-rewards/:userID',
                 element: <WinningReward />,
               },
               {
-                path: 'future-secure-wallet',
+                path: 'future-secure-wallet/:userID',
                 element: <FutureSecureWallet />,
               },
 
               {
-                path: 'team',
+                path: 'team/:userID',
                 element: <Team />,
               },
               {
-                path: 'top-up-id',
+                path: 'top-up-id/:userID',
                 element: <TopUpID />,
               },
               {
-                path: 'transactions',
+                path: 'wallet-page/:userID',
+                element: <WalletPage />,
+              },
+              {
+                path: 'transactions/:userID',
                 element: <Transactions />,
               },
             ],
@@ -89,5 +85,9 @@ export const Routes = createHashRouter([
         ],
       },
     ],
+  },
+  {
+    path: '*',
+    element: <App />,
   },
 ]);

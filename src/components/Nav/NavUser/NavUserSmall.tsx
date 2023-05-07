@@ -38,7 +38,7 @@ export const NavUserSmall = () => {
               : NavMenuItems?.map((itemsOject, key) => {
                   return (
                     pathname ===
-                      `/user/dashboard/${userID}/${itemsOject.link}` &&
+                      `/user/info/${itemsOject.link}/${userID}` &&
                     itemsOject?.name
                   );
                 })}

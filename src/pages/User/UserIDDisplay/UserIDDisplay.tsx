@@ -20,7 +20,7 @@ export const UserIDDisplay = () => {
           <Wrap w="full" justify="center" p={5} spacing={10} overflow="visible">
             {referralAccount?.accountIds.map((id: string, key: number) => {
               return (
-                <VStack onClick={() => navigate(`/user/dashboard/${id}`)} key={key}>
+                <VStack onClick={() => navigate(`/user/info/dashboard/${id}`)} key={key}>
                   <UserIDCardDashboard id={`${id}`}></UserIDCardDashboard>
                 </VStack>
               );

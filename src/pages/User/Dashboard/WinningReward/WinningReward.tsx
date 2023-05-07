@@ -13,20 +13,20 @@ import {
 import { useContractFunction, useEthers } from '@usedapp/core';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { CardContainer } from '../../../components';
-import { ModalConfirmTransaction } from '../../../components/Modals/ModalConfirmTransaction';
-import { ModalTransactionInProgress } from '../../../components/Modals/ModalTransactionInProgress/ModalTransactionInProgress';
-import { ModalTransactionSuccess } from '../../../components/Modals/ModalTransactionSuccess/ModalTransactionSuccess';
+import { CardContainer } from '../../../../components';
+import { ModalConfirmTransaction } from '../../../../components/Modals/ModalConfirmTransaction';
+import { ModalTransactionInProgress } from '../../../../components/Modals/ModalTransactionInProgress/ModalTransactionInProgress';
+import { ModalTransactionSuccess } from '../../../../components/Modals/ModalTransactionSuccess/ModalTransactionSuccess';
 import {
   MyUSDLogo,
   MyUSDSymbol,
   useSupportedNetworkInfo
-} from '../../../constants';
-import { useIDAccount } from '../../../hooks/ReferralHooks';
+} from '../../../../constants';
+import { useIDAccount } from '../../../../hooks/ReferralHooks';
 import {
   useGetUserAllActiveROIValue,
   useGetUserIDTotalROI
-} from '../../../hooks/ROIHooks';
+} from '../../../../hooks/ROIHooks';
 
 export const WinningReward = () => {
   const { chainId } = useEthers();
