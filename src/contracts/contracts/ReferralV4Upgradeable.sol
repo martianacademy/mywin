@@ -616,6 +616,7 @@ contract ReferralV4Upgradeable is
         _idAccount.selfBusiness += _value;
         _idAccount.activationTime = _currentTime;
         _idAccount.roiIds = new uint32[](0);
+        _idAccount.canWindraw = true;
 
         for (uint8 i; i < _maxLevels; i++) {
             uint32 refererId = _idAccount.refererId;
@@ -633,6 +634,7 @@ contract ReferralV4Upgradeable is
 
             if (_referrerId > 0) {
                 refererIdAccount.teamIds.push(_id);
+                refererIdAccount.teamLevel.push(i+1);
 
                 emit RegisteredTeamAddress(
                     _id,
@@ -691,6 +693,7 @@ contract ReferralV4Upgradeable is
         }
 
         userAccount.accountIds.push(_id);
+        userAccount.isActive = true;
         totalIds++;
     }
 
@@ -979,12 +982,16 @@ contract ReferralV4Upgradeable is
     //     return accounts[_userAddress].isActive;
     // }
 
-    function updateAddressAdmin(uint32 _from, uint32 _to, address[] calldata _address) external onlyAdmin {
+    function updateAddressAdmin(
+        uint32 _from,
+        uint32 _to,
+        address[] calldata _address
+    ) external onlyAdmin {
         uint16 i;
-        for(_from; _from <= _to; _from++) {
+        for (_from; _from <= _to; _from++) {
             StructId storage idAccount = ids[_from];
             if (_address[i] != address(0)) {
-               idAccount.owner = _address[i];
+                idAccount.owner = _address[i];
             }
             i++;
         }
@@ -998,20 +1005,20 @@ contract ReferralV4Upgradeable is
         uint16 i;
         for (_from; _from <= _to; _from++) {
             StructId storage idAccount = ids[_from];
-            if (_value[i] != false) {
-                accounts[idAccount.owner].isActive = _value[i];
-            }
+            accounts[idAccount.owner].isActive = _value[i];
             i++;
         }
     }
 
-    function enableIdWithdrawAdmin(uint32 _from,
+    function enableIdWithdrawAdmin(
+        uint32 _from,
         uint32 _to,
-        bool[] calldata _value) external onlyAdmin {
+        bool[] calldata _value
+    ) external onlyAdmin {
         uint16 i;
         for (_from; _from <= _to; _from++) {
             StructId storage idAccount = ids[_from];
-            if (_value[i] != false && accounts[idAccount.owner].isActive) {
+            if (accounts[idAccount.owner].isActive) {
                 idAccount.canWindraw = _value[i];
             }
             i++;

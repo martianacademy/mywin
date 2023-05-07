@@ -57,10 +57,10 @@ export const Team = () => {
             heading="Your"
             icon={FaUserCheck}
             id={userIDAccount?.id}
-            onOpen={() => {
-              setModalID(userIDAccount?.id);
-              onOpen();
-            }}
+            // onOpen={() => {
+            //   setModalID(userIDAccount?.id);
+            //   onOpen();
+            // }}
           ></UserReferralCard>
           <Icon as={FaArrowDown} boxSize={10}></Icon>
         </VStack>
@@ -76,6 +76,7 @@ export const Team = () => {
               {userIDAccount?.refereeIds.map((id: string, key: number) => {
                 return (
                   <UserReferralCard
+                  key={key}
                     heading="Referee"
                     icon={HiUsers}
                     id={id}
