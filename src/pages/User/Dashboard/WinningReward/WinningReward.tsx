@@ -101,7 +101,7 @@ export const WinningReward = () => {
   return (
     <>
       <VStack py={[3, 5, 7, 10]} spacing={5}>
-        <Heading textAlign="center">Winning Rewards Stats</Heading>
+        <Heading textAlign="center">Winning Rewards</Heading>
         <CardContainer>
           <VStack>
             <Heading textAlign="center" color="orange.500" size="md">
