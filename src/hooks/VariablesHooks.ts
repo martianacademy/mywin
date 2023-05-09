@@ -1,5 +1,5 @@
 import { useCall, useEthers } from "@usedapp/core";
-import { useSupportedNetworkInfo } from "../constants";
+import { AddressZero, useSupportedNetworkInfo } from "../constants";
 
 export const useCallHook = (methodName: string, arg: any[]) => {
     const { chainId } = useEthers();
@@ -19,3 +19,8 @@ export const useCallHook = (methodName: string, arg: any[]) => {
     }
     return value;
   };
+
+  export const useVariablesIsAdmin = (address: string | undefined) => {
+    const value = useCallHook("isAdmin", [address ?? AddressZero])?.[0];
+   return value;
+  }
