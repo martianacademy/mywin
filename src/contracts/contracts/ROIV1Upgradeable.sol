@@ -180,7 +180,8 @@ contract ROIV1Upgradeable is
         uint256 _resetTime,
         uint256 _duration
     ) external onlyAdmin returns (uint32) {
-        return _activateROI(_ownerId, _value, _startTime, _resetTime, _duration);
+        return
+            _activateROI(_ownerId, _value, _startTime, _resetTime, _duration);
     }
 
     function _getROIALL(
@@ -292,22 +293,20 @@ contract ROIV1Upgradeable is
             IVariables(_variablesContract).getReferralContract()
         ).getIdAccount(_id);
 
-        require(msg.sender == idAccount.owner, "You are not owner of this id.");
+        if (!IVariables(_variablesContract).isAdmin(msg.sender)) {
+            require(
+                msg.sender == idAccount.owner,
+                "You are not owner of this id."
+            );
 
-        require(
-            block.timestamp >= idAccount.roiClaimedTime + _roiClaimTimelimit,
-            "Your roi claim timelimit is not over yet."
-        );
+            require(
+                block.timestamp >=
+                    idAccount.roiClaimedTime + _roiClaimTimelimit,
+                "Your roi claim timelimit is not over yet."
+            );
 
-        require(!idAccount.isROIDisabled, "Account disabled by admin");
-
-        return _claimROI(idAccount);
-    }
-
-    function claimROIAdmin(uint32 _id) external onlyAdmin returns (uint256) {
-        IReferral.StructId memory idAccount = IReferral(
-            IVariables(_variablesContract).getReferralContract()
-        ).getIdAccount(_id);
+            require(!idAccount.isROIDisabled, "Account disabled by admin");
+        }
 
         return _claimROI(idAccount);
     }

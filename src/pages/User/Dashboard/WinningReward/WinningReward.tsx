@@ -38,6 +38,8 @@ export const WinningReward = () => {
   const IDAccount = useIDAccount(userID ?? '0');
   const liveROI = useGetUserIDTotalROI(userID);
 
+  console.log(IDAccount)
+
   const [transactionStatus, setTransactionStatus] = useState<
     'No' | 'Loading' | 'Mining' | 'Success'
   >('No');
@@ -204,6 +206,7 @@ export const WinningReward = () => {
               onClose={() => {
                 onClose();
                 resetStateClaimWinningReward();
+                setTransactionStatus("No")
               }}
               isLoading={transactionStatus === 'Loading'}
               value={Number(liveROI).toFixed(5)}

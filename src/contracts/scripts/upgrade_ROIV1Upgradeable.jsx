@@ -1,5 +1,5 @@
-import {roiV1ContractAddress} from "../../constants/ContractAddress"
-import { ethers, upgrades } from "hardhat";
+// import {roiV1ContractAddress} from "../../constants/ContractAddress"
+const { ethers, upgrades } = require("hardhat");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -15,7 +15,7 @@ async function main() {
 
   const TokenV2 = await ethers.getContractFactory("ROIV1Upgradeable");
   const mc = await upgrades.upgradeProxy(
-    roiV1ContractAddress,
+    "0x53387fba122eBC8d124A153e535C4b669764D235",
     TokenV2,
     { gasPrice: gas }
   );
