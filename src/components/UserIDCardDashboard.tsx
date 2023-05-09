@@ -140,6 +140,11 @@ export const UserIDCardDashboard = ({ id, isAdmin, userAddress }: { id: string, 
               <Spacer></Spacer>
               <Text color={idAccountMap?.canWindraw ? "green.400" : "red.400"}>{idAccountMap?.canWindraw ? "true" : "false"}</Text>
             </HStack>
+            <HStack w="full">
+              <Text fontSize="xs" color={idAccountMap?.isROIDisabled ? "green.400" : "red.400"}>isROIDisabled</Text>
+              <Spacer></Spacer>
+              <Text color={idAccountMap?.isROIDisabled ? "green.400" : "red.400"}>{idAccountMap?.canWindraw ? "true" : "false"}</Text>
+            </HStack>
           </VStack>
         </Tag>}
         
@@ -154,12 +159,12 @@ export const UserIDCardDashboard = ({ id, isAdmin, userAddress }: { id: string, 
         )}
 
         <Wrap justify="center" align="center" maxW={300}>
-          <Tag colorScheme="blue">Value: ${idAccountMap.selfBusiness?.toFixed(2)}</Tag>
+          <Tag colorScheme="blue">Value: ${Number(idAccountMap.selfBusiness + idAccountMap?.selfBusinessOld)?.toFixed(2)}</Tag>
           <Tag colorScheme="blue">
             Reward: ${getIDReward.totalRewardPaid.toFixed(2)}
           </Tag>
           <Tag colorScheme="blue">Team: {getIDTeam.teamCount}</Tag>
-          <Tag colorScheme="blue">Business: ${idAccountMap.teamBusiness?.toFixed(2)}</Tag>
+          <Tag colorScheme="blue">Business: ${(idAccountMap.teamBusiness + idAccountMap?.teamBusinessOld)?.toFixed(2)}</Tag>
         </Wrap>
       </MotionVStack>
     </VStack>
