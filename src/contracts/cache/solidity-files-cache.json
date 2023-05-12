@@ -1047,8 +1047,8 @@
       ]
     },
     "/Users/suru.martian/Documents/Projects/mywin/src/contracts/contracts/ReferralV4Upgradeable.sol": {
-      "lastModificationDate": 1683630327318,
-      "contentHash": "93db10d674da977cf7b30d9c9f2a5610",
+      "lastModificationDate": 1683907041726,
+      "contentHash": "ea532c64e49733e48e3b62f2dca7d73c",
       "sourceName": "contracts/ReferralV4Upgradeable.sol",
       "solcConfig": {
         "version": "0.8.18",
@@ -1092,8 +1092,8 @@
       ]
     },
     "/Users/suru.martian/Documents/Projects/mywin/src/contracts/contracts/ROIV1Upgradeable.sol": {
-      "lastModificationDate": 1683610576689,
-      "contentHash": "716c090a83f75bdd63aa7f24d1a6c738",
+      "lastModificationDate": 1683888896234,
+      "contentHash": "2a2ad1ca0e00bc7772408138451d0243",
       "sourceName": "contracts/ROIV1Upgradeable.sol",
       "solcConfig": {
         "version": "0.8.18",
@@ -1244,6 +1244,49 @@
       ],
       "artifacts": [
         "MultiCallV2"
+      ]
+    },
+    "/Users/suru.martian/Documents/Projects/mywin/src/contracts/contracts/ROIV1Upgradeable copy.sol": {
+      "lastModificationDate": 1683887844047,
+      "contentHash": "002daec0a8b359d8a4759fda610133f8",
+      "sourceName": "contracts/ROIV1Upgradeable copy.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.18"
+      ],
+      "artifacts": [
+        "IReferral",
+        "IVariables",
+        "ROIV1OldUpgradeable"
       ]
     }
   }

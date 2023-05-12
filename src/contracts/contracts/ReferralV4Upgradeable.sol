@@ -397,8 +397,7 @@ contract ReferralV4Upgradeable is
         StructId storage idAccount = ids[_id];
         idAccount.roiClaimedTime = block.timestamp;
         idAccount.roiPaid += _value;
-        idAccount.topUpIncome += _value;
-        idAccount.walletBalance += _value;
+        _increaseIdTopUpIncome(idAccount, _value);
     }
 
     function _increaseIdTopUpIncome(
@@ -532,6 +531,16 @@ contract ReferralV4Upgradeable is
             uint32 referrerId = idAccount.refererId;
             StructId storage refererIDAccount = ids[referrerId];
             if (refererIDAccount.id == 0) {
+                emit ReferralNotPaid(referrerId, i + 1, "Reached to id 0.");
+                break;
+            }
+
+            if (refererIDAccount.refererId == referrerId) {
+                emit ReferralNotPaid(
+                    referrerId,
+                    i + 1,
+                    "Self Refer id won't get referral."
+                );
                 break;
             }
 
@@ -541,26 +550,19 @@ contract ReferralV4Upgradeable is
                 continue;
             }
 
-            if (i + 1 > _userLevelUnlockCount(refererIDAccount)) {
+            if (refererIDAccount.refereeIds.length > 0 && ((refererIDAccount.refereeIds.length * _userLevelUnlockMultiplier) - 1) > i) {
+                uint256 c = (_value * rates[i]) / decimals;
+                refererIDAccount.referralPaid += (c);
+                _increaseIdTopUpIncome(refererIDAccount, c);
+                totalReferralIn += c;
+                emit ReferralRewardPaid(_id, referrerId, c, i + 1);
+            } else {
                 emit ReferralNotPaid(
                     referrerId,
                     i + 1,
                     "Downline levels limit reached"
                 );
-
-                idAccount = refererIDAccount;
-                continue;
             }
-
-            uint256 c = (_value * rates[i]) / decimals;
-
-            refererIDAccount.referralPaid += (c);
-
-            _increaseIdTopUpIncome(refererIDAccount, c);
-
-            totalReferralIn += c;
-
-            emit ReferralRewardPaid(_id, referrerId, c, i + 1);
 
             idAccount = refererIDAccount;
         }
@@ -710,15 +712,16 @@ contract ReferralV4Upgradeable is
         uint32 _id = totalIds + 1;
         StructAccount storage userAccount = accounts[_userAddress];
         StructId storage _idAccount = ids[_id];
+        uint256 _currentTime = block.timestamp;
 
         _activateId(
             _idAccount,
             _userAddress,
             _id,
             _refererId,
-            _valueInUSD,
-            _valueInUSD * 3,
-            _activationTime,
+            _valueInUSD * 1e18,
+            _valueInUSD * 1e18 * 3,
+            _activationTime == 0 ? _currentTime : _activationTime,
             maxLevels
         );
 
@@ -727,9 +730,9 @@ contract ReferralV4Upgradeable is
                 IVariables(_variablesContract).getROIContract()
             ).activateROIAdmin(
                     _id,
-                    _valueInUSD,
-                    _roiStartTime,
-                    _roiResetTime,
+                    _valueInUSD * 1e18,
+                    _roiStartTime == 0 ? _currentTime : _roiStartTime,
+                    _roiResetTime == 0 ? _currentTime : _roiResetTime,
                     _roiDurationInDays * 1 days
                 );
             _idAccount.roiIds.push(_roiId);
@@ -783,19 +786,6 @@ contract ReferralV4Upgradeable is
                 );
             _idAccount.roiIds.push(_roiId);
         }
-    }
-
-    function _userLevelUnlockCount(
-        StructId memory _userIdAccount
-    ) private view returns (uint256) {
-        uint256 userRefereeCount = _userIdAccount.refereeIds.length;
-        uint256 count;
-
-        if (userRefereeCount > 0) {
-            count = userRefereeCount * _userLevelUnlockMultiplier - 1;
-        }
-
-        return count;
     }
 
     function _usdToETH(uint256 _valueInUSD) private view returns (uint256) {

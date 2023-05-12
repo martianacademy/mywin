@@ -67,7 +67,7 @@ interface IReferral {
     function updateIdWhenClaimROI(uint32 _id, uint256 _value) external;
 }
 
-contract ROIV1Upgradeable is
+contract ROIV1OldUpgradeable is
     Initializable,
     OwnableUpgradeable,
     UUPSUpgradeable
@@ -296,7 +296,7 @@ contract ROIV1Upgradeable is
         bool isEnabled;
 
         if (!IVariables(_variablesContract).isAdmin(msg.sender)) {
-            // require(isEnabled, "System is in maintainance.");
+            require(isEnabled, "System is in maintainance.");
             require(
                 msg.sender == idAccount.owner,
                 "You are not owner of this id."
