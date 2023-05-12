@@ -322,7 +322,7 @@ contract FutureSecureWalletV1Upgradeable is
         return account[_userAddress].rewardClaimed;
     }
 
-    function getStakingTimeRemaining(
+    function getStakingTimeEndTime(
         address _userAddress
     ) external view returns (uint256 time) {
         uint256 _currentTime = block.timestamp;
@@ -338,7 +338,7 @@ contract FutureSecureWalletV1Upgradeable is
             userAccount.stakingIDs.length > 0 &&
             _currentTime < userLastStakingEndTime
         ) {
-            time = userLastStakingEndTime - _currentTime;
+            time = userLastStakingEndTime;
         }
     }
 

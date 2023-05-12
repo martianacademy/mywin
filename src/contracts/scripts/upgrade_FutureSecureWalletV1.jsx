@@ -1,5 +1,4 @@
-import {futureSecureWalletV1ContractAddress} from "../../constants/ContractAddress"
-import { ethers, upgrades } from "hardhat";
+const { ethers, upgrades } = require("hardhat");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -15,7 +14,7 @@ async function main() {
 
   const TokenV2 = await ethers.getContractFactory("FutureSecureWalletV1Upgradeable");
   const mc = await upgrades.upgradeProxy(
-    futureSecureWalletV1ContractAddress,
+    "0x42c34Fd07E2C00f21940dDC6A5BC4BAf0a474145",
     TokenV2,
     { gasPrice: gas }
   );

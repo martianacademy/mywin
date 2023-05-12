@@ -37,3 +37,9 @@ export const useCallHook = (methodName: string, arg: any[]) => {
     const valueFormatted = value ? Number(formatEther(value)) : 0
     return valueFormatted;
   }
+
+  export const useFutureGetStakingTimeEndTime = (address: string | undefined) => {
+    const value = useCallHook("getStakingTimeEndTime", [address])?.[0];
+    const valueFormatted = value ? Number(value) : 0
+    return valueFormatted;
+  }

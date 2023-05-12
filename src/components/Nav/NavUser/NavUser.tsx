@@ -49,7 +49,7 @@ export const NavUser = () => {
               colorScheme: 'green',
             }}
           /> */}
-          <UserAddressActionButton address={account}></UserAddressActionButton>
+          <UserAddressActionButton address={userIDAccount?.owner}></UserAddressActionButton>
         </VStack>
         <VStack color="orange.500">
           <Text>ID: {userIDAccount?.id}</Text>

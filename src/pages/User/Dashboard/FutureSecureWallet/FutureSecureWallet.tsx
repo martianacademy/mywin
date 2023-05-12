@@ -14,6 +14,7 @@ import { useContractFunction, useEthers } from '@usedapp/core';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CardContainer } from '../../../../components';
+import { Counter } from '../../../../components/Counter';
 import { ModalConfirmTransaction } from '../../../../components/Modals/ModalConfirmTransaction';
 import { ModalTransactionInProgress } from '../../../../components/Modals/ModalTransactionInProgress/ModalTransactionInProgress';
 import { ModalTransactionSuccess } from '../../../../components/Modals/ModalTransactionSuccess/ModalTransactionSuccess';
@@ -22,7 +23,7 @@ import {
   MyUSDSymbol,
   useSupportedNetworkInfo
 } from '../../../../constants';
-import { useFutureGetUserAllStakingsRewards, useFutureGetUserTotalRewardClaimedToken, useFutureGetUserTotalValueStaked } from '../../../../hooks/FutureSecureWalletHooks';
+import { useFutureGetStakingTimeEndTime, useFutureGetUserAllStakingsRewards, useFutureGetUserTotalRewardClaimedToken, useFutureGetUserTotalValueStaked } from '../../../../hooks/FutureSecureWalletHooks';
 import { useIDAccount } from '../../../../hooks/ReferralHooks';
 
 export const FutureSecureWallet = () => {
@@ -35,6 +36,7 @@ export const FutureSecureWallet = () => {
   const userTotalValueLocked = useFutureGetUserTotalValueStaked(IDAccount?.owner);
   const liveROI = useFutureGetUserAllStakingsRewards(IDAccount?.owner);
   const totalRewardClaimed = useFutureGetUserTotalRewardClaimedToken(IDAccount?.owner);
+  const stakingEndTime = useFutureGetStakingTimeEndTime(IDAccount?.owner);
 
   const [transactionStatus, setTransactionStatus] = useState<
     'No' | 'Loading' | 'Mining' | 'Success'
@@ -121,12 +123,12 @@ export const FutureSecureWallet = () => {
               <Image src={MyUSDLogo} boxSize={10}></Image>
             </HStack>
           </VStack>
-          {/* <VStack>
+          <VStack>
           <Heading color="orange.500" size="md">
-            Max Duration
+            Wallet Unlock Time
           </Heading>
-          <Counter timeinseconds={roiEndTimeInSeconds} size="sm"></Counter>
-        </VStack> */}
+          <Counter timeinseconds={stakingEndTime} size="sm"></Counter>
+        </VStack>
           <VStack>
             <Heading color="orange.500" size="md">
               Reward Claimed
