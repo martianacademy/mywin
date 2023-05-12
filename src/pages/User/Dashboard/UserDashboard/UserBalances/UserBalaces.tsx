@@ -12,10 +12,10 @@ export const UserBalaces = ({
 }) => {
   const { chainId, account } = useEthers();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
-  const userNativeBalance = useEtherBalance(account);
+  const userNativeBalance = useEtherBalance(idAccountMap.owner ?? account);
   const userMYUSDBalance = useTokenBalance(
     currentNetwork?.MYUSD?.ContractAddress,
-    account
+    idAccountMap.owner ?? account
   );
 
   return (

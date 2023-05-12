@@ -10,7 +10,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { useEthers } from '@usedapp/core';
+import { shortenAddress, useEthers } from '@usedapp/core';
 import { BiLogInCircle } from 'react-icons/bi';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useIDAccount } from '../../../hooks/ReferralHooks';
@@ -43,11 +43,12 @@ export const NavUser = () => {
               bg={userIDAccount?.isActive ? 'green' : 'red'}
             ></AvatarBadge>
           </Avatar>
-          <ConnectWalletButton
+          <Button borderRadius="xl">{shortenAddress(userIDAccount?.owner)}</Button>
+          {/* <ConnectWalletButton
             style={{
               colorScheme: 'green',
             }}
-          />
+          /> */}
           <UserAddressActionButton address={account}></UserAddressActionButton>
         </VStack>
         <VStack color="orange.500">
