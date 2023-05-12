@@ -1,4 +1,5 @@
 import { useCall, useEthers } from "@usedapp/core";
+import { formatEther } from "ethers/lib/utils";
 import { useSupportedNetworkInfo } from "../constants";
 
 export const useCallHook = (methodName: string, arg: any[]) => {
@@ -19,3 +20,20 @@ export const useCallHook = (methodName: string, arg: any[]) => {
     }
     return value;
   };
+
+  export const useFutureGetUserTotalValueStaked = (address: string | undefined) => {
+    const value = useCallHook("getUserTotalValueStaked", [address])?.[0];
+    const valueFormatted = value ? Number(formatEther(value)) : 0
+    return valueFormatted;
+  }
+  export const useFutureGetUserAllStakingsRewards = (address: string | undefined) => {
+    const value = useCallHook("getUserAllStakingsRewards", [address])?.[0];
+    const valueFormatted = value ? Number(formatEther(value)) : 0
+    return valueFormatted;
+  }
+
+  export const useFutureGetUserTotalRewardClaimedToken = (address: string | undefined) => {
+    const value = useCallHook("getUserTotalRewardClaimedToken", [address])?.[0];
+    const valueFormatted = value ? Number(formatEther(value)) : 0
+    return valueFormatted;
+  }
