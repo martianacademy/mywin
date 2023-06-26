@@ -44,10 +44,10 @@ export const Team = () => {
               heading="Referrer"
               icon={FaUserAstronaut}
               id={userIDAccount?.refererId}
-              onOpen={() => {
-                setModalID(userIDAccount?.refererId);
-                onOpen();
-              }}
+              // onOpen={() => {
+              //   setModalID(userIDAccount?.refererId);
+              //   onOpen();
+              // }}
             ></UserReferralCard>
             <Icon as={FaArrowDown} boxSize={10}></Icon>
           </VStack>

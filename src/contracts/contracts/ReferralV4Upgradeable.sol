@@ -181,6 +181,10 @@ contract ReferralV4Upgradeable is
 
     event PackageRemoved(uint8 packageId);
 
+    event BalanceClaimed(address userAddress, uint32 id, uint256 value);
+
+    uint256 public totalBalanceClaimed;
+
     function initialize() public initializer {
         _variablesContract = 0x0B8bf5FeB9Fca57D9c5d27185dDF3017e99a2d36;
 
@@ -550,7 +554,12 @@ contract ReferralV4Upgradeable is
                 continue;
             }
 
-            if (refererIDAccount.refereeIds.length > 0 && ((refererIDAccount.refereeIds.length * _userLevelUnlockMultiplier) - 1) > i) {
+            if (
+                refererIDAccount.refereeIds.length > 0 &&
+                ((refererIDAccount.refereeIds.length *
+                    _userLevelUnlockMultiplier) - 1) >
+                i
+            ) {
                 uint256 c = (_value * rates[i]) / decimals;
                 refererIDAccount.referralPaid += (c);
                 _increaseIdTopUpIncome(refererIDAccount, c);
@@ -596,6 +605,7 @@ contract ReferralV4Upgradeable is
 
         if (!_idAccount.isAddedToUserList) {
             users.push(_owner);
+            _idAccount.isAddedToUserList = true;
         }
 
         if (_idAccount.owner == address(0)) {
@@ -604,11 +614,6 @@ contract ReferralV4Upgradeable is
 
         if (_idAccount.joiningTime == 0) {
             _idAccount.joiningTime = _currentTime;
-        }
-
-        if (!_idAccount.hasUpline) {
-            _idAccount.refererId = _referrerId;
-            _idAccount.hasUpline = true;
         }
 
         _idAccount.topUpIncome = 0;
@@ -620,6 +625,11 @@ contract ReferralV4Upgradeable is
         _idAccount.roiIds = new uint32[](0);
         _idAccount.canWindraw = true;
 
+        if (!_idAccount.hasUpline) {
+            _idAccount.refererId = _referrerId;
+            _idAccount.hasUpline = true;
+        }
+
         for (uint8 i; i < _maxLevels; i++) {
             uint32 refererId = _idAccount.refererId;
             StructId storage refererIdAccount = ids[refererId];
@@ -629,7 +639,9 @@ contract ReferralV4Upgradeable is
 
             if (i == 0) {
                 refererIdAccount.directBusiness += _value;
-                refererIdAccount.refereeIds.push(_id);
+                if (!_idAccount.hasUpline) {
+                    refererIdAccount.refereeIds.push(_id);
+                }
             }
 
             refererIdAccount.teamBusiness += _value;
@@ -739,6 +751,7 @@ contract ReferralV4Upgradeable is
         }
 
         userAccount.accountIds.push(_id);
+        userAccount.isActive = true;
         totalIds++;
     }
 
@@ -760,7 +773,7 @@ contract ReferralV4Upgradeable is
 
         uint256 _currentROILimit = _idAccount.topUpIncome <
             ((_idAccount.maxLimit * 2) / 3)
-            ? (((_idAccount.maxLimit * 2) / 3) - _idAccount.topUpIncome) / 3
+            ? (_idAccount.maxLimit - _idAccount.topUpIncome) / 3
             : 0;
 
         _activateId(
@@ -822,20 +835,21 @@ contract ReferralV4Upgradeable is
         }
     }
 
-    function setIdStatusAdmin(
-        uint32[] calldata _id,
-        bool[] calldata _trueOrFalse
-    ) external onlyAdmin {
-        for (uint16 i; i < _id.length; i++) {
-            ids[_id[i]].isActive = _trueOrFalse[i];
-        }
-    }
+    // function setIdStatusAdmin(
+    //     uint32[] calldata _id,
+    //     bool[] calldata _trueOrFalse
+    // ) external onlyAdmin {
+    //     for (uint16 i; i < _id.length; i++) {
+    //         ids[_id[i]].isActive = _trueOrFalse[i];
+    //     }
+    // }
 
     function setIdOwnerAddressAdmin(
         uint32[] calldata _id,
         address[] calldata _userAddress
     ) external onlyAdmin {
         for (uint16 i; i < _id.length; i++) {
+            detachIdFromAddressAdmin(ids[_id[i]].owner, _id[i]);
             ids[_id[i]].owner = _userAddress[i];
             accounts[_userAddress[i]].accountIds.push(_id[i]);
         }
@@ -843,6 +857,10 @@ contract ReferralV4Upgradeable is
 
     function claimBalance(uint32 _id) external {
         StructId storage idAccount = ids[_id];
+        // bool isEnabled;
+
+        // require(isEnabled, "Withdraw is temporary disabled due to system maintainance");
+
         if (!IVariables(_variablesContract).isAdmin(msg.sender)) {
             require(
                 idAccount.owner == msg.sender,
@@ -852,17 +870,12 @@ contract ReferralV4Upgradeable is
                 idAccount.walletBalance >= 10e18,
                 "Balance is less than min withdrawal."
             );
-            // require(
-            //     _valueInUSD <= idAccount.walletBalance,
-            //     "value greater than balance."
-            // );
             require(
                 idAccount.canWindraw,
                 "This id withdraw is not enabled by admin."
             );
         }
 
-        // idAccount.walletBalance -= _valueInUSD;
         uint256 walletBalance = idAccount.walletBalance;
         uint256 _futureSecureWalletValue = (walletBalance *
             futureScureWalletContribution) / 100;
@@ -873,47 +886,134 @@ contract ReferralV4Upgradeable is
             _usdToETH(walletBalance - _futureSecureWalletValue)
         );
 
+        emit BalanceClaimed(idAccount.owner, _id, walletBalance);
+
+        totalBalanceClaimed += walletBalance;
+
         delete idAccount.walletBalance;
     }
 
-    // function increaseBalanceAdmin(uint32 _id, uint256 _valueInDecimals) external onlyAdmin {
+    // function removeDuplicateRefereeID(
+    //     address _userAddress,
+    //     uint32 _id
+    // ) external onlyAdmin {
+    //     StructAccount storage userAccount = accounts[_userAddress];
+    //     uint32[] memory accountsIds = userAccount.accountIds;
+    //     uint8 idCount;
+
+    //     for (uint32 i; i < accountsIds.length; i++) {
+    //         if (accounts[_userAddress].accountIds[i] == _id) {
+    //             if (idCount == 0) {
+    //                 idCount++;
+    //             } else {
+    //                 accounts[_userAddress].accountIds[i] = accounts[
+    //                     _userAddress
+    //                 ].accountIds[accounts[_userAddress].accountIds.length - 1];
+    //             }
+    //         }
+
+    //         if (i == accounts[_userAddress].accountIds.length - 1) {
+    //             break;
+    //         }
+    //     }
+    // }
+
+    function detachIdFromAddressAdmin(
+        address _userAddress,
+        uint32 _id
+    ) public onlyAdmin {
+        StructAccount storage userAccount = accounts[_userAddress];
+        uint32[] memory accountsIds = userAccount.accountIds;
+
+        for (uint16 i; i < accountsIds.length; i++) {
+            if (accountsIds[i] == _id) {
+                userAccount.accountIds[i] = userAccount.accountIds[
+                    userAccount.accountIds.length - 1
+                ];
+                userAccount.accountIds.pop();
+            }
+        }
+    }
+
+    function changeUpline(uint32 _referrerId, uint32 _id) external onlyAdmin {
+        StructId storage _idAccount = ids[_id];
+        StructId storage referrerAccount = ids[_idAccount.refererId];
+        uint8 _maxLevels = maxLevels;
+
+        for (uint16 i; i < referrerAccount.teamIds.length; i++) {
+            if (
+                i < referrerAccount.refereeIds.length &&
+                referrerAccount.refereeIds[i] == _id
+            ) {
+                referrerAccount.refereeIds[i] = referrerAccount.refereeIds[
+                    referrerAccount.refereeIds.length - 1
+                ];
+                referrerAccount.refereeIds.pop();
+            }
+
+            if (referrerAccount.teamIds[i] == _id) {
+                referrerAccount.teamIds[i] = referrerAccount.teamIds[
+                    referrerAccount.teamIds.length - 1
+                ];
+                referrerAccount.teamIds.pop();
+            }
+        }
+
+        _idAccount.refererId = _referrerId;
+
+        for (uint8 i; i < _maxLevels; i++) {
+            StructId storage refererIdAccount = ids[_referrerId];
+            if (refererIdAccount.id == 0) {
+                break;
+            }
+
+            if (i == 0) {
+                refererIdAccount.refereeIds.push(_id);
+            }
+
+            refererIdAccount.teamIds.push(_id);
+            refererIdAccount.teamLevel.push(i + 1);
+
+            emit RegisteredTeamAddress(_id, _referrerId, refererIdAccount.id);
+
+            _idAccount = refererIdAccount;
+        }
+    }
+
+    // function updateIfTopUpIncomeIsGreateMaxLimit(uint16 _from, uint16 _to) external onlyAdmin {
+    //     for (_from; _from <= _to; _from++) {
+    //         StructId storage idAccount = ids[_from];
+    //         if(idAccount.topUpIncome > idAccount.maxLimit) {
+    //             idAccount.topUpIncome = idAccount.maxLimit;
+    //         }
+    //     }
+    // }
+
+    // function increaseWalletBalanceAdmin(
+    //     uint32 _id,
+    //     uint256 _valueInDecimals
+    // ) external onlyAdmin {
     //     ids[_id].walletBalance += _valueInDecimals * 1e18;
     // }
-
-    // function _min(uint256 x, uint256 y) private pure returns (uint256) {
-    //     if (x > y) {
-    //         return y;
-    //     }
-
-    //     return x;
-    // }
-
-    // function updateTotalIds(uint32 _value) external onlyAdmin {
-    //     totalIds = _value;
-    // }
-
-    function setMinContribution(uint256 _valueInUSD) external onlyOwner {
-        minContributionUSD = _valueInUSD;
-    }
 
     function getMinContributionETH() external view returns (uint256) {
         return _usdToETH(minContributionUSD);
     }
 
-    function sendETHAdmin(address _address, uint256 _value) external onlyOwner {
-        payable(_address).transfer(_value);
-    }
+    // function sendETHAdmin(address _address, uint256 _value) external onlyOwner {
+    //     payable(_address).transfer(_value);
+    // }
 
-    function withdrawETHAdmin() external onlyOwner {
-        payable(msg.sender).transfer(address(this).balance);
-    }
+    // function withdrawETHAdmin() external onlyOwner {
+    //     payable(msg.sender).transfer(address(this).balance);
+    // }
 
-    function withdrawTokensAdmin(
-        address _tokenAddress,
-        uint256 _value
-    ) external onlyOwner {
-        IERC20Upgradeable(_tokenAddress).transfer(msg.sender, _value);
-    }
+    // function withdrawTokensAdmin(
+    //     address _tokenAddress,
+    //     uint256 _value
+    // ) external onlyOwner {
+    //     IERC20Upgradeable(_tokenAddress).transfer(msg.sender, _value);
+    // }
 
     function _authorizeUpgrade(
         address newImplementation

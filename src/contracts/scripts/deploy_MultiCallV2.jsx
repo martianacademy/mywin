@@ -12,7 +12,7 @@ async function main() {
 
   console.log("Account balance:", formatedBalance.toString(), "ETH");
 
-  const contract = await ethers.getContractFactory("MultiCallV2");
+  const contract = await ethers.getContractFactory("MultiCallV3");
   const mc = await contract.deploy();
 
   await mc.deployed();

@@ -13,6 +13,7 @@ export const UserBusiness = ({
 }) => {
   const { chainId } = useEthers();
   const currentNetwork = useSupportedNetworkInfo[chainId!];
+  console.log(idAccountMap?.teamBusiness)
   return (
     <CardContainer>
       <Heading size="sm">Business</Heading>
@@ -24,7 +25,6 @@ export const UserBusiness = ({
         currencySymbol={currentNetwork?.MYUSD?.Symbol}
         icon={FaUserAlt}
       ></BalancesCard>
-
       <BalancesCard
         heading="Direct Business"
         currencyValue={Number(

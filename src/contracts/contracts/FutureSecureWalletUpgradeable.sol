@@ -328,7 +328,7 @@ contract FutureSecureWalletV1Upgradeable is
         uint256 _currentTime = block.timestamp;
         Account memory userAccount = account[_userAddress];
         StakeInfo storage userLastStakingInfo = stakeInfo[
-            userAccount.stakingIDs[userAccount.stakingIDs.length - 1]
+            userAccount.stakingIDs[0]
         ];
 
         uint256 userLastStakingEndTime = userLastStakingInfo.startTime +

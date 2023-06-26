@@ -19,6 +19,7 @@ module.exports = {
   etherscan: {
     apiKey: {
       myvee: "abc",
+      bsc: process.env.BSC_MAINNET_KEY
     },
     customChains: [
       {

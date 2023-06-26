@@ -7,3 +7,4 @@ export const referralV4ContractAddress = "0x09B4498E688f4E9DF27Fb4238112408C7489
 export const roiV1ContractAddress = "0x53387fba122eBC8d124A153e535C4b669764D235";
 
 export const myUSDContractAddress = "0xD2F6a7C009A9B112e451DA05BBd16357a3D323ea";
+export const MultiCallV3Address = "0x8170370626037450070E0023F82420F428891214";
